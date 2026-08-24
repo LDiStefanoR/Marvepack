@@ -180,6 +180,10 @@ async function push(drive) {
 }
 
 loadEnv();
+if (process.env.GOOGLE_DRIVE_ENABLED !== "1") {
+  console.log("[sync-drive] Drive en pausa: las fotos se versionan en GitHub.");
+  process.exit(0);
+}
 const modo = process.argv[2] || "pull";
 const googleAuth = auth();
 if (!googleAuth) {

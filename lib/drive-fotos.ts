@@ -46,6 +46,7 @@ function keyFile() {
 }
 
 export function driveFotosActivo() {
+  if (process.env.GOOGLE_DRIVE_ENABLED !== "1") return false;
   return Boolean(credenciales() || keyFile());
 }
 

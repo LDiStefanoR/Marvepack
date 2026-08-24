@@ -5,7 +5,7 @@ import { leerAjustes } from "@/lib/ajustes";
 import { getSesion } from "@/lib/sesion";
 import { guardarProductos, leerProductos } from "@/lib/productos";
 import { borrarFotoSitioSiLibre, guardarFotoSitio } from "@/lib/fotos-sitio";
-import { driveFotosActivo } from "@/lib/drive-fotos";
+import { persistirFotosGithub } from "@/lib/persistir-github";
 import { leerRubros } from "@/lib/rubros";
 
 const MAX_BYTES = 5 * 1024 * 1024;
@@ -93,6 +93,7 @@ export async function subirImagenProducto(
   await guardarProductos(productos);
   const rubros = await leerRubros(productos.map((p) => p.seccion));
   await borrarFotoSitioSiLibre(anterior, imagenesUsadas(productos, rubros));
+  const github = await persistirFotosGithub();
 
   revalidatePath("/", "layout");
   revalidatePath("/catalogo");
@@ -100,11 +101,11 @@ export async function subirImagenProducto(
 
   if (afectados > 1) {
     return {
-      ok: `Guardamos la foto y la aplicamos a ${afectados} productos que usaban la misma imagen.${driveFotosActivo() ? " También quedó en Drive." : ""}`,
+      ok: `Guardamos la foto y la aplicamos a ${afectados} productos que usaban la misma imagen.${github}`,
     };
   }
   return {
-    ok: `Listo, actualizamos la foto de este producto.${driveFotosActivo() ? " También quedó en Drive." : ""}`,
+    ok: `Listo, actualizamos la foto de este producto.${github}`,
   };
 }
 
@@ -179,7 +180,8 @@ export async function eliminarProducto(
   const rubros = await leerRubros(resto.map((p) => p.seccion));
   await borrarFotoSitioSiLibre(producto.imagen, imagenesUsadas(resto, rubros));
   revalidarCatalogo();
-  return { ok: `Eliminamos ${producto.codigo} — ${producto.nombre}.` };
+  const github = await persistirFotosGithub();
+  return { ok: `Eliminamos ${producto.codigo} — ${producto.nombre}.${github}` };
 }
 
 export async function crearProducto(form: FormData): Promise<EstadoImagen> {

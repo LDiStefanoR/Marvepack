@@ -50,9 +50,6 @@ export async function guardarFotoSitio(opts: {
       });
     } catch (error) {
       console.error("[drive] No se pudo subir la foto", error);
-      throw new Error(
-        "La foto no se pudo guardar en Drive. Compartí la carpeta con la cuenta de servicio de Google.",
-      );
     }
   }
 

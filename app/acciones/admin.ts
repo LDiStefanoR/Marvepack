@@ -1,7 +1,7 @@
 "use server";
 
 import { borrarFotoSitioSiLibre, guardarFotoSitio } from "@/lib/fotos-sitio";
-import { driveFotosActivo } from "@/lib/drive-fotos";
+import { persistirFotosGithub } from "@/lib/persistir-github";
 import { revalidatePath } from "next/cache";
 import { guardarAjustes, leerAjustes } from "@/lib/ajustes";
 import { claveRubro, RUBRO_RESERVADO } from "@/lib/categorias";
@@ -133,7 +133,10 @@ export async function crearRubro(form: FormData): Promise<EstadoAdmin> {
     ...varios,
   ]);
   revalidarSitio();
-  return { ok: `Creamos el rubro "${etiqueta}". Ya aparece en el inicio y en el catálogo.` };
+  const github = imagen ? await persistirFotosGithub() : "";
+  return {
+    ok: `Creamos el rubro "${etiqueta}". Ya aparece en el inicio y en el catálogo.${github}`,
+  };
 }
 
 export async function renombrarRubro(form: FormData): Promise<EstadoAdmin> {
@@ -207,11 +210,12 @@ export async function eliminarRubro(form: FormData): Promise<EstadoAdmin> {
     imagenesUsadasAdmin(productos, restantes),
   );
   revalidarSitio();
+  const github = await persistirFotosGithub();
   return {
     ok:
       movidos > 0
-        ? `Eliminamos "${rubro.etiqueta}" y pasamos ${movidos} producto${movidos === 1 ? "" : "s"} a Varios. El catálogo ya está actualizado.`
-        : `Eliminamos "${rubro.etiqueta}". El catálogo ya no muestra ese rubro.`,
+        ? `Eliminamos "${rubro.etiqueta}" y pasamos ${movidos} producto${movidos === 1 ? "" : "s"} a Varios. El catálogo ya está actualizado.${github}`
+        : `Eliminamos "${rubro.etiqueta}". El catálogo ya no muestra ese rubro.${github}`,
   };
 }
 
@@ -245,8 +249,9 @@ export async function subirImagenRubro(form: FormData): Promise<EstadoAdmin> {
     imagenesUsadasAdmin(productos, actualizados),
   );
   revalidarSitio();
+  const github = await persistirFotosGithub();
   return {
-    ok: `Guardamos la foto. Ya se ve en el inicio y en el catálogo.${driveFotosActivo() ? " También quedó en Drive." : ""}`,
+    ok: `Guardamos la foto. Ya se ve en el inicio y en el catálogo.${github}`,
   };
 }
 
