@@ -41,6 +41,9 @@ async function git(args: string[]) {
 
 export async function persistirFotosGithub(): Promise<string> {
   if (!fotosEnGithub()) return "";
+  if (process.env.VERCEL === "1") {
+    return " En Vercel las fotos del admin no se guardan todavía; eso queda para Drive o un servidor con disco.";
+  }
 
   const agregado = await git(["add", "-A", "--", ...RUTAS]);
   if (agregado.code !== 0) {
