@@ -1,0 +1,66 @@
+[
+  {
+    "clave": "BOLSAS",
+    "etiqueta": "Bolsas"
+  },
+  {
+    "clave": "DESCARTABLES",
+    "etiqueta": "Descartables"
+  },
+  {
+    "clave": "REPOSTERIA",
+    "etiqueta": "Repostería"
+  },
+  {
+    "clave": "COTILLON",
+    "etiqueta": "Cotillón"
+  },
+  {
+    "clave": "CAJAS MICRO",
+    "etiqueta": "Cajas micro"
+  },
+  {
+    "clave": "CAJAS Y ESTUCHES",
+    "etiqueta": "Cajas y estuches"
+  },
+  {
+    "clave": "POTES",
+    "etiqueta": "Potes"
+  },
+  {
+    "clave": "EXPANDIDO",
+    "etiqueta": "Expandido"
+  },
+  {
+    "clave": "TERMICOS",
+    "etiqueta": "Térmicos"
+  },
+  {
+    "clave": "EMBALAJE",
+    "etiqueta": "Embalaje"
+  },
+  {
+    "clave": "ROLLOS",
+    "etiqueta": "Rollos"
+  },
+  {
+    "clave": "HIGIENE",
+    "etiqueta": "Higiene"
+  },
+  {
+    "clave": "LIBRERIA",
+    "etiqueta": "Librería"
+  },
+  {
+    "clave": "PERSONALIZADOS",
+    "etiqueta": "Personalizados"
+  },
+  {
+    "clave": "EJEMPLO",
+    "etiqueta": "ejemplo"
+  },
+  {
+    "clave": "VARIOS",
+    "etiqueta": "Varios"
+  }
+]

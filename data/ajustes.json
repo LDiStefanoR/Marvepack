@@ -1,0 +1,7 @@
+{
+  "descuentoClienteGenerico": 10,
+  "ajustePorSeccion": {
+    "BOLSAS": -50
+  },
+  "descuentoClientePorSeccion": {}
+}
