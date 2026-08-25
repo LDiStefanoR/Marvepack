@@ -1,14 +1,11 @@
-import { promises as fs } from "fs";
-import path from "path";
 import {
   etiquetaRubro,
   RUBRO_RESERVADO,
   SECCION_LABEL,
   SECCIONES,
 } from "@/lib/categorias";
+import { escribirJsonData, leerJsonData } from "@/lib/data-fs";
 import type { Rubro } from "@/types/rubro";
-
-const archivo = path.join(process.cwd(), "data", "rubros.json");
 
 function semilla(): Rubro[] {
   return SECCIONES.map((clave) => ({
@@ -32,14 +29,9 @@ function asegurarVarios(lista: Rubro[]) {
 
 export async function leerRubros(clavesUsadas: string[] = []): Promise<Rubro[]> {
   let lista: Rubro[] = [];
-  try {
-    const raw = await fs.readFile(archivo, "utf8");
-    const parsed = JSON.parse(raw) as Rubro[];
-    if (Array.isArray(parsed) && parsed.length > 0) {
-      lista = parsed.filter((r) => r?.clave);
-    }
-  } catch {
-    lista = [];
+  const parsed = await leerJsonData<Rubro[]>("rubros.json", []);
+  if (Array.isArray(parsed) && parsed.length > 0) {
+    lista = parsed.filter((r) => r?.clave);
   }
   if (lista.length === 0) {
     lista = semilla();
@@ -64,6 +56,5 @@ export async function guardarRubros(rubros: Rubro[]) {
         ...(r.imagen ? { imagen: r.imagen } : {}),
       })),
   );
-  await fs.mkdir(path.dirname(archivo), { recursive: true });
-  await fs.writeFile(archivo, JSON.stringify(limpios, null, 2), "utf8");
+  await escribirJsonData("rubros.json", limpios);
 }

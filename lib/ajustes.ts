@@ -1,8 +1,5 @@
-import { promises as fs } from "fs";
-import path from "path";
+import { escribirJsonData, leerJsonData } from "@/lib/data-fs";
 import type { AjustesPrecios } from "@/types/ajustes";
-
-const archivo = path.join(process.cwd(), "data", "ajustes.json");
 
 const vacio: AjustesPrecios = {
   descuentoClienteGenerico: 10,
@@ -26,27 +23,20 @@ function mapaPorcentajes(raw: unknown): Record<string, number> {
 }
 
 export async function leerAjustes(): Promise<AjustesPrecios> {
-  try {
-    const raw = await fs.readFile(archivo, "utf8");
-    const parsed = JSON.parse(raw) as Partial<AjustesPrecios>;
-    const descuento =
-      porcentaje(parsed.descuentoClienteGenerico) ?? 10;
-    return {
-      descuentoClienteGenerico: descuento,
-      ajustePorSeccion:
-        parsed.ajustePorSeccion && typeof parsed.ajustePorSeccion === "object"
-          ? parsed.ajustePorSeccion
-          : {},
-      descuentoClientePorSeccion: mapaPorcentajes(
-        parsed.descuentoClientePorSeccion,
-      ),
-    };
-  } catch {
-    return { ...vacio, ajustePorSeccion: {}, descuentoClientePorSeccion: {} };
-  }
+  const parsed = await leerJsonData<Partial<AjustesPrecios>>("ajustes.json", vacio);
+  const descuento = porcentaje(parsed.descuentoClienteGenerico) ?? 10;
+  return {
+    descuentoClienteGenerico: descuento,
+    ajustePorSeccion:
+      parsed.ajustePorSeccion && typeof parsed.ajustePorSeccion === "object"
+        ? parsed.ajustePorSeccion
+        : {},
+    descuentoClientePorSeccion: mapaPorcentajes(
+      parsed.descuentoClientePorSeccion,
+    ),
+  };
 }
 
 export async function guardarAjustes(ajustes: AjustesPrecios) {
-  await fs.mkdir(path.dirname(archivo), { recursive: true });
-  await fs.writeFile(archivo, JSON.stringify(ajustes, null, 2), "utf8");
+  await escribirJsonData("ajustes.json", ajustes);
 }
