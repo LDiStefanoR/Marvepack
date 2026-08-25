@@ -122,7 +122,7 @@ export async function subirFotoBlob(
 ) {
   if (!blobActivo()) return null;
   try {
-    await put(rutaFoto(carpeta, nombre), new Uint8Array(buffer), {
+    await put(rutaFoto(carpeta, nombre), buffer, {
       ...opcionesBlob(),
       addRandomSuffix: false,
       allowOverwrite: true,
