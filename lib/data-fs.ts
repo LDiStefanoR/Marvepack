@@ -30,8 +30,13 @@ function parsear<T>(raw: string, vacio: T): T {
 }
 
 export async function leerJsonData<T>(nombre: string, vacio: T): Promise<T> {
-  const enMemoria = memoria.get(nombre);
-  if (enMemoria) return parsear(enMemoria, vacio);
+  // En Vercel cada función tiene su propia memoria. Si leemos de acá,
+  // el catálogo sigue mostrando el JSON del repo aunque otra instancia
+  // ya haya guardado la foto nueva en Blob.
+  if (!process.env.VERCEL) {
+    const enMemoria = memoria.get(nombre);
+    if (enMemoria) return parsear(enMemoria, vacio);
+  }
 
   const remoto = await leerDatoBlob(nombre);
   if (remoto) {
@@ -71,6 +76,15 @@ export async function escribirJsonData(nombre: string, valor: unknown) {
     const ok = await guardarDatoBlob(nombre, raw);
     if (!ok) {
       console.error(`[data] No se pudo guardar ${nombre} en Vercel Blob.`);
+      if (process.env.VERCEL) {
+        throw new Error(
+          "No se pudo guardar el catálogo en Blob. Revisá que el store esté conectado con token de lectura y escritura.",
+        );
+      }
     }
+  } else if (process.env.VERCEL) {
+    throw new Error(
+      "Falta conectar Vercel Blob. Sin eso las fotos y el catálogo no se guardan.",
+    );
   }
 }

@@ -4,49 +4,41 @@ import { desencriptarTexto, encriptarTexto } from "@/lib/cifrar-json";
 const SENSIBLES = new Set(["usuarios.json", "pedidos.json"]);
 const ACCESO = "private" as const;
 
-function valorEnv(...nombres: string[]) {
-  for (const nombre of nombres) {
-    const v = process.env[nombre]?.trim();
-    if (v) return v;
-  }
-  for (const [clave, valor] of Object.entries(process.env)) {
-    if (!valor?.trim()) continue;
-    if (nombres.some((n) => clave.toLowerCase() === n.toLowerCase())) {
-      return valor.trim();
-    }
-  }
-  return "";
+function idTienda() {
+  // Nombres literales: Next solo incluye en el servidor las env escritas así.
+  return (
+    process.env.marvegota_STORE_ID ||
+    process.env.BLOB_STORE_ID ||
+    ""
+  ).trim();
 }
 
-function storeId() {
-  const directo = valorEnv("marvegota_STORE_ID", "BLOB_STORE_ID");
-  if (directo) return directo;
-  for (const [clave, valor] of Object.entries(process.env)) {
-    if (clave.toLowerCase().includes("marvegota") && /store_id$/i.test(clave)) {
-      return valor?.trim() || "";
-    }
-  }
-  return "";
+function tokenTienda() {
+  return (
+    process.env.marvegota_READ_WRITE_TOKEN ||
+    process.env.BLOB_READ_WRITE_TOKEN ||
+    ""
+  ).trim();
 }
 
-function tokenBlob() {
-  const directo = valorEnv(
-    "marvegota_READ_WRITE_TOKEN",
-    "BLOB_READ_WRITE_TOKEN",
-  );
-  if (directo) return directo;
-  for (const [clave, valor] of Object.entries(process.env)) {
-    if (/read_write_token$/i.test(clave) && valor?.trim()) {
-      return valor.trim();
-    }
+function prepararEnvBlob() {
+  const id = idTienda();
+  const token = tokenTienda();
+  if (id && !process.env.BLOB_STORE_ID) {
+    process.env.BLOB_STORE_ID = id;
   }
-  return "";
+  if (token && !process.env.BLOB_READ_WRITE_TOKEN) {
+    process.env.BLOB_READ_WRITE_TOKEN = token;
+  }
 }
 
 function authBlob() {
+  prepararEnvBlob();
+  const storeId = idTienda();
+  const token = tokenTienda();
   return {
-    ...(storeId() ? { storeId: storeId() } : {}),
-    ...(tokenBlob() ? { token: tokenBlob() } : {}),
+    ...(storeId ? { storeId } : {}),
+    ...(token ? { token } : {}),
   };
 }
 
@@ -58,7 +50,12 @@ function opcionesBlob() {
 }
 
 export function blobActivo() {
-  return Boolean(tokenBlob() || (process.env.VERCEL && storeId()));
+  prepararEnvBlob();
+  return Boolean(
+    tokenTienda() ||
+      idTienda() ||
+      (process.env.VERCEL && process.env.VERCEL_OIDC_TOKEN),
+  );
 }
 
 export function rutaDato(nombre: string) {
@@ -71,6 +68,11 @@ export function rutaFoto(carpeta: string, nombre: string) {
 
 export function urlFotoPublica(carpeta: string, nombre: string) {
   return `/api/media/${rutaFoto(carpeta, nombre)}`;
+}
+
+function mensajeBlob(error: unknown) {
+  if (error instanceof Error && error.message.trim()) return error.message;
+  return "No se pudo hablar con Vercel Blob.";
 }
 
 async function streamATexto(stream: ReadableStream<Uint8Array> | null) {
@@ -105,7 +107,7 @@ export async function guardarDatoBlob(nombre: string, json: string) {
       addRandomSuffix: false,
       allowOverwrite: true,
       contentType: "application/json",
-      cacheControlMaxAge: 60,
+      cacheControlMaxAge: 0,
     });
     return true;
   } catch (error) {
@@ -120,18 +122,24 @@ export async function subirFotoBlob(
   buffer: Buffer,
   mime: string,
 ) {
-  if (!blobActivo()) return null;
+  prepararEnvBlob();
+  if (!idTienda() && !tokenTienda()) {
+    throw new Error(
+      "Vercel no ve la tienda Blob. En el proyecto, Storage → conectá marvepack-blob y redesplegá.",
+    );
+  }
   try {
     await put(rutaFoto(carpeta, nombre), buffer, {
       ...opcionesBlob(),
       addRandomSuffix: false,
       allowOverwrite: true,
       contentType: mime || "application/octet-stream",
+      cacheControlMaxAge: 0,
     });
     return urlFotoPublica(carpeta, nombre);
   } catch (error) {
     console.error("[blob] foto", error);
-    return null;
+    throw new Error(mensajeBlob(error));
   }
 }
 
@@ -153,7 +161,7 @@ export async function leerBlobBinario(pathname: string) {
   if (!blobActivo()) return null;
   const result = await get(pathname, {
     ...opcionesBlob(),
-    useCache: true,
+    useCache: false,
   });
   if (!result?.stream) return null;
   const body = Buffer.from(await new Response(result.stream).arrayBuffer());

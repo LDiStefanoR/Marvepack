@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "@/components/AuthProvider";
 import { useCart } from "@/components/CartProvider";
 import { etiquetaRubro, mensajeConsultaProducto } from "@/lib/categorias";
@@ -14,6 +14,10 @@ export function ProductCard({ producto, etiqueta }: Props) {
   const sesion = useAuth();
   const [broken, setBroken] = useState(false);
   const [agregado, setAgregado] = useState(false);
+
+  useEffect(() => {
+    setBroken(false);
+  }, [producto.imagen]);
   const { agregar } = useCart();
   const wa = whatsappUrl(mensajeConsultaProducto(producto.nombre));
 
@@ -29,6 +33,7 @@ export function ProductCard({ producto, etiqueta }: Props) {
         {!broken ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
+            key={producto.imagen}
             src={producto.imagen}
             alt={producto.nombre}
             className="h-full w-full object-contain p-2"

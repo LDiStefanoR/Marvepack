@@ -118,7 +118,9 @@ export async function subirImagenProducto(
     await guardarProductos(productos);
     const rubros = await leerRubros(productos.map((p) => p.seccion));
     await borrarFotoSitioSiLibre(anterior, imagenesUsadas(productos, rubros));
-    await persistirFotosGithub();
+    await persistirFotosGithub().catch((error) => {
+      console.error("[imagen] github", error);
+    });
     revalidatePath("/", "layout");
     revalidatePath("/catalogo");
     revalidatePath("/admin");

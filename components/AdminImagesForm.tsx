@@ -270,6 +270,7 @@ export function AdminImagesForm({
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
+                key={producto.imagen}
                 src={producto.imagen}
                 alt=""
                 className="h-24 w-24 shrink-0 rounded-lg bg-neutral-50 object-contain"

@@ -17,7 +17,7 @@ export async function GET(_req: Request, { params }: Params) {
     return new NextResponse(new Uint8Array(archivo.body), {
       headers: {
         "Content-Type": archivo.type,
-        "Cache-Control": "public, max-age=60",
+        "Cache-Control": "private, no-cache, must-revalidate",
       },
     });
   } catch (error) {

@@ -8,6 +8,8 @@ import { HeroSection } from "@/components/HeroSection";
 import { leerProductos } from "@/lib/productos";
 import { leerRubros } from "@/lib/rubros";
 
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   const productos = await leerProductos();
   const rubros = await leerRubros(productos.map((p) => p.seccion));

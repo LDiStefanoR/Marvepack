@@ -39,11 +39,11 @@ export async function guardarFotoSitio(opts: {
       if (url) return url;
     } catch (error) {
       console.error("[foto] blob", error);
-    }
-    if (process.env.VERCEL) {
-      throw new Error(
-        "No se pudo guardar la foto en Vercel Blob. Revisá que la tienda esté conectada y el token de lectura/escritura.",
-      );
+      if (process.env.VERCEL) {
+        throw error instanceof Error
+          ? error
+          : new Error("No se pudo guardar la foto en Vercel Blob.");
+      }
     }
   }
 
