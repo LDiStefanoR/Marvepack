@@ -7,6 +7,7 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { contarAlertasAdmin } from "@/app/acciones/cuentas";
 import { BRAND_BLUE, BRAND_NAME, BRAND_TAGLINE } from "@/lib/brand";
+import { urlBaseSitio } from "@/lib/site-url";
 import { getSesion } from "@/lib/sesion";
 import "./globals.css";
 
@@ -30,9 +31,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3003",
-  ),
+  metadataBase: new URL(urlBaseSitio()),
   title: siteTitle,
   description: siteDescription,
   openGraph: {
