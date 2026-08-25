@@ -13,7 +13,7 @@ const RUTAS = [
 ];
 
 export function fotosEnGithub() {
-  return process.env.FOTOS_EN_GITHUB !== "0";
+  return process.env.FOTOS_EN_GITHUB === "1";
 }
 
 async function git(args: string[]) {
@@ -41,15 +41,12 @@ async function git(args: string[]) {
 }
 
 export async function persistirFotosGithub(): Promise<string> {
-  if (!fotosEnGithub()) return "";
-  if (process.env.VERCEL === "1") {
-    return "";
-  }
+  if (!fotosEnGithub() || process.env.VERCEL === "1") return "";
 
   const agregado = await git(["add", "-A", "--", ...RUTAS]);
   if (agregado.code !== 0) {
     console.error("[github-fotos]", agregado.stderr);
-    return " La foto quedó en el servidor, pero no se pudo preparar el commit a GitHub.";
+    return "";
   }
 
   const pendiente = await git(["diff", "--cached", "--quiet", "--", ...RUTAS]);
@@ -65,14 +62,14 @@ export async function persistirFotosGithub(): Promise<string> {
   ]);
   if (commit.code !== 0) {
     console.error("[github-fotos]", commit.stderr);
-    return " La foto quedó en el servidor, pero GitHub no aceptó el commit.";
+    return "";
   }
 
   const push = await git(["push", "origin", "HEAD"]);
   if (push.code !== 0) {
     console.error("[github-fotos]", push.stderr);
-    return " La foto quedó en el servidor y en el commit local, pero no se pudo subir a GitHub.";
+    return "";
   }
 
-  return " Ya está en GitHub.";
+  return "";
 }

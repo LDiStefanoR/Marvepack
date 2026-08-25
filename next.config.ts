@@ -5,7 +5,7 @@ import { fileURLToPath } from "url";
 const projectRoot = path.dirname(fileURLToPath(import.meta.url));
 
 const nextConfig: NextConfig = {
-  serverExternalPackages: ["bcryptjs", "exceljs", "pdfkit", "googleapis"],
+  serverExternalPackages: ["bcryptjs", "exceljs", "pdfkit", "googleapis", "@vercel/blob"],
   experimental: {
     serverActions: {
       bodySizeLimit: "8mb",

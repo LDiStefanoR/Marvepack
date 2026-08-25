@@ -1,6 +1,12 @@
 import { promises as fs } from "fs";
 import path from "path";
 import {
+  blobActivo,
+  borrarFotoBlob,
+  esUrlBlob,
+  subirFotoBlob,
+} from "@/lib/blob-datos";
+import {
   borrarFotoDrive,
   type CarpetaFotos,
   driveFotosActivo,
@@ -22,6 +28,16 @@ export async function guardarFotoSitio(opts: {
   buffer: Buffer;
   mime: string;
 }) {
+  if (blobActivo()) {
+    const url = await subirFotoBlob(
+      opts.carpeta,
+      opts.nombre,
+      opts.buffer,
+      opts.mime,
+    );
+    if (url) return url;
+  }
+
   const destRecursos = path.join(
     process.cwd(),
     "recursos",
@@ -61,10 +77,16 @@ export async function borrarFotoSitioSiLibre(
   usadas: Iterable<string>,
 ) {
   if (!ruta) return;
-  const parsed = parsearRutaFoto(ruta);
-  if (!parsed) return;
   const set = new Set(usadas);
   if (set.has(ruta)) return;
+
+  if (esUrlBlob(ruta)) {
+    await borrarFotoBlob(ruta);
+    return;
+  }
+
+  const parsed = parsearRutaFoto(ruta);
+  if (!parsed) return;
 
   const destRecursos = path.join(
     process.cwd(),

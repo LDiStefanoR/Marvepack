@@ -1,9 +1,10 @@
 import { promises as fs } from "fs";
 import path from "path";
 import {
-  guardarArchivoGithub,
-  leerArchivoGithub,
-} from "@/lib/github-datos";
+  blobActivo,
+  guardarDatoBlob,
+  leerDatoBlob,
+} from "@/lib/blob-datos";
 
 const memoria = new Map<string, string>();
 
@@ -17,7 +18,7 @@ function directorioEscritura() {
 function directoriosLectura() {
   const tmp = path.join("/tmp", "marvepack-data");
   const repo = path.join(process.cwd(), "data");
-  return process.env.VERCEL ? [tmp, repo] : [repo, tmp];
+  return process.env.VERCEL ? [tmp, repo] : [repo];
 }
 
 function parsear<T>(raw: string, vacio: T): T {
@@ -32,11 +33,10 @@ export async function leerJsonData<T>(nombre: string, vacio: T): Promise<T> {
   const enMemoria = memoria.get(nombre);
   if (enMemoria) return parsear(enMemoria, vacio);
 
-  const remoto = await leerArchivoGithub(nombre);
-  if (remoto?.contenido) {
-    memoria.set(nombre, remoto.contenido);
-    await escribirDisco(nombre, remoto.contenido);
-    return parsear(remoto.contenido, vacio);
+  const remoto = await leerDatoBlob(nombre);
+  if (remoto) {
+    memoria.set(nombre, remoto);
+    return parsear(remoto, vacio);
   }
 
   for (const dir of directoriosLectura()) {
@@ -53,6 +53,7 @@ export async function leerJsonData<T>(nombre: string, vacio: T): Promise<T> {
 }
 
 async function escribirDisco(nombre: string, raw: string) {
+  if (process.env.VERCEL && blobActivo()) return;
   const dir = directorioEscritura();
   try {
     await fs.mkdir(dir, { recursive: true });
@@ -66,10 +67,10 @@ export async function escribirJsonData(nombre: string, valor: unknown) {
   const raw = JSON.stringify(valor, null, 2);
   memoria.set(nombre, raw);
   await escribirDisco(nombre, raw);
-  const ok = await guardarArchivoGithub(nombre, raw);
-  if (!ok && process.env.VERCEL === "1") {
-    console.error(
-      `[data] ${nombre} no se pudo guardar en GitHub. Cargá GITHUB_DATA_TOKEN en Vercel.`,
-    );
+  if (blobActivo()) {
+    const ok = await guardarDatoBlob(nombre, raw);
+    if (!ok) {
+      console.error(`[data] No se pudo guardar ${nombre} en Vercel Blob.`);
+    }
   }
 }
