@@ -113,7 +113,13 @@ async function asegurarSemilla() {
     cambio = true;
   }
 
-  if (cambio) await escribirArchivo(usuarios);
+  if (cambio) {
+    try {
+      await escribirArchivo(usuarios);
+    } catch (error) {
+      console.error("[usuarios] No se pudo guardar la semilla", error);
+    }
+  }
   return usuarios;
 }
 

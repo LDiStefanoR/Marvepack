@@ -24,13 +24,22 @@ export default async function CatalogoPage({ searchParams }: Props) {
   const params = await searchParams;
   const raw = params.seccion;
   const seccion = Array.isArray(raw) ? raw[0] : raw;
-  const [sesion, ajustes, productos] = await Promise.all([
-    getSesion(),
-    leerAjustes(),
-    leerProductos(),
-  ]);
-  const rubros = await leerRubros(productos.map((p) => p.seccion));
-  const vitrina = productos.map((p) => armarVitrina(p, sesion, ajustes));
+  const sesion = await getSesion();
+  let ajustes: Awaited<ReturnType<typeof leerAjustes>> | null = null;
+  let productos: Awaited<ReturnType<typeof leerProductos>> = [];
+  let rubros: Awaited<ReturnType<typeof leerRubros>> = [];
+  try {
+    [ajustes, productos] = await Promise.all([leerAjustes(), leerProductos()]);
+    rubros = await leerRubros(productos.map((p) => p.seccion));
+  } catch (error) {
+    console.error("[catalogo]", error);
+  }
+  const ajustesOk = ajustes ?? {
+    descuentoClienteGenerico: 10,
+    ajustePorSeccion: {},
+    descuentoClientePorSeccion: {},
+  };
+  const vitrina = productos.map((p) => armarVitrina(p, sesion, ajustesOk));
   const modo = modoPrecio(sesion);
   const aviso =
     modo === "cliente"

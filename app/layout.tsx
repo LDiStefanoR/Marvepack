@@ -49,10 +49,14 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const sesion = await getSesion();
-  const alertasIniciales =
-    sesion?.rol === "admin"
-      ? await contarAlertasAdmin()
-      : { solicitudes: 0, pedidosNuevos: 0 };
+  let alertasIniciales = { solicitudes: 0, pedidosNuevos: 0 };
+  if (sesion?.rol === "admin") {
+    try {
+      alertasIniciales = await contarAlertasAdmin();
+    } catch (error) {
+      console.error("[layout] alertas admin", error);
+    }
+  }
 
   return (
     <html

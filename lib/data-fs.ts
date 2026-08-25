@@ -72,19 +72,11 @@ export async function escribirJsonData(nombre: string, valor: unknown) {
   const raw = JSON.stringify(valor, null, 2);
   memoria.set(nombre, raw);
   await escribirDisco(nombre, raw);
-  if (blobActivo()) {
-    const ok = await guardarDatoBlob(nombre, raw);
-    if (!ok) {
-      console.error(`[data] No se pudo guardar ${nombre} en Vercel Blob.`);
-      if (process.env.VERCEL) {
-        throw new Error(
-          "No se pudo guardar el catálogo en Blob. Revisá que el store esté conectado con token de lectura y escritura.",
-        );
-      }
-    }
-  } else if (process.env.VERCEL) {
-    throw new Error(
-      "Falta conectar Vercel Blob. Sin eso las fotos y el catálogo no se guardan.",
-    );
+  if (!blobActivo()) return true;
+  const ok = await guardarDatoBlob(nombre, raw);
+  if (!ok) {
+    console.error(`[data] No se pudo guardar ${nombre} en Vercel Blob.`);
+    return false;
   }
+  return true;
 }

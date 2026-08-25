@@ -35,7 +35,11 @@ export async function leerRubros(clavesUsadas: string[] = []): Promise<Rubro[]> 
   }
   if (lista.length === 0) {
     lista = semilla();
-    await guardarRubros(lista);
+    try {
+      await guardarRubros(lista);
+    } catch (error) {
+      console.error("[rubros] No se pudo guardar la semilla", error);
+    }
   }
   const map = new Map(lista.map((r) => [r.clave, r]));
   for (const clave of clavesUsadas) {

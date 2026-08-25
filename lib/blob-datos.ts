@@ -51,11 +51,7 @@ function opcionesBlob() {
 
 export function blobActivo() {
   prepararEnvBlob();
-  return Boolean(
-    tokenTienda() ||
-      idTienda() ||
-      (process.env.VERCEL && process.env.VERCEL_OIDC_TOKEN),
-  );
+  return Boolean(tokenTienda() || idTienda());
 }
 
 export function rutaDato(nombre: string) {

@@ -7,5 +7,5 @@ export async function leerProductos(): Promise<Producto[]> {
 }
 
 export async function guardarProductos(productos: Producto[]) {
-  await escribirJsonData("productos.json", productos);
+  return escribirJsonData("productos.json", productos);
 }

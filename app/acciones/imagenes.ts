@@ -115,7 +115,13 @@ export async function subirImagenProducto(
     }
   }
   try {
-    await guardarProductos(productos);
+    const ok = await guardarProductos(productos);
+    if (!ok) {
+      return {
+        error:
+          "La foto se subió, pero no se pudo actualizar el catálogo. Probá de nuevo.",
+      };
+    }
     const rubros = await leerRubros(productos.map((p) => p.seccion));
     await borrarFotoSitioSiLibre(anterior, imagenesUsadas(productos, rubros));
     await persistirFotosGithub().catch((error) => {
