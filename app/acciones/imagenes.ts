@@ -61,13 +61,26 @@ export async function subirImagenProducto(
   const archivo = form.get("imagen");
 
   if (!productoId) return { error: "Falta el producto." };
-  if (!(archivo instanceof File) || archivo.size === 0) {
+  if (!(archivo instanceof Blob) || archivo.size === 0) {
     return { error: "Elegí una imagen de tu PC." };
   }
   if (archivo.size > MAX_BYTES) {
     return { error: "La imagen no puede pesar más de 5 MB." };
   }
-  const ext = TIPOS[archivo.type];
+  const mime =
+    archivo.type ||
+    ("name" in archivo &&
+    String((archivo as File).name || "")
+      .toLowerCase()
+      .endsWith(".png")
+      ? "image/png"
+      : "name" in archivo &&
+          String((archivo as File).name || "")
+            .toLowerCase()
+            .endsWith(".webp")
+        ? "image/webp"
+        : "image/jpeg");
+  const ext = TIPOS[mime] ?? TIPOS[archivo.type];
   if (!ext) return { error: "Usá JPG, PNG o WebP." };
 
   const productos = await leerProductos();
@@ -76,12 +89,23 @@ export async function subirImagenProducto(
 
   const nombre = nombreArchivo(producto.codigo, ext);
   const buffer = Buffer.from(await archivo.arrayBuffer());
-  const ruta = await guardarFotoSitio({
-    carpeta: "imagenes-productos",
-    nombre,
-    buffer,
-    mime: archivo.type,
-  });
+  let ruta: string;
+  try {
+    ruta = await guardarFotoSitio({
+      carpeta: "imagenes-productos",
+      nombre,
+      buffer,
+      mime,
+    });
+  } catch (error) {
+    console.error("[imagen]", error);
+    return {
+      error:
+        error instanceof Error
+          ? error.message
+          : "No se pudo guardar la foto. Probá de nuevo o usá una imagen más liviana.",
+    };
+  }
   const anterior = producto.imagen;
   let afectados = 0;
   for (const item of productos) {
@@ -90,22 +114,29 @@ export async function subirImagenProducto(
       afectados += 1;
     }
   }
-  await guardarProductos(productos);
-  const rubros = await leerRubros(productos.map((p) => p.seccion));
-  await borrarFotoSitioSiLibre(anterior, imagenesUsadas(productos, rubros));
-  const github = await persistirFotosGithub();
-
-  revalidatePath("/", "layout");
-  revalidatePath("/catalogo");
-  revalidatePath("/admin");
+  try {
+    await guardarProductos(productos);
+    const rubros = await leerRubros(productos.map((p) => p.seccion));
+    await borrarFotoSitioSiLibre(anterior, imagenesUsadas(productos, rubros));
+    await persistirFotosGithub();
+    revalidatePath("/", "layout");
+    revalidatePath("/catalogo");
+    revalidatePath("/admin");
+  } catch (error) {
+    console.error("[imagen] guardar", error);
+    return {
+      error:
+        "La foto se subió, pero no se pudo actualizar el catálogo. Probá de nuevo.",
+    };
+  }
 
   if (afectados > 1) {
     return {
-      ok: `Guardamos la foto y la aplicamos a ${afectados} productos que usaban la misma imagen.${github}`,
+      ok: `Guardamos la foto y la aplicamos a ${afectados} productos que usaban la misma imagen.`,
     };
   }
   return {
-    ok: `Listo, actualizamos la foto de este producto.${github}`,
+    ok: "Listo, actualizamos la foto de este producto.",
   };
 }
 

@@ -121,13 +121,18 @@ export async function subirFotoBlob(
   mime: string,
 ) {
   if (!blobActivo()) return null;
-  await put(rutaFoto(carpeta, nombre), buffer, {
-    ...opcionesBlob(),
-    addRandomSuffix: false,
-    allowOverwrite: true,
-    contentType: mime,
-  });
-  return urlFotoPublica(carpeta, nombre);
+  try {
+    await put(rutaFoto(carpeta, nombre), new Uint8Array(buffer), {
+      ...opcionesBlob(),
+      addRandomSuffix: false,
+      allowOverwrite: true,
+      contentType: mime || "application/octet-stream",
+    });
+    return urlFotoPublica(carpeta, nombre);
+  } catch (error) {
+    console.error("[blob] foto", error);
+    return null;
+  }
 }
 
 export async function borrarFotoBlob(url: string) {

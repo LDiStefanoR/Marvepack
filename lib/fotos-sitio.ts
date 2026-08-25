@@ -28,14 +28,23 @@ export async function guardarFotoSitio(opts: {
   buffer: Buffer;
   mime: string;
 }) {
-  if (blobActivo()) {
-    const url = await subirFotoBlob(
-      opts.carpeta,
-      opts.nombre,
-      opts.buffer,
-      opts.mime,
-    );
-    if (url) return url;
+  if (blobActivo() || process.env.VERCEL) {
+    try {
+      const url = await subirFotoBlob(
+        opts.carpeta,
+        opts.nombre,
+        opts.buffer,
+        opts.mime,
+      );
+      if (url) return url;
+    } catch (error) {
+      console.error("[foto] blob", error);
+    }
+    if (process.env.VERCEL) {
+      throw new Error(
+        "No se pudo guardar la foto en Vercel Blob. Revisá que la tienda esté conectada y el token de lectura/escritura.",
+      );
+    }
   }
 
   const destRecursos = path.join(

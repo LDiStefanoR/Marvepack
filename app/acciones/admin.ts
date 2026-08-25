@@ -37,13 +37,23 @@ async function guardarFotoRubro(clave: string, archivo: File) {
   const slug = clave.replace(/[^a-zA-Z0-9_-]/g, "").slice(0, 24) || "rubro";
   const nombre = `rubro-${slug}-${Date.now()}${ext}`;
   const buffer = Buffer.from(await archivo.arrayBuffer());
-  const ruta = await guardarFotoSitio({
-    carpeta: "imagenes-rubros",
-    nombre,
-    buffer,
-    mime: archivo.type,
-  });
-  return { ruta };
+  try {
+    const ruta = await guardarFotoSitio({
+      carpeta: "imagenes-rubros",
+      nombre,
+      buffer,
+      mime: archivo.type,
+    });
+    return { ruta };
+  } catch (error) {
+    console.error("[foto-rubro]", error);
+    return {
+      error:
+        error instanceof Error
+          ? error.message
+          : "No se pudo guardar la foto del rubro.",
+    };
+  }
 }
 
 export type EstadoAdmin = { error?: string; ok?: string } | null;
