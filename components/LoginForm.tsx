@@ -52,6 +52,7 @@ export function LoginForm() {
           name="email"
           required
           autoComplete="email"
+          placeholder="digitalpreseciavip@gmail.com"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           className="w-full rounded-xl border border-movipack/20 bg-white px-4 py-3 outline-none ring-movipack/30 focus:border-movipack focus:ring-2"

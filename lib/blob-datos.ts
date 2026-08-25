@@ -4,20 +4,43 @@ import { desencriptarTexto, encriptarTexto } from "@/lib/cifrar-json";
 const SENSIBLES = new Set(["usuarios.json", "pedidos.json"]);
 const ACCESO = "private" as const;
 
+function valorEnv(...nombres: string[]) {
+  for (const nombre of nombres) {
+    const v = process.env[nombre]?.trim();
+    if (v) return v;
+  }
+  for (const [clave, valor] of Object.entries(process.env)) {
+    if (!valor?.trim()) continue;
+    if (nombres.some((n) => clave.toLowerCase() === n.toLowerCase())) {
+      return valor.trim();
+    }
+  }
+  return "";
+}
+
 function storeId() {
-  return (
-    process.env.marvegota_STORE_ID?.trim() ||
-    process.env.BLOB_STORE_ID?.trim() ||
-    ""
-  );
+  const directo = valorEnv("marvegota_STORE_ID", "BLOB_STORE_ID");
+  if (directo) return directo;
+  for (const [clave, valor] of Object.entries(process.env)) {
+    if (clave.toLowerCase().includes("marvegota") && /store_id$/i.test(clave)) {
+      return valor?.trim() || "";
+    }
+  }
+  return "";
 }
 
 function tokenBlob() {
-  return (
-    process.env.marvegota_READ_WRITE_TOKEN?.trim() ||
-    process.env.BLOB_READ_WRITE_TOKEN?.trim() ||
-    ""
+  const directo = valorEnv(
+    "marvegota_READ_WRITE_TOKEN",
+    "BLOB_READ_WRITE_TOKEN",
   );
+  if (directo) return directo;
+  for (const [clave, valor] of Object.entries(process.env)) {
+    if (/read_write_token$/i.test(clave) && valor?.trim()) {
+      return valor.trim();
+    }
+  }
+  return "";
 }
 
 function authBlob() {

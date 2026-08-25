@@ -14,7 +14,8 @@ export default async function IngresarPage() {
       </h1>
       <p className="mt-2 text-neutral-600">
         Entrá con tu mail. Si pediste cuenta y todavía no te aceptaron, vas a
-        ver un aviso.
+        ver un aviso. El mail de administración es
+        digitalpreseciavip@gmail.com (todo junto, sin espacios).
       </p>
       <div className="mt-8">
         <LoginForm />

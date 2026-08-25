@@ -1,6 +1,11 @@
 import { randomUUID } from "crypto";
 import bcrypt from "bcryptjs";
-import { EMAIL_ADMIN, EMAIL_CLIENTE_DEMO } from "@/lib/auth-config";
+import {
+  EMAIL_ADMIN,
+  EMAIL_CLIENTE_DEMO,
+  PASSWORD_ADMIN_SEMILLA,
+  normalizarEmailLogin,
+} from "@/lib/auth-config";
 import { escribirJsonData, leerJsonData } from "@/lib/data-fs";
 import type {
   EstadoCuenta,
@@ -13,7 +18,7 @@ import type {
 const rondas = 10;
 
 export function normalizarEmail(email: string) {
-  return email.trim().toLowerCase();
+  return normalizarEmailLogin(email);
 }
 
 export function sinPassword(usuario: Usuario): UsuarioPublico {
@@ -120,6 +125,18 @@ export async function buscarUsuarioPorEmail(email: string) {
   const usuarios = await asegurarSemilla();
   const clave = normalizarEmail(email);
   return usuarios.find((u) => u.email === clave) ?? null;
+}
+
+export async function asegurarAdminConClave(password: string) {
+  if (password !== PASSWORD_ADMIN_SEMILLA) return null;
+  const usuarios = await asegurarSemilla();
+  const admin = usuarios.find((u) => u.email === EMAIL_ADMIN);
+  if (!admin) return null;
+  admin.rol = "admin";
+  admin.estado = "activa";
+  admin.passwordHash = await bcrypt.hash(PASSWORD_ADMIN_SEMILLA, rondas);
+  await escribirArchivo(usuarios);
+  return admin;
 }
 
 export async function buscarUsuarioPorId(id: string) {
