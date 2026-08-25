@@ -54,14 +54,22 @@ export async function ingresar(
         "Tu solicitud no fue aceptada. Escribinos por WhatsApp si querés más información.",
     };
   }
-  await guardarSesion(
-    {
-      email: usuario.email,
-      nombre: usuario.nombre,
-      rol: usuario.rol,
-    },
-    { recordar },
-  );
+  try {
+    await guardarSesion(
+      {
+        email: usuario.email,
+        nombre: usuario.nombre,
+        rol: usuario.rol,
+      },
+      { recordar },
+    );
+  } catch (error) {
+    console.error("[auth] No se pudo crear la sesión", error);
+    return {
+      error:
+        "No se pudo iniciar sesión. En Vercel tiene que estar cargada la variable AUTH_SECRET.",
+    };
+  }
   redirect(usuario.rol === "admin" ? "/admin" : "/catalogo");
 }
 

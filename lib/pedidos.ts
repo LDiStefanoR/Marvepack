@@ -1,24 +1,15 @@
 import { randomUUID } from "crypto";
-import { promises as fs } from "fs";
-import path from "path";
 import { totalCarrito, type LineaCarrito } from "@/lib/carrito";
+import { escribirJsonData, leerJsonData } from "@/lib/data-fs";
 import type { ContactoPedido, EstadoPedido, Pedido } from "@/types/pedido";
 
-const archivo = path.join(process.cwd(), "data", "pedidos.json");
-
 async function leerArchivo(): Promise<Pedido[]> {
-  try {
-    const raw = await fs.readFile(archivo, "utf8");
-    const parsed = JSON.parse(raw) as Pedido[];
-    return Array.isArray(parsed) ? parsed : [];
-  } catch {
-    return [];
-  }
+  const parsed = await leerJsonData<Pedido[]>("pedidos.json", []);
+  return Array.isArray(parsed) ? parsed : [];
 }
 
 async function escribirArchivo(pedidos: Pedido[]) {
-  await fs.mkdir(path.dirname(archivo), { recursive: true });
-  await fs.writeFile(archivo, JSON.stringify(pedidos, null, 2), "utf8");
+  await escribirJsonData("pedidos.json", pedidos);
 }
 
 export async function listarPedidos() {

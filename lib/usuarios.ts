@@ -1,8 +1,7 @@
 import { randomUUID } from "crypto";
-import { promises as fs } from "fs";
-import path from "path";
 import bcrypt from "bcryptjs";
 import { EMAIL_ADMIN, EMAIL_CLIENTE_DEMO } from "@/lib/auth-config";
+import { escribirJsonData, leerJsonData } from "@/lib/data-fs";
 import type {
   EstadoCuenta,
   PerfilCliente,
@@ -11,7 +10,6 @@ import type {
   UsuarioPublico,
 } from "@/types/auth";
 
-const archivo = path.join(process.cwd(), "data", "usuarios.json");
 const rondas = 10;
 
 export function normalizarEmail(email: string) {
@@ -39,21 +37,15 @@ function normalizarUsuario(
 }
 
 async function leerArchivo(): Promise<Usuario[]> {
-  try {
-    const raw = await fs.readFile(archivo, "utf8");
-    const parsed = JSON.parse(raw) as Partial<Usuario>[];
-    if (!Array.isArray(parsed)) return [];
-    return parsed
-      .filter((u) => u?.id && u?.email)
-      .map((u) => normalizarUsuario(u as Usuario));
-  } catch {
-    return [];
-  }
+  const parsed = await leerJsonData<Partial<Usuario>[]>("usuarios.json", []);
+  if (!Array.isArray(parsed)) return [];
+  return parsed
+    .filter((u) => u?.id && u?.email)
+    .map((u) => normalizarUsuario(u as Usuario));
 }
 
 async function escribirArchivo(usuarios: Usuario[]) {
-  await fs.mkdir(path.dirname(archivo), { recursive: true });
-  await fs.writeFile(archivo, JSON.stringify(usuarios, null, 2), "utf8");
+  await escribirJsonData("usuarios.json", usuarios);
 }
 
 async function asegurarSemilla() {
