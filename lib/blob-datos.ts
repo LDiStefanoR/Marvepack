@@ -8,6 +8,7 @@ let accesoUsado: Acceso | null = null;
 
 function idTienda() {
   return (
+    process.env.marveBlob2_STORE_ID ||
     process.env.marvegota_STORE_ID ||
     process.env.BLOB_STORE_ID ||
     ""
@@ -16,6 +17,7 @@ function idTienda() {
 
 function tokenTienda() {
   return (
+    process.env.marveBlob2_READ_WRITE_TOKEN ||
     process.env.marvegota_READ_WRITE_TOKEN ||
     process.env.BLOB_READ_WRITE_TOKEN ||
     ""
@@ -46,8 +48,8 @@ function authBlob() {
 function accesoPreferido(): Acceso {
   if (accesoUsado) return accesoUsado;
   const env = process.env.BLOB_ACCESS?.trim().toLowerCase();
-  if (env === "private") return "private";
-  return "public";
+  if (env === "public") return "public";
+  return "private";
 }
 
 function ordenAcceso(): Acceso[] {
@@ -174,7 +176,7 @@ export async function subirFotoBlob(
   prepararEnvBlob();
   if (!idTienda() && !tokenTienda()) {
     throw new Error(
-      "Vercel no ve la tienda Blob. En el proyecto, Storage → conectá marvepack-blob y redesplegá.",
+      "Vercel no ve la tienda Blob. Conectá el store privado al proyecto (marveBlob2_STORE_ID) y redesplegá.",
     );
   }
   try {
