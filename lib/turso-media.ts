@@ -46,6 +46,14 @@ export async function subirFotoTurso(opts: {
   return urlMediaPublica(opts.carpeta, opts.nombre);
 }
 
+function blobABuffer(value: unknown): Buffer {
+  if (Buffer.isBuffer(value)) return value;
+  if (value instanceof Uint8Array) return Buffer.from(value);
+  if (value instanceof ArrayBuffer) return Buffer.from(new Uint8Array(value));
+  if (typeof value === "string") return Buffer.from(value, "base64");
+  throw new Error("Formato de imagen no reconocido");
+}
+
 export async function leerFotoTurso(pathname: string) {
   if (!tursoConfigurado()) return null;
   try {
@@ -57,10 +65,7 @@ export async function leerFotoTurso(pathname: string) {
     });
     const row = result.rows[0];
     if (!row?.body) return null;
-    const body =
-      row.body instanceof ArrayBuffer
-        ? Buffer.from(row.body)
-        : Buffer.from(row.body as ArrayBuffer | Uint8Array | string);
+    const body = blobABuffer(row.body);
     const mime =
       typeof row.mime === "string" && row.mime
         ? row.mime
