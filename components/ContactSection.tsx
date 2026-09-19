@@ -28,9 +28,9 @@ export function ContactSection() {
               Consultá lo que necesita tu local
             </h2>
             <p className="mt-3 text-lg text-neutral-600">
-              WhatsApp directo con el equipo: compras, envíos programados o el
-              catálogo en PDF. También podés ver productos y precios en esta
-              web.
+              WhatsApp directo: compras, envíos en Rosario, catálogo online o
+              precios al por mayor en PDF. Si te registrás, ves descuentos
+              exclusivos.
             </p>
             <div className="mt-6 space-y-2 text-[#111111]">
               <p>
@@ -62,13 +62,19 @@ export function ContactSection() {
               rel="noopener noreferrer"
               className="inline-flex min-h-12 items-center justify-center rounded-xl border border-movipack/30 px-4 text-sm font-bold text-movipack"
             >
-              Pedir catálogo PDF
+              Pedir precios al por mayor (PDF)
             </a>
             <Link
               href="/catalogo"
               className="inline-flex min-h-12 items-center justify-center text-sm font-semibold text-movipack-deep underline-offset-4 hover:underline"
             >
               Ver catálogo online
+            </Link>
+            <Link
+              href="/registro"
+              className="inline-flex min-h-12 items-center justify-center text-sm font-semibold text-movipack-deep underline-offset-4 hover:underline"
+            >
+              Solicitar ser cliente
             </Link>
           </div>
         </div>

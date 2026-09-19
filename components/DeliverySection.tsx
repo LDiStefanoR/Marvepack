@@ -27,17 +27,16 @@ export function DeliverySection() {
             Envíos programados
           </p>
           <h2 className="mt-2 font-display text-3xl font-extrabold tracking-tight text-movipack-deep sm:text-4xl">
-            Llevamos el pedido a los que nos visitan siempre
+            Llevamos los pedidos a todos lados en Rosario
           </h2>
           <p className="mt-4 text-lg text-neutral-700">
-            Estamos en zona sur y cubrimos todo Rosario. A los clientes
-            recurrentes les armamos envíos programados: te acercamos los
-            productos para que el negocio no se quede sin los consumibles que
-            necesita.
+            Hacemos envíos para que tu local nunca se quede sin los productos
+            del día a día. Coordinamos día y frecuencia según tu ritmo.
           </p>
           <p className="mt-3 text-lg text-neutral-700">
-            Coordinamos día y frecuencia según tu ritmo. Si todavía no tenés
-            ruta, escribinos y vemos cómo incluirte.
+            El catálogo lo tenés por WhatsApp y online. Si necesitás precios al
+            por mayor, te los pasamos en PDF. Los clientes registrados ven
+            descuentos exclusivos.
           </p>
         </div>
 

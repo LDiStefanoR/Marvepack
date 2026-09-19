@@ -6,15 +6,18 @@
     "sync-recursos": "node scripts/sync-recursos.mjs",
     "sync-drive": "node scripts/sync-drive.mjs pull",
     "push-drive": "node scripts/sync-drive.mjs push",
-    "dev": "node scripts/sync-recursos.mjs && next dev -p 3003",
+    "db:import": "tsx scripts/import-a-turso.ts",
+    "dev": "node scripts/sync-recursos.mjs && next dev -H 0.0.0.0 -p 3003",
     "prebuild": "node scripts/sync-recursos.mjs",
     "build": "next build",
     "start": "next start -p 3003",
     "lint": "eslint"
   },
   "dependencies": {
+    "@libsql/client": "^0.18.0",
     "@vercel/blob": "^2.8.0",
     "bcryptjs": "^3.0.3",
+    "cloudinary": "^2.11.0",
     "exceljs": "^4.4.0",
     "googleapis": "^176.0.0",
     "jose": "^6.2.10",
@@ -33,6 +36,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.2",
     "tailwindcss": "^4",
+    "tsx": "^4.23.13",
     "typescript": "^5"
   }
 }

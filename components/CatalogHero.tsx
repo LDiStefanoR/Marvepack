@@ -17,8 +17,9 @@ export function CatalogHero({ total }: Props) {
             <span className="block not-italic">para tu negocio</span>
           </h1>
           <p className="text-lg text-white/90">
-            {total} productos con precio de lista. Filtrá por rubro, buscá por
-            nombre y consultá por WhatsApp.
+            {total} productos con precio de lista. Filtrá por rubro, pedí por
+            WhatsApp o registrate para ver descuentos exclusivos. También te
+            pasamos precios al por mayor en PDF.
           </p>
           <Link
             href="/"

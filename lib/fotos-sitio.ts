@@ -7,6 +7,12 @@ import {
   subirFotoBlob,
 } from "@/lib/blob-datos";
 import {
+  borrarFotoCloudinary,
+  cloudinaryActivo,
+  esUrlCloudinary,
+  subirFotoCloudinary,
+} from "@/lib/cloudinary";
+import {
   borrarFotoDrive,
   type CarpetaFotos,
   driveFotosActivo,
@@ -28,6 +34,25 @@ export async function guardarFotoSitio(opts: {
   buffer: Buffer;
   mime: string;
 }) {
+  if (cloudinaryActivo()) {
+    try {
+      const url = await subirFotoCloudinary({
+        carpeta: opts.carpeta,
+        nombre: opts.nombre,
+        buffer: opts.buffer,
+        mime: opts.mime,
+      });
+      if (url) return url;
+    } catch (error) {
+      console.error("[foto] cloudinary", error);
+      if (process.env.VERCEL) {
+        throw error instanceof Error
+          ? error
+          : new Error("No se pudo guardar la foto en Cloudinary.");
+      }
+    }
+  }
+
   if (blobActivo() || process.env.VERCEL) {
     try {
       const url = await subirFotoBlob(
@@ -88,6 +113,11 @@ export async function borrarFotoSitioSiLibre(
   if (!ruta) return;
   const set = new Set(usadas);
   if (set.has(ruta)) return;
+
+  if (esUrlCloudinary(ruta)) {
+    await borrarFotoCloudinary(ruta);
+    return;
+  }
 
   if (esUrlBlob(ruta)) {
     await borrarFotoBlob(ruta);

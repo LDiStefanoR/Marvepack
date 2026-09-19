@@ -59,7 +59,7 @@ export const MENSAJE_PEDIDO_GENERAL =
   "Hola MarvePack, quiero consultar por las necesidades de mi local";
 
 export const MENSAJE_CATALOGO_PDF =
-  "Hola MarvePack, ¿me pueden enviar el catálogo en PDF?";
+  "Hola MarvePack, ¿me pueden pasar los precios al por mayor en PDF?";
 
 export function mensajeConsultaProducto(nombreProducto: string) {
   return `Hola MarvePack, quiero consultar por ${nombreProducto}`;

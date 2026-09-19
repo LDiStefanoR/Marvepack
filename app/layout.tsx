@@ -24,7 +24,7 @@ const oswald = Oswald({
 
 const siteTitle = `${BRAND_NAME} | Descartables para tu negocio`;
 const siteDescription =
-  "Distribuidora de descartables en zona sur de Rosario, con cobertura en toda la ciudad. Envíos programados, catálogo online y WhatsApp directo.";
+  "Envíos en toda Rosario. Catálogo por WhatsApp y online, precios al por mayor en PDF y descuentos exclusivos para clientes registrados.";
 
 export const viewport: Viewport = {
   themeColor: BRAND_BLUE,

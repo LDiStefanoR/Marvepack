@@ -5,6 +5,11 @@ import {
   guardarDatoBlob,
   leerDatoBlob,
 } from "@/lib/blob-datos";
+import {
+  guardarDocTurso,
+  leerDocTurso,
+  tursoConfigurado,
+} from "@/lib/turso";
 
 const memoria = new Map<string, string>();
 
@@ -29,19 +34,36 @@ function parsear<T>(raw: string, vacio: T): T {
   }
 }
 
+function usarSoloTurso() {
+  return tursoConfigurado();
+}
+
 export async function leerJsonData<T>(nombre: string, vacio: T): Promise<T> {
-  // En Vercel cada función tiene su propia memoria. Si leemos de acá,
-  // el catálogo sigue mostrando el JSON del repo aunque otra instancia
-  // ya haya guardado la foto nueva en Blob.
   if (!process.env.VERCEL) {
     const enMemoria = memoria.get(nombre);
     if (enMemoria) return parsear(enMemoria, vacio);
   }
 
-  const remoto = await leerDatoBlob(nombre);
-  if (remoto) {
-    memoria.set(nombre, remoto);
-    return parsear(remoto, vacio);
+  // Prioridad: Turso (reemplaza Vercel Blob para JSON de datos)
+  if (tursoConfigurado()) {
+    try {
+      const remoto = await leerDocTurso(nombre);
+      if (remoto) {
+        memoria.set(nombre, remoto);
+        return parsear(remoto, vacio);
+      }
+    } catch (error) {
+      console.error(`[data] Turso lectura ${nombre}`, error);
+    }
+  }
+
+  // Fallback legado: Blob (solo si Turso no está configurado)
+  if (!usarSoloTurso()) {
+    const remoto = await leerDatoBlob(nombre);
+    if (remoto) {
+      memoria.set(nombre, remoto);
+      return parsear(remoto, vacio);
+    }
   }
 
   for (const dir of directoriosLectura()) {
@@ -58,7 +80,8 @@ export async function leerJsonData<T>(nombre: string, vacio: T): Promise<T> {
 }
 
 async function escribirDisco(nombre: string, raw: string) {
-  if (process.env.VERCEL && blobActivo()) return;
+  // En Vercel con Turso no hace falta disco; sin Turso y con Blob tampoco.
+  if (process.env.VERCEL && (tursoConfigurado() || blobActivo())) return;
   const dir = directorioEscritura();
   try {
     await fs.mkdir(dir, { recursive: true });
@@ -72,6 +95,18 @@ export async function escribirJsonData(nombre: string, valor: unknown) {
   const raw = JSON.stringify(valor, null, 2);
   memoria.set(nombre, raw);
   await escribirDisco(nombre, raw);
+
+  if (tursoConfigurado()) {
+    const ok = await guardarDocTurso(nombre, raw);
+    if (!ok) {
+      throw new Error(
+        `No se pudo guardar ${nombre} en Turso. Revisá TURSO_DATABASE_URL y TURSO_AUTH_TOKEN.`,
+      );
+    }
+    return true;
+  }
+
+  // Legado: Vercel Blob (dejar de usar cuando Turso esté en producción)
   if (!blobActivo()) return true;
   const ok = await guardarDatoBlob(nombre, raw);
   if (!ok) {

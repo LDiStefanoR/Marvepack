@@ -26,12 +26,12 @@ export function CatalogPreview({ productos, rubros }: Props) {
               Catálogo
             </p>
             <h2 className="mt-2 font-display text-3xl font-bold italic text-movipack-deep sm:text-4xl">
-              Precios y productos, acá o por PDF
+              Catálogo por WhatsApp y online
             </h2>
             <p className="mt-3 text-base text-neutral-600 sm:text-lg">
-              En esta plataforma ves todo lo que trabajamos, con precios. Si
-              preferís, nuestro equipo te envía el catálogo en PDF por
-              WhatsApp.
+              Recorré los productos acá o pedilos por WhatsApp. También te
+              pasamos precios al por mayor en PDF. Si te registrás, ves
+              descuentos exclusivos.
             </p>
           </div>
           <div className="flex flex-col gap-2 sm:items-end">
@@ -47,8 +47,14 @@ export function CatalogPreview({ productos, rubros }: Props) {
               rel="noopener noreferrer"
               className="inline-flex min-h-12 items-center justify-center rounded-xl bg-[#25D366] px-5 text-sm font-bold text-white shadow-md shadow-emerald-700/25 transition hover:brightness-110"
             >
-              Pedir PDF por WhatsApp
+              Pedir precios al por mayor (PDF)
             </a>
+            <Link
+              href="/registro"
+              className="inline-flex min-h-12 items-center justify-center rounded-xl border border-movipack/30 px-5 text-sm font-bold text-movipack-deep transition hover:bg-white"
+            >
+              Solicitar ser cliente
+            </Link>
           </div>
         </div>
 

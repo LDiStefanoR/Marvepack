@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { BrandLogo } from "@/components/BrandLogo";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
-import { ADDRESS_LINE, BRAND_NAME, BRAND_TAGLINE } from "@/lib/brand";
+import { ADDRESS_LINE, BRAND_NAME } from "@/lib/brand";
 import {
   MENSAJE_CATALOGO_PDF,
   MENSAJE_PEDIDO_GENERAL,
@@ -25,13 +25,14 @@ export function HeroSection() {
             </span>
           </h1>
           <p className="max-w-xl text-lg leading-relaxed text-white/90 sm:text-xl">
-            Somos {BRAND_NAME}, de zona sur, con cobertura en todo Rosario.{" "}
-            {BRAND_TAGLINE}: kioscos, oficinas, restaurantes y polirubros
-            reponen con nosotros lo de todos los días.
+            Somos {BRAND_NAME}. Los pedidos los llevamos a todos lados en la
+            ciudad de Rosario: hacemos envíos para que tu local nunca se quede
+            sin los productos del día a día.
           </p>
           <p className="text-base text-white/80">
-            Consultanos por WhatsApp o recorré el catálogo online. También te
-            mandamos la lista en PDF.
+            El catálogo está por WhatsApp y online en esta página. También te
+            pasamos precios al por mayor en PDF. Los clientes registrados ven
+            descuentos exclusivos: pedí ser cliente cuando quieras.
           </p>
 
           <div className="grid gap-3 rounded-2xl border border-white/20 bg-white/10 p-4 backdrop-blur-md sm:grid-cols-2">
@@ -75,7 +76,7 @@ export function HeroSection() {
               rel="noopener noreferrer"
               className="inline-flex min-h-14 items-center justify-center px-2 text-sm font-semibold text-white/90 underline-offset-4 hover:underline"
             >
-              Pedir catálogo en PDF
+              Pedir precios al por mayor (PDF)
             </a>
           </div>
         </div>

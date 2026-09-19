@@ -5,7 +5,19 @@ import { fileURLToPath } from "url";
 const projectRoot = path.dirname(fileURLToPath(import.meta.url));
 
 const nextConfig: NextConfig = {
-  serverExternalPackages: ["bcryptjs", "exceljs", "pdfkit", "googleapis", "@vercel/blob"],
+  serverExternalPackages: [
+    "bcryptjs",
+    "exceljs",
+    "pdfkit",
+    "googleapis",
+    "@vercel/blob",
+    "cloudinary",
+  ],
+  images: {
+    remotePatterns: [
+      { protocol: "https", hostname: "res.cloudinary.com" },
+    ],
+  },
   experimental: {
     serverActions: {
       bodySizeLimit: "8mb",

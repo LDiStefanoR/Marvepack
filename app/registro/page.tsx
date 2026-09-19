@@ -12,8 +12,9 @@ export default async function RegistroPage() {
         Pedir cuenta de cliente
       </h1>
       <p className="mt-2 text-neutral-600">
-        Completá estos datos. El administrador revisa la solicitud y, si la
-        acepta, vas a poder ingresar y ver los precios de cliente.
+        Completá estos datos para solicitar ser cliente. El administrador
+        revisa la solicitud y, si la acepta, vas a poder ingresar y ver
+        descuentos exclusivos.
       </p>
       <div className="mt-8">
         <RegisterForm />
