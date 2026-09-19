@@ -18,6 +18,12 @@ import {
   driveFotosActivo,
   subirFotoDrive,
 } from "@/lib/drive-fotos";
+import {
+  borrarFotoTurso,
+  esUrlMediaTurso,
+  subirFotoTurso,
+} from "@/lib/turso-media";
+import { tursoConfigurado } from "@/lib/turso";
 
 export function parsearRutaFoto(ruta: string) {
   const limpia = ruta.replace(/\\/g, "/");
@@ -26,6 +32,11 @@ export function parsearRutaFoto(ruta: string) {
   );
   if (!m) return null;
   return { carpeta: m[1] as CarpetaFotos, nombre: m[2] };
+}
+
+function blobSuspendido(error: unknown) {
+  const msg = error instanceof Error ? error.message : String(error);
+  return /suspended/i.test(msg);
 }
 
 export async function guardarFotoSitio(opts: {
@@ -45,15 +56,26 @@ export async function guardarFotoSitio(opts: {
       if (url) return url;
     } catch (error) {
       console.error("[foto] cloudinary", error);
+    }
+  }
+
+  // Preferimos Turso: Blob del proyecto está suspendido / no confiable
+  if (tursoConfigurado()) {
+    try {
+      const url = await subirFotoTurso(opts);
+      if (url) return url;
+    } catch (error) {
+      console.error("[foto] turso", error);
       if (process.env.VERCEL) {
         throw error instanceof Error
           ? error
-          : new Error("No se pudo guardar la foto en Cloudinary.");
+          : new Error("No se pudo guardar la foto en Turso.");
       }
     }
   }
 
-  if (blobActivo() || process.env.VERCEL) {
+  // Blob solo si sigue activo; si está suspended, seguimos sin romper
+  if (blobActivo()) {
     try {
       const url = await subirFotoBlob(
         opts.carpeta,
@@ -64,12 +86,18 @@ export async function guardarFotoSitio(opts: {
       if (url) return url;
     } catch (error) {
       console.error("[foto] blob", error);
-      if (process.env.VERCEL) {
+      if (!blobSuspendido(error) && process.env.VERCEL && !tursoConfigurado()) {
         throw error instanceof Error
           ? error
           : new Error("No se pudo guardar la foto en Vercel Blob.");
       }
     }
+  }
+
+  if (process.env.VERCEL) {
+    throw new Error(
+      "No hay dónde guardar fotos en internet. Configurá TURSO_DATABASE_URL y TURSO_AUTH_TOKEN (o Cloudinary) en Vercel.",
+    );
   }
 
   const destRecursos = path.join(
@@ -119,8 +147,13 @@ export async function borrarFotoSitioSiLibre(
     return;
   }
 
+  if (esUrlMediaTurso(ruta)) {
+    await borrarFotoTurso(ruta);
+    return;
+  }
+
   if (esUrlBlob(ruta)) {
-    await borrarFotoBlob(ruta);
+    await borrarFotoBlob(ruta).catch(() => undefined);
     return;
   }
 

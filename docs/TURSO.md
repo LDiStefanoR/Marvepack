@@ -40,12 +40,20 @@ Con Turso configurado, `lib/data-fs.ts` **lee y escribe en Turso** y ya no usa B
 3. Opcional: desconectá / dejá de usar el store Blob **solo para datos JSON**.  
    Las fotos pueden seguir en Cloudinary o Blob (`marveBlob2_*`).
 
-## Quitar Blob como base de datos
+## Fotos (galería / productos)
 
-Cuando Turso esté en producción y verifiques el catálogo:
+Si Vercel Blob está **suspended**, las fotos nuevas se guardan en la tabla `media` de Turso
+y se sirven por `/api/media/fotos/...`.
 
-- Podés borrar del Blob los paths `datos/*.json` (ya no se leen si Turso está activo).
-- No hace falta borrar el store entero si todavía sirve para fotos.
+Orden de subida: Cloudinary (si hay keys) → Turso → Blob (solo si sigue activo) → disco local.
+
+## Quitar Blob
+
+Cuando Turso esté en producción:
+
+- Los JSON ya no usan Blob.
+- Las fotos nuevas tampoco (van a Turso).
+- Podés ignorar el store suspended de Blob.
 
 ## Nota
 

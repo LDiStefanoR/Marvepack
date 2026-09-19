@@ -34,3 +34,11 @@ CREATE TABLE IF NOT EXISTS ajustes (
   id INTEGER PRIMARY KEY CHECK (id = 1),
   body TEXT NOT NULL
 );
+
+-- Fotos del catálogo / galería (reemplazo de Vercel Blob)
+CREATE TABLE IF NOT EXISTS media (
+  path TEXT PRIMARY KEY,
+  mime TEXT NOT NULL,
+  body BLOB NOT NULL,
+  updated_at TEXT NOT NULL DEFAULT (datetime('now'))
+);

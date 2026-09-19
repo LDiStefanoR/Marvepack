@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { leerBlobBinario } from "@/lib/blob-datos";
+import { leerFotoTurso } from "@/lib/turso-media";
 
 export const dynamic = "force-dynamic";
 
@@ -12,6 +13,16 @@ export async function GET(_req: Request, { params }: Params) {
     return new NextResponse("No encontrado", { status: 404 });
   }
   try {
+    const desdeTurso = await leerFotoTurso(pathname);
+    if (desdeTurso) {
+      return new NextResponse(new Uint8Array(desdeTurso.body), {
+        headers: {
+          "Content-Type": desdeTurso.type,
+          "Cache-Control": "public, max-age=3600, stale-while-revalidate=86400",
+        },
+      });
+    }
+
     const archivo = await leerBlobBinario(pathname);
     if (!archivo) return new NextResponse("No encontrado", { status: 404 });
     return new NextResponse(new Uint8Array(archivo.body), {
