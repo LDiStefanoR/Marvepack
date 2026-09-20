@@ -84,7 +84,11 @@ export function AdminClientesPedidos({ pedidos, usuarios }: Props) {
           {pedidos.map((pedido) => (
             <li
               key={pedido.id}
-              className="rounded-2xl border border-movipack/15 bg-white p-4 shadow-sm"
+              className={`rounded-2xl border p-4 shadow-sm ${
+                pedido.estado === "sin_atender"
+                  ? "border-cape bg-red-50"
+                  : "border-movipack/15 bg-white"
+              }`}
             >
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div>

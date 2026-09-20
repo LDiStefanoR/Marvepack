@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Oswald } from "next/font/google";
+import { AdminPedidoAlarma } from "@/components/AdminPedidoAlarma";
 import { AuthProvider } from "@/components/AuthProvider";
 import { CartShell } from "@/components/CartShell";
 import { FloatingWhatsapp } from "@/components/FloatingWhatsapp";
@@ -67,6 +68,7 @@ export default async function RootLayout({
         <AuthProvider sesion={sesion}>
           <CartShell>
             <SiteHeader alertasIniciales={alertasIniciales} />
+            <AdminPedidoAlarma />
             {children}
             <SiteFooter />
             <FloatingWhatsapp />

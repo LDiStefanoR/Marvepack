@@ -35,7 +35,7 @@ export function SiteHeader({ alertasIniciales }: { alertasIniciales?: Alertas })
       if (!cancelado) setAlertas(actual);
     }
     void refrescar();
-    const id = window.setInterval(() => void refrescar(), 20000);
+    const id = window.setInterval(() => void refrescar(), 4000);
     return () => {
       cancelado = true;
       window.clearInterval(id);
