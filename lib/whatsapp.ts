@@ -1,4 +1,4 @@
-const WHATSAPP_E164 = "5493413050203";
+const WHATSAPP_E164 = "5493416039435";
 
 function encodeMessage(text: string) {
   return encodeURIComponent(text.trim());
@@ -9,5 +9,5 @@ export function whatsappUrl(message: string) {
 }
 
 export function whatsappPhoneDisplay() {
-  return "+54 9 3413 05-0203";
+  return "+54 9 341 603-9435";
 }
