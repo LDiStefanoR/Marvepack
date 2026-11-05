@@ -18,7 +18,23 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "res.cloudinary.com" },
+      { protocol: "https", hostname: "raw.githubusercontent.com" },
     ],
+  },
+  outputFileTracingExcludes: {
+    "*": [
+      "./recursos/imagenes-productos/auto-*",
+      "./public/recursos/imagenes-productos/auto-*",
+    ],
+  },
+  async rewrites() {
+    return [
+      {
+        source: "/recursos/imagenes-productos/:file",
+        destination:
+          "https://raw.githubusercontent.com/LDiStefanoR/Marvepack/main/recursos/imagenes-productos/:file",
+      },
+    ];
   },
   experimental: {
     serverActions: {

@@ -33,7 +33,7 @@ export function CajaVentasDia({
         </p>
       ) : (
         <div className="mt-4 grid items-start gap-4 xl:grid-cols-[minmax(0,1fr)_320px]">
-          <div className={`${caja.panel} overflow-x-auto`}>
+          <div className={caja.panel}>
             <table className="w-full min-w-[760px] text-left text-sm">
               <thead className="bg-neutral-100 text-xs uppercase">
                 <tr>

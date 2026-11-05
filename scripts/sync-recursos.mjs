@@ -17,13 +17,16 @@ function copyDirFlat(src, dest, label) {
     return;
   }
   fs.mkdirSync(dest, { recursive: true });
+  let copiados = 0;
   for (const name of fs.readdirSync(src)) {
     const from = path.join(src, name);
-    if (fs.statSync(from).isFile()) {
-      fs.copyFileSync(from, path.join(dest, name));
-    }
+    if (!fs.statSync(from).isFile()) continue;
+    // En Vercel las auto-* se sirven desde GitHub; copiarlas rompe el deploy.
+    if (process.env.VERCEL && name.toLowerCase().startsWith("auto-")) continue;
+    fs.copyFileSync(from, path.join(dest, name));
+    copiados += 1;
   }
-  console.log(`[sync-recursos] OK → ${label}`);
+  console.log(`[sync-recursos] OK → ${label} (${copiados})`);
 }
 
 const imgProdSrc = path.join(root, "recursos", "imagenes-productos");

@@ -17,12 +17,12 @@ function directorioEscritura() {
   if (process.env.VERCEL) {
     return path.join("/tmp", "marvepack-data");
   }
-  return path.join(process.cwd(), "data");
+  return path.join(/* turbopackIgnore: true */ process.cwd(), "data");
 }
 
 function directoriosLectura() {
   const tmp = path.join("/tmp", "marvepack-data");
-  const repo = path.join(process.cwd(), "data");
+  const repo = path.join(/* turbopackIgnore: true */ process.cwd(), "data");
   return process.env.VERCEL ? [tmp, repo] : [repo];
 }
 

@@ -2,7 +2,7 @@
 export const caja = {
   pantalla: "min-h-screen bg-background text-foreground",
   header:
-    "sticky top-0 z-30 flex shrink-0 flex-nowrap items-center gap-x-3 overflow-x-auto border-b border-white/10 bg-movipack-deep px-4 py-2 text-white",
+    "sticky top-0 z-30 flex shrink-0 flex-nowrap items-center gap-x-3 overflow-x-auto overflow-y-hidden border-b border-white/10 bg-movipack-deep px-4 py-2 text-white",
   marca: "font-display text-xl font-bold italic tracking-tight text-confetti",
   reloj: "font-display text-2xl font-bold leading-none",
   meta: "text-sm text-white/70",

@@ -704,8 +704,13 @@ export function CajaPanel({
     };
   }, [productos, personas]);
 
+  const pantallaFija = vista === "venta";
   return (
-    <div className="flex h-dvh flex-col overflow-hidden bg-background text-foreground">
+    <div
+      className={`flex flex-col bg-background text-foreground ${
+        pantallaFija ? "h-dvh overflow-hidden" : "min-h-dvh"
+      }`}
+    >
       <AdminAlarma
         inicial={alertasIniciales}
         enCaja
@@ -775,7 +780,7 @@ export function CajaPanel({
       {mensaje?.ok && <p className={caja.avisoOk}>{mensaje.ok}</p>}
 
       {(vista === "inicio" || vista === "empleado") && (
-        <div className="min-h-0 flex-1 overflow-auto">
+        <div className="flex-1">
       {vista === "inicio" && (
         <MenuCaja
           esAdmin={esAdmin}
@@ -1178,7 +1183,7 @@ export function CajaPanel({
       )}
 
       {(vista === "cierre" || vista === "listados" || vista === "stock" || vista === "clientes" || vista === "productos" || vista === "mantenimiento" || vista === "deudas" || vista === "pedidos") && (
-        <div className="min-h-0 flex-1 overflow-auto">
+        <div className="flex-1">
       {vista === "cierre" && (
         <CajaCierre
           total={total}
