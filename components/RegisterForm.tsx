@@ -3,6 +3,7 @@
 import { useActionState } from "react";
 import Link from "next/link";
 import { registrar, type EstadoAuth } from "@/app/acciones/auth";
+import { ETIQUETA_FRANJA } from "@/types/pedido";
 
 const campo =
   "w-full rounded-xl border border-movipack/20 bg-white px-4 py-3 outline-none ring-movipack/30 focus:border-movipack focus:ring-2";
@@ -52,13 +53,13 @@ export function RegisterForm() {
 
       <label className="block">
         <span className="mb-1 block text-sm font-semibold text-neutral-700">
-          Tipo de local
+          Tipo de compra
         </span>
         <input
           name="tipoLocal"
           required
           minLength={2}
-          placeholder="Ej: kiosco, dietética, restaurant"
+          placeholder="Ej: vecino, comercio, oficina"
           className={campo}
         />
       </label>
@@ -72,7 +73,7 @@ export function RegisterForm() {
           required
           minLength={3}
           rows={3}
-          placeholder="Contanos qué buscás para tu local"
+          placeholder="Contanos qué sueles comprar"
           className={campo}
         />
       </label>
@@ -98,31 +99,23 @@ export function RegisterForm() {
         <input type="email" name="email" required autoComplete="email" className={campo} />
       </label>
 
-      <label className="block">
-        <span className="mb-1 block text-sm font-semibold text-neutral-700">
-          Horario de atención
-        </span>
-        <input
-          name="horarioAtencion"
-          required
-          minLength={3}
-          placeholder="Ej: Lunes a viernes 9 a 18"
-          className={campo}
-        />
-      </label>
-
       <fieldset className="space-y-2">
         <legend className="text-sm font-semibold text-neutral-700">
-          ¿Querés que un asesor se comunique?
+          Franja de entrega
         </legend>
-        <label className="flex items-center gap-2 text-sm">
-          <input type="radio" name="deseaAsesor" value="si" required />
-          Sí
-        </label>
-        <label className="flex items-center gap-2 text-sm">
-          <input type="radio" name="deseaAsesor" value="no" />
-          No
-        </label>
+        <p className="text-xs text-neutral-500">
+          En qué horario preferís que te llevemos el pedido.
+        </p>
+        <div className="grid grid-cols-2 gap-2">
+          <label className="flex items-center gap-2 rounded-xl border border-movipack/20 px-3 py-3 text-sm">
+            <input type="radio" name="franjaReparto" value="manana" required />
+            {ETIQUETA_FRANJA.manana}
+          </label>
+          <label className="flex items-center gap-2 rounded-xl border border-movipack/20 px-3 py-3 text-sm">
+            <input type="radio" name="franjaReparto" value="tarde" required />
+            {ETIQUETA_FRANJA.tarde}
+          </label>
+        </div>
       </fieldset>
 
       <label className="block">

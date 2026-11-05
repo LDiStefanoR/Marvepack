@@ -12,6 +12,12 @@ export const ADDRESS_LINE = "Hilarión de la Quintana 2667";
 export const ADDRESS_CITY = "Rosario, Santa Fe";
 export const ADDRESS_FULL = `${ADDRESS_LINE}, ${ADDRESS_CITY}`;
 
+export const PHONE_DISPLAY = "0341 603-9435";
+export const PHONE_TEL = "+543416039435";
+
+export const HOURS_SHORT = "Lun–vie 9–18 · Sáb 9–12";
+export const HOURS_DETAIL = "Lunes a viernes 09:00 a 18:00 · Sábados 09:00 a 12:00";
+
 export const MAPS_SHARE_URL = "https://share.google/As8XgAqFAWgwSRiY3";
 export const MAPS_EMBED_SRC =
   "https://maps.google.com/maps?q=Hilarion%20de%20la%20Quintana%202667%20Rosario&t=&z=16&ie=UTF8&iwloc=&output=embed";

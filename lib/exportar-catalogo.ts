@@ -8,7 +8,7 @@ import { formatoPesos, nombreVitrina } from "@/lib/format";
 import {
   descuentoClienteDe,
   precioConDescuentoCliente,
-  precioLista,
+  precioWeb,
 } from "@/lib/precios";
 import { leerProductos } from "@/lib/productos";
 import { leerRubros } from "@/lib/rubros";
@@ -31,8 +31,9 @@ export async function filasCatalogo(): Promise<FilaCatalogo[]> {
   const etiqueta = Object.fromEntries(rubros.map((r) => [r.clave, r.etiqueta]));
 
   return productos
+    .filter((producto) => producto.mostrarEnCatalogo !== false)
     .map((producto) => {
-      const minorista = precioLista(producto, ajustes);
+      const minorista = precioWeb(producto, ajustes);
       const dto = descuentoClienteDe(producto.seccion, ajustes);
       return {
         codigo: producto.codigo,
@@ -51,13 +52,17 @@ export async function filasCatalogo(): Promise<FilaCatalogo[]> {
 }
 
 function candidatosImagen(imagen: string) {
+  if (/^https?:\/\//i.test(imagen) || imagen.startsWith("/api/media/")) {
+    return [];
+  }
   const limpio = imagen.replace(/^\/+/, "").replace(/\\/g, "/");
   const nombre = path.basename(limpio);
+  const raiz = /* turbopackIgnore: true */ process.cwd();
   return [
-    path.join(process.cwd(), "public", limpio),
-    path.join(process.cwd(), limpio),
-    path.join(process.cwd(), "public", "recursos", "imagenes-productos", nombre),
-    path.join(process.cwd(), "recursos", "imagenes-productos", nombre),
+    path.join(raiz, "public", "recursos", "imagenes-productos", nombre),
+    path.join(raiz, "recursos", "imagenes-productos", nombre),
+    path.join(raiz, "public", "recursos", "imagenes-rubros", nombre),
+    path.join(raiz, "recursos", "imagenes-rubros", nombre),
   ];
 }
 
@@ -272,5 +277,5 @@ export async function armarPdfCatalogo(filas: FilaCatalogo[]) {
 
 export function nombreArchivoCatalogo(ext: "xlsx" | "pdf") {
   const fecha = new Date().toISOString().slice(0, 10);
-  return `MarvePack-catalogo-precios-${fecha}.${ext}`;
+  return `LaTripleL-catalogo-precios-${fecha}.${ext}`;
 }

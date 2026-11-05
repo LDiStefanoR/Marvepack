@@ -7,10 +7,13 @@ import {
   normalizarEmailLogin,
 } from "@/lib/auth-config";
 import { escribirJsonData, leerJsonData } from "@/lib/data-fs";
+import { esPermisoCaja } from "@/lib/permisos-caja";
+import { parseTipoCuenta } from "@/lib/tipo-cuenta";
 import type {
   EstadoCuenta,
   PerfilCliente,
   RolUsuario,
+  TipoCuentaCliente,
   Usuario,
   UsuarioPublico,
 } from "@/types/auth";
@@ -33,10 +36,18 @@ function normalizarUsuario(
     id: raw.id,
     email: normalizarEmail(raw.email),
     nombre: raw.nombre?.trim() || raw.email,
-    rol: raw.rol === "admin" ? "admin" : "cliente",
+    rol: raw.rol === "admin" ? "admin" : raw.rol === "caja" ? "caja" : "cliente",
     passwordHash: raw.passwordHash ?? "",
     estado: raw.estado ?? "activa",
     perfil: raw.perfil,
+    tipoCuenta:
+      raw.rol === "admin" || raw.rol === "caja"
+        ? undefined
+        : parseTipoCuenta(raw.tipoCuenta),
+    notaInterna: raw.notaInterna?.trim() || "",
+    permisosCaja: Array.isArray(raw.permisosCaja)
+      ? raw.permisosCaja.filter(esPermisoCaja)
+      : undefined,
     creadoEn: raw.creadoEn ?? new Date().toISOString(),
   };
 }
@@ -44,9 +55,25 @@ function normalizarUsuario(
 async function leerArchivo(): Promise<Usuario[]> {
   const parsed = await leerJsonData<Partial<Usuario>[]>("usuarios.json", []);
   if (!Array.isArray(parsed)) return [];
-  return parsed
-    .filter((u) => u?.id && u?.email)
-    .map((u) => normalizarUsuario(u as Usuario));
+  const crudos = parsed.filter((u) => u?.id && u?.email);
+  const hayTiposNuevos = crudos.some(
+    (u) =>
+      u.tipoCuenta === "descuentos" ||
+      u.tipoCuenta === "credito_super" ||
+      u.tipoCuenta === "linea_credito",
+  );
+  if (!hayTiposNuevos) {
+    for (const u of crudos) {
+      if (u.rol === "admin") continue;
+      if ((u.tipoCuenta as string) === "credito") u.tipoCuenta = "credito_super";
+      else u.tipoCuenta = "descuentos";
+    }
+  }
+  const usuarios = crudos.map((u) => normalizarUsuario(u as Usuario));
+  if (!hayTiposNuevos && usuarios.some((u) => u.rol === "cliente")) {
+    await escribirArchivo(usuarios);
+  }
+  return usuarios;
 }
 
 async function escribirArchivo(usuarios: Usuario[]) {
@@ -162,8 +189,8 @@ export function validarPerfil(perfil: PerfilCliente) {
   if (perfil.telefono.replace(/\D/g, "").length < 8) {
     return "Ingresá un teléfono válido.";
   }
-  if (perfil.horarioAtencion.trim().length < 3) {
-    return "Ingresá el horario de atención.";
+  if (perfil.franjaReparto !== "manana" && perfil.franjaReparto !== "tarde") {
+    return "Elegí la franja de entrega: mañana (9 a 13) o tarde (18 a 20).";
   }
   return null;
 }
@@ -203,6 +230,7 @@ export async function solicitarCuenta(datos: {
     rol: "cliente",
     passwordHash,
     estado: "pendiente",
+    tipoCuenta: "generico",
     perfil: {
       ...datos.perfil,
       tipoLocal: datos.perfil.tipoLocal.trim(),
@@ -223,13 +251,14 @@ export async function crearUsuarioAdmin(datos: {
   nombre: string;
   password: string;
   rol: RolUsuario;
+  tipoCuenta?: TipoCuentaCliente;
+  permisosCaja?: string[];
 }) {
   const email = normalizarEmail(datos.email);
   if (!email.includes("@")) return { error: "Ingresá un mail válido." as const };
   if (datos.nombre.trim().length < 2) return { error: "Ingresá un nombre." as const };
-  if (datos.password.length < 8) {
-    return { error: "La contraseña tiene que tener al menos 8 caracteres." as const };
-  }
+  const errorPin = pinOPasswordValido(datos.password);
+  if (errorPin) return { error: errorPin };
   const usuarios = await asegurarSemilla();
   if (usuarios.some((u) => u.email === email)) {
     return { error: "Ese mail ya existe." as const };
@@ -242,9 +271,32 @@ export async function crearUsuarioAdmin(datos: {
     rol: datos.rol,
     passwordHash,
     estado: "activa",
+    tipoCuenta:
+      datos.rol === "cliente"
+        ? parseTipoCuenta(datos.tipoCuenta ?? "generico")
+        : undefined,
+    permisosCaja:
+      datos.rol === "caja" ? (datos.permisosCaja ?? []).filter(esPermisoCaja) : undefined,
     creadoEn: new Date().toISOString(),
   };
   usuarios.push(usuario);
+  await escribirArchivo(usuarios);
+  return { usuario: sinPassword(usuario) };
+}
+
+export async function guardarPermisosCaja(id: string, permisos: string[]) {
+  const usuarios = await asegurarSemilla();
+  const usuario = usuarios.find((u) => u.id === id);
+  if (!usuario) return { error: "No encontramos a esa persona." as const };
+  if (usuario.rol === "admin") {
+    return { error: "La administración entra a todo el menú." as const };
+  }
+  if (usuario.rol !== "caja") {
+    return { error: "Esos permisos son para empleados de caja." as const };
+  }
+  const lista = permisos.filter(esPermisoCaja);
+  if (lista.length < 1) return { error: "Elegí al menos una parte del menú." as const };
+  usuario.permisosCaja = lista;
   await escribirArchivo(usuarios);
   return { usuario: sinPassword(usuario) };
 }
@@ -278,9 +330,8 @@ export async function cambiarRolUsuario(id: string, rol: RolUsuario) {
 }
 
 export async function cambiarPasswordUsuario(id: string, password: string) {
-  if (password.length < 8) {
-    return { error: "La contraseña tiene que tener al menos 8 caracteres." as const };
-  }
+  const errorPin = pinOPasswordValido(password);
+  if (errorPin) return { error: errorPin };
   const usuarios = await asegurarSemilla();
   const usuario = usuarios.find((u) => u.id === id);
   if (!usuario) return { error: "No encontramos esa cuenta." as const };
@@ -289,27 +340,141 @@ export async function cambiarPasswordUsuario(id: string, password: string) {
   return { ok: true as const };
 }
 
+export async function cambiarEmailUsuario(id: string, emailNuevo: string) {
+  const email = normalizarEmail(emailNuevo);
+  if (!email.includes("@")) return { error: "Ingresá un mail válido." as const };
+  const usuarios = await asegurarSemilla();
+  const usuario = usuarios.find((u) => u.id === id);
+  if (!usuario) return { error: "No encontramos esa cuenta." as const };
+  if (usuario.email === EMAIL_ADMIN) {
+    return { error: "El mail de administración no se puede cambiar acá." as const };
+  }
+  if (email === EMAIL_ADMIN) {
+    return { error: "Ese mail no se puede usar." as const };
+  }
+  if (usuarios.some((u) => u.id !== id && u.email === email)) {
+    return { error: "Ese mail ya está en uso." as const };
+  }
+  const anterior = usuario.email;
+  usuario.email = email;
+  await escribirArchivo(usuarios);
+  return { ok: true as const, anterior, email };
+}
+
+export async function actualizarTipoCuenta(
+  id: string,
+  tipo: TipoCuentaCliente,
+) {
+  const usuarios = await asegurarSemilla();
+  const usuario = usuarios.find((u) => u.id === id);
+  if (!usuario) return { error: "No encontramos esa cuenta." as const };
+  if (usuario.rol === "admin") {
+    return { error: "Un administrador no usa cuenta de cliente." as const };
+  }
+  usuario.tipoCuenta = tipo;
+  await escribirArchivo(usuarios);
+  return { usuario: sinPassword(usuario) };
+}
+
+export async function actualizarContactoCliente(
+  id: string,
+  datos: {
+    nombre?: string;
+    telefono: string;
+    direccion: string;
+    franjaReparto?: "manana" | "tarde";
+    fotoPerfil?: string;
+  },
+) {
+  if (datos.direccion.trim().length < 5) return { error: "Ingresá una dirección." as const };
+  if (datos.telefono.replace(/\D/g, "").length < 8) {
+    return { error: "Ingresá un teléfono válido." as const };
+  }
+  const usuarios = await asegurarSemilla();
+  const usuario = usuarios.find((u) => u.id === id);
+  if (!usuario) return { error: "No encontramos esa cuenta." as const };
+  if (datos.nombre && datos.nombre.trim().length >= 2) {
+    usuario.nombre = datos.nombre.trim();
+  }
+  const base = usuario.perfil ?? perfilFiado(datos.telefono);
+  usuario.perfil = {
+    ...base,
+    telefono: datos.telefono.trim(),
+    direccion: datos.direccion.trim(),
+    franjaReparto: datos.franjaReparto ?? base.franjaReparto,
+    horarioAtencion:
+      datos.franjaReparto === "manana"
+        ? "Mañana (9 a 13)"
+        : datos.franjaReparto === "tarde"
+          ? "Tarde (18 a 20)"
+          : base.horarioAtencion,
+    fotoPerfil: datos.fotoPerfil ?? base.fotoPerfil,
+  };
+  await escribirArchivo(usuarios);
+  return { usuario: sinPassword(usuario) };
+}
+
 export async function actualizarPerfilUsuario(
   id: string,
-  datos: { nombre: string; perfil: PerfilCliente },
+  datos: { nombre: string; perfil: PerfilCliente; notaInterna?: string },
 ) {
   if (datos.nombre.trim().length < 2) return { error: "Ingresá un nombre." as const };
-  const errorPerfil = validarPerfil(datos.perfil);
-  if (errorPerfil) return { error: errorPerfil };
+  const telefono = datos.perfil.telefono.replace(/\D/g, "");
+  if (telefono && telefono.length < 8) {
+    return { error: "Ingresá un teléfono válido (al menos 8 números)." as const };
+  }
   const usuarios = await asegurarSemilla();
   const usuario = usuarios.find((u) => u.id === id);
   if (!usuario) return { error: "No encontramos esa cuenta." as const };
   usuario.nombre = datos.nombre.trim();
+  const base = usuario.perfil;
   usuario.perfil = {
-    ...datos.perfil,
-    tipoLocal: datos.perfil.tipoLocal.trim(),
-    productosInteres: datos.perfil.productosInteres.trim(),
+    tipoPersona: datos.perfil.tipoPersona === "empresa" ? "empresa" : "persona",
+    tipoLocal: datos.perfil.tipoLocal.trim() || base?.tipoLocal || "",
+    productosInteres:
+      datos.perfil.productosInteres.trim() || base?.productosInteres || "",
     direccion: datos.perfil.direccion.trim(),
     telefono: datos.perfil.telefono.trim(),
-    horarioAtencion: datos.perfil.horarioAtencion.trim(),
+    horarioAtencion:
+      datos.perfil.horarioAtencion.trim() || base?.horarioAtencion || "",
+    deseaAsesor: datos.perfil.deseaAsesor,
+    franjaReparto: datos.perfil.franjaReparto ?? base?.franjaReparto,
+    fotoPerfil: base?.fotoPerfil,
+    codigo: datos.perfil.codigo === undefined ? base?.codigo ?? "" : datos.perfil.codigo.trim(),
+    apellido: datos.perfil.apellido === undefined ? base?.apellido ?? "" : datos.perfil.apellido.trim(),
+    cumpleanos:
+      datos.perfil.cumpleanos === undefined ? base?.cumpleanos ?? "" : datos.perfil.cumpleanos.trim(),
+    documento:
+      datos.perfil.documento === undefined ? base?.documento ?? "" : datos.perfil.documento.trim(),
+    descuento:
+      datos.perfil.descuento === undefined
+        ? descuentoFicha(base?.descuento)
+        : descuentoFicha(datos.perfil.descuento),
+    direcciones: datos.perfil.direcciones ?? base?.direcciones,
   };
+  if (datos.notaInterna !== undefined) {
+    usuario.notaInterna = datos.notaInterna.trim();
+  }
   await escribirArchivo(usuarios);
   return { usuario: sinPassword(usuario) };
+}
+
+export async function recordarDireccion(id: string, direccion: string) {
+  const limpia = direccion.trim();
+  if (limpia.length < 5) return { ok: true as const };
+  const usuarios = await asegurarSemilla();
+  const usuario = usuarios.find((u) => u.id === id);
+  if (!usuario?.perfil) return { ok: true as const };
+  const previas = (usuario.perfil.direcciones ?? [])
+    .map((d) => d.trim())
+    .filter((d) => d.length >= 5);
+  const ya = [usuario.perfil.direccion, ...previas].some(
+    (d) => d.trim().toLowerCase() === limpia.toLowerCase(),
+  );
+  usuario.perfil.direccion = limpia;
+  if (!ya) usuario.perfil.direcciones = [...previas, limpia].slice(-8);
+  await escribirArchivo(usuarios);
+  return { ok: true as const };
 }
 
 export async function eliminarUsuario(id: string, quienEliminaEmail: string) {
@@ -332,4 +497,80 @@ export async function eliminarUsuario(id: string, quienEliminaEmail: string) {
 
 export async function verificarPassword(usuario: Usuario, password: string) {
   return bcrypt.compare(password, usuario.passwordHash);
+}
+
+function perfilFiado(telefono: string): PerfilCliente {
+  const tel = telefono.replace(/\D/g, "");
+  return {
+    tipoPersona: "persona",
+    tipoLocal: "Cuenta corriente",
+    productosInteres: "Fiado almacén",
+    direccion: "A coordinar",
+    telefono: tel.length >= 8 && !/^0+$/.test(tel) ? telefono.trim() : "3410000000",
+    horarioAtencion: "A coordinar",
+    deseaAsesor: false,
+  };
+}
+
+export function descuentoFicha(valor: unknown) {
+  const n = Math.round(Number(valor) || 0);
+  if (n <= 0) return undefined;
+  return Math.min(100, n);
+}
+
+export function pinOPasswordValido(password: string) {
+  if (/^\d{4,8}$/.test(password.trim())) return null;
+  if (password.length < 8) {
+    return "Usá un PIN de 4 a 8 números o una contraseña de al menos 8 caracteres.";
+  }
+  return null;
+}
+
+export async function asegurarUsuariosFiado(
+  lista: { email: string; nombre: string; telefono: string; pin: string }[],
+) {
+  const usuarios = await asegurarSemilla();
+  const porEmail = new Map(usuarios.map((u) => [normalizarEmail(u.email), u]));
+  let cambio = false;
+
+  for (const datos of lista) {
+    const email = normalizarEmail(datos.email);
+    if (!email.includes("@")) continue;
+    const existente = porEmail.get(email);
+    if (existente) {
+      if (existente.estado !== "activa") {
+        existente.estado = "activa";
+        cambio = true;
+      }
+      if (!existente.perfil) {
+        existente.perfil = perfilFiado(datos.telefono);
+        cambio = true;
+      }
+      continue;
+    }
+    const pin = datos.pin.trim() || "1234";
+    const creado: Usuario = {
+      id: randomUUID(),
+      email,
+      nombre: datos.nombre.trim() || email,
+      rol: "cliente",
+      passwordHash: await bcrypt.hash(pin, rondas),
+      estado: "activa",
+      perfil: perfilFiado(datos.telefono),
+      tipoCuenta: "credito_super",
+      creadoEn: new Date().toISOString(),
+    };
+    usuarios.push(creado);
+    porEmail.set(email, creado);
+    cambio = true;
+  }
+
+  if (cambio) {
+    try {
+      await escribirArchivo(usuarios);
+    } catch (error) {
+      console.error("[usuarios] No se pudieron crear las cuentas de fiado", error);
+    }
+  }
+  return usuarios;
 }

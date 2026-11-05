@@ -4,9 +4,12 @@ import { borrarFotoSitioSiLibre, guardarFotoSitio } from "@/lib/fotos-sitio";
 import { persistirFotosGithub } from "@/lib/persistir-github";
 import { revalidatePath } from "next/cache";
 import { guardarAjustes, leerAjustes } from "@/lib/ajustes";
+import type { AjustesPrecios } from "@/types/ajustes";
 import { claveRubro, RUBRO_RESERVADO } from "@/lib/categorias";
 import { guardarProductos, leerProductos } from "@/lib/productos";
 import { guardarRubros, leerRubros } from "@/lib/rubros";
+import { exigirPermisoCaja } from "@/lib/exigir-permiso";
+import { puedeCobrar } from "@/lib/roles";
 import { getSesion } from "@/lib/sesion";
 
 function numero(valor: FormDataEntryValue | null, fallback: number) {
@@ -18,6 +21,7 @@ function revalidarSitio() {
   revalidatePath("/", "layout");
   revalidatePath("/catalogo");
   revalidatePath("/admin");
+  revalidatePath("/caja");
 }
 
 const MAX_FOTO = 5 * 1024 * 1024;
@@ -63,6 +67,10 @@ async function exigirAdmin() {
   return sesion?.rol === "admin" ? sesion : null;
 }
 
+async function exigirCaja() {
+  return exigirPermisoCaja("mantenimiento");
+}
+
 function imagenesUsadasAdmin(
   productos: { imagen: string }[],
   rubros: { imagen?: string }[],
@@ -82,38 +90,120 @@ export async function guardarPreciosAdmin(
     return { error: "No tenés permiso para cambiar precios." };
   }
 
-  const descuento = numero(form.get("descuentoClienteGenerico"), 10);
-  if (descuento < 0 || descuento > 90) {
-    return { error: "El descuento de clientes tiene que estar entre 0 y 90." };
-  }
-
-  const productos = await leerProductos();
-  const rubros = await leerRubros(productos.map((p) => p.seccion));
   const ajustes = await leerAjustes();
-  const descuentoClientePorSeccion: Record<string, number> = {};
-  for (const rubro of rubros) {
-    const propioActivo = form.get(`dto-activo-${rubro.clave}`) === "1";
-    if (!propioActivo) continue;
-    const dto = numero(form.get(`dto-${rubro.clave}`), descuento);
-    if (dto < 0 || dto > 90) {
-      return {
-        error: `El descuento de clientes de ${rubro.etiqueta} tiene que estar entre 0 y 90.`,
-      };
-    }
-    descuentoClientePorSeccion[rubro.clave] = dto;
+  function tasa(campo: string, base: number) {
+    const n = numero(form.get(campo), base);
+    if (n < 0 || n > 500) return null;
+    return Math.round(n * 10) / 10;
+  }
+  const tasasCuota = {
+    1: tasa("interes1", ajustes.tasasCuota[1]),
+    2: tasa("interes2", ajustes.tasasCuota[2]),
+    3: tasa("interes3", ajustes.tasasCuota[3]),
+    6: tasa("interes6", ajustes.tasasCuota[6]),
+  };
+  const moraCredito = [1, 2, 3, 4].map((semana) => tasa(`moraCredito${semana}`, ajustes.moraCredito[semana - 1]));
+  const moraCuenta = [1, 2, 3, 4].map((semana) => tasa(`moraCuenta${semana}`, ajustes.moraCuenta[semana - 1]));
+  if (Object.values(tasasCuota).some((n) => n === null) || moraCredito.some((n) => n === null) || moraCuenta.some((n) => n === null)) {
+    return { error: "Las tasas tienen que estar entre 0 y 500." };
+  }
+  const plazoCuenta = Math.round(Number(form.get("plazoCuenta")));
+  if (!Number.isFinite(plazoCuenta) || plazoCuenta < 1 || plazoCuenta > 365) {
+    return { error: "El plazo de la cuenta corriente tiene que ser entre 1 y 365 días." };
   }
 
   await guardarAjustes({
-    descuentoClienteGenerico: descuento,
-    ajustePorSeccion: ajustes.ajustePorSeccion,
-    descuentoClientePorSeccion,
+    ...ajustes,
+    tasasCuota: tasasCuota as AjustesPrecios["tasasCuota"],
+    moraCredito: moraCredito as AjustesPrecios["moraCredito"],
+    moraCuenta: moraCuenta as AjustesPrecios["moraCuenta"],
+    plazoCuenta,
   });
   revalidarSitio();
-  return { ok: "Guardamos el descuento de clientes." };
+  return { ok: "Guardamos los intereses de créditos y cuentas corrientes." };
+}
+
+export async function guardarCatalogoWeb(form: FormData): Promise<EstadoAdmin> {
+  if (!(await exigirAdmin())) return { error: "No tenés permiso para cambiar el catálogo." };
+  const recargo = numero(form.get("recargoWeb"), 0);
+  const descuento = numero(form.get("descuentoClienteGenerico"), 0);
+  const descuentoEmpleado = numero(form.get("descuentoEmpleadoGenerico"), 0);
+  if (recargo < 0 || recargo > 200) {
+    return { error: "El recargo tiene que estar entre 0 y 200." };
+  }
+  if (descuento < 0 || descuento > 90) {
+    return { error: "El descuento de clientes tiene que estar entre 0 y 90." };
+  }
+  if (descuentoEmpleado < 0 || descuentoEmpleado > 90) {
+    return { error: "El descuento de empleados tiene que estar entre 0 y 90." };
+  }
+  const productos = await leerProductos();
+  const rubros = await leerRubros(productos.map((p) => p.seccion));
+  const descuentoClientePorSeccion: Record<string, number> = {};
+  const descuentoEmpleadoPorSeccion: Record<string, number> = {};
+  for (const rubro of rubros) {
+    if (form.get(`dto-activo-${rubro.clave}`) === "1") {
+      const dto = numero(form.get(`dto-${rubro.clave}`), descuento);
+      if (dto < 0 || dto > 90) {
+        return {
+          error: `El descuento de clientes de ${rubro.etiqueta} tiene que estar entre 0 y 90.`,
+        };
+      }
+      descuentoClientePorSeccion[rubro.clave] = dto;
+    }
+    if (form.get(`emp-activo-${rubro.clave}`) === "1") {
+      const dto = numero(form.get(`emp-${rubro.clave}`), descuentoEmpleado);
+      if (dto < 0 || dto > 90) {
+        return {
+          error: `El descuento de empleados de ${rubro.etiqueta} tiene que estar entre 0 y 90.`,
+        };
+      }
+      descuentoEmpleadoPorSeccion[rubro.clave] = dto;
+    }
+  }
+  const ajustes = await leerAjustes();
+  await guardarAjustes({
+    ...ajustes,
+    recargoWeb: recargo,
+    descuentoClienteGenerico: descuento,
+    descuentoClientePorSeccion,
+    descuentoEmpleadoGenerico: descuentoEmpleado,
+    descuentoEmpleadoPorSeccion,
+  });
+  revalidarSitio();
+  return { ok: "Guardamos recargo, descuentos de productos y de empleados." };
+}
+
+export async function guardarEnvioAdmin(form: FormData): Promise<EstadoAdmin> {
+  if (!(await exigirAdmin())) return { error: "No tenés permiso para cambiar el envío." };
+  const pesos = (campo: string) =>
+    Math.round(Number(String(form.get(campo) ?? "").replace(/\D/g, ""))) || 0;
+  const codigo = String(form.get("codigo") ?? "")
+    .trim()
+    .toUpperCase()
+    .replace(/\s+/g, " ")
+    .slice(0, 20);
+  if (codigo.length < 1) return { error: "Ingresá el código del envío." };
+  const envio = {
+    base: pesos("base"),
+    medioDesde: pesos("medioDesde"),
+    medio: pesos("medio"),
+    bajoDesde: pesos("bajoDesde"),
+    bajo: pesos("bajo"),
+    sinCargoDesde: pesos("sinCargoDesde"),
+    codigo,
+  };
+  if (!(envio.medioDesde > 0 && envio.bajoDesde > envio.medioDesde && envio.sinCargoDesde > envio.bajoDesde)) {
+    return { error: "Los cortes tienen que ir de menor a mayor: primer corte, segundo corte y envío sin cargo." };
+  }
+  const ajustes = await leerAjustes();
+  await guardarAjustes({ ...ajustes, envio });
+  revalidarSitio();
+  return { ok: "Guardamos la escala de envío a domicilio." };
 }
 
 export async function crearRubro(form: FormData): Promise<EstadoAdmin> {
-  if (!(await exigirAdmin())) {
+  if (!(await exigirCaja())) {
     return { error: "No tenés permiso para crear rubros." };
   }
   const etiqueta = String(form.get("etiqueta") ?? "").trim();
@@ -150,7 +240,7 @@ export async function crearRubro(form: FormData): Promise<EstadoAdmin> {
 }
 
 export async function renombrarRubro(form: FormData): Promise<EstadoAdmin> {
-  if (!(await exigirAdmin())) {
+  if (!(await exigirCaja())) {
     return { error: "No tenés permiso para renombrar rubros." };
   }
   const clave = String(form.get("clave") ?? "").trim();
@@ -182,7 +272,7 @@ export async function renombrarRubro(form: FormData): Promise<EstadoAdmin> {
 }
 
 export async function eliminarRubro(form: FormData): Promise<EstadoAdmin> {
-  if (!(await exigirAdmin())) {
+  if (!(await exigirCaja())) {
     return { error: "No tenés permiso para eliminar rubros." };
   }
   const clave = String(form.get("clave") ?? "").trim();
@@ -208,10 +298,12 @@ export async function eliminarRubro(form: FormData): Promise<EstadoAdmin> {
   const ajustes = await leerAjustes();
   const { [clave]: _quitado, ...restoAjuste } = ajustes.ajustePorSeccion;
   const { [clave]: _dto, ...restoDto } = ajustes.descuentoClientePorSeccion;
+  const { [clave]: _emp, ...restoEmp } = ajustes.descuentoEmpleadoPorSeccion;
   await guardarAjustes({
     ...ajustes,
     ajustePorSeccion: restoAjuste,
     descuentoClientePorSeccion: restoDto,
+    descuentoEmpleadoPorSeccion: restoEmp,
   });
   const restantes = rubros.filter((r) => r.clave !== clave);
   await guardarRubros(restantes);
@@ -230,7 +322,7 @@ export async function eliminarRubro(form: FormData): Promise<EstadoAdmin> {
 }
 
 export async function subirImagenRubro(form: FormData): Promise<EstadoAdmin> {
-  if (!(await exigirAdmin())) {
+  if (!(await exigirCaja())) {
     return { error: "No tenés permiso para cambiar la foto del rubro." };
   }
   const clave = String(form.get("clave") ?? "").trim();

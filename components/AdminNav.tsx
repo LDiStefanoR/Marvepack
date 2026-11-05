@@ -1,41 +1,47 @@
 import Link from "next/link";
 
 type Props = {
-  activa: "precios" | "clientes";
-  solicitudes?: number;
+  activa: "pedidos" | "promos";
   pedidosNuevos?: number;
 };
 
-export function AdminNav({ activa, solicitudes = 0, pedidosNuevos = 0 }: Props) {
-  const pendientes = solicitudes + pedidosNuevos;
+function claseBoton(activo: boolean) {
+  return `relative flex min-h-14 flex-col justify-center rounded-2xl border px-4 py-3 text-left text-sm font-bold shadow-sm ${
+    activo
+      ? "border-movipack bg-movipack text-white"
+      : "border-movipack/20 bg-white text-movipack-deep hover:border-movipack hover:bg-movipack/5"
+  }`;
+}
 
+function Badge({ n, claro }: { n: number; claro?: boolean }) {
+  if (n <= 0) return null;
   return (
-    <div className="mt-6 flex flex-wrap gap-3 text-sm font-bold">
-      <Link
-        href="/admin"
-        className={
-          activa === "precios"
-            ? "text-movipack underline underline-offset-4"
-            : "text-neutral-600 underline-offset-4 hover:text-movipack hover:underline"
-        }
-      >
-        Precios y productos
+    <span
+      className={`absolute -right-1.5 -top-1.5 inline-flex h-5 min-w-5 items-center justify-center rounded-full px-1.5 text-[11px] font-bold ${
+        claro ? "bg-white text-cape" : "bg-cape text-white"
+      }`}
+    >
+      {n > 99 ? "99+" : n}
+    </span>
+  );
+}
+
+export function AdminNav({ activa, pedidosNuevos = 0 }: Props) {
+  return (
+    <nav className="mt-6 grid grid-cols-2 gap-2" aria-label="Secciones de administración">
+      <Link href="/caja?vista=pedidos" className={claseBoton(activa === "pedidos")}>
+        Pedidos
+        <span className={`text-xs font-semibold ${activa === "pedidos" ? "text-white/80" : "text-neutral-500"}`}>
+          Notificaciones
+        </span>
+        <Badge n={pedidosNuevos} claro={activa === "pedidos"} />
       </Link>
-      <Link
-        href="/admin/clientes"
-        className={`relative inline-flex items-center ${
-          activa === "clientes"
-            ? "text-movipack underline underline-offset-4"
-            : "text-neutral-600 underline-offset-4 hover:text-movipack hover:underline"
-        }`}
-      >
-        Clientes y pedidos
-        {pendientes > 0 && (
-          <span className="ml-2 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-cape px-1.5 text-[11px] font-bold text-white no-underline">
-            {pendientes > 99 ? "99+" : pendientes}
-          </span>
-        )}
+      <Link href="/admin/promos" className={claseBoton(activa === "promos")}>
+        Promos
+        <span className={`text-xs font-semibold ${activa === "promos" ? "text-white/80" : "text-neutral-500"}`}>
+          2x1, 3x2 y carrusel
+        </span>
       </Link>
-    </div>
+    </nav>
   );
 }

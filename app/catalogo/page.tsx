@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import { CatalogHero } from "@/components/CatalogHero";
 import { ProductCatalog } from "@/components/ProductCatalog";
-import { leerAjustes } from "@/lib/ajustes";
+import { AJUSTES_PRECIOS_BASE, leerAjustes } from "@/lib/ajustes";
 import { BRAND_NAME } from "@/lib/brand";
+import { armarComboVitrina, idsEnCombos } from "@/lib/combo";
 import { armarVitrina, modoPrecio } from "@/lib/precios";
 import { getSesion } from "@/lib/sesion";
 import { leerProductos } from "@/lib/productos";
+import { combosActivos, ofertasActivas, mapaOfertas } from "@/lib/promos";
 import { leerRubros } from "@/lib/rubros";
 
 export const dynamic = "force-dynamic";
@@ -34,28 +36,39 @@ export default async function CatalogoPage({ searchParams }: Props) {
   } catch (error) {
     console.error("[catalogo]", error);
   }
-  const ajustesOk = ajustes ?? {
-    descuentoClienteGenerico: 10,
-    ajustePorSeccion: {},
-    descuentoClientePorSeccion: {},
-  };
-  const vitrina = productos.map((p) => armarVitrina(p, sesion, ajustesOk));
+  const ofertas = await ofertasActivas().catch(() => []);
+  const combos = await combosActivos().catch(() => []);
+  const porOferta = mapaOfertas(ofertas);
+  const enCombo = idsEnCombos(combos);
+  const ajustesOk = ajustes ?? AJUSTES_PRECIOS_BASE;
+  const publicados = productos.filter((p) => p.mostrarEnCatalogo !== false);
+  const vitrina = publicados.map((p) => ({
+    ...armarVitrina(p, sesion, ajustesOk, porOferta.get(p.id)),
+    enCombo: enCombo.has(p.id),
+  }));
+  const porVitrina = new Map(vitrina.map((p) => [p.id, p]));
+  const combosVista = combos
+    .map((c) => armarComboVitrina(c, porVitrina))
+    .filter((c): c is NonNullable<typeof c> => Boolean(c));
   const modo = modoPrecio(sesion);
   const aviso =
     modo === "cliente"
-      ? "Estás viendo tu precio de cliente. Al lado aparece tachado el precio de lista. El descuento puede ser el general o el propio de ese rubro."
-      : modo === "admin"
-        ? "Como admin ves el precio de lista y, en cada producto, el descuento que se aplica a los clientes registrados."
-        : "Si te registrás, vas a ver tu precio de cliente.";
+      ? "Estás viendo tu precio de cliente. Si el rubro tiene descuento propio, se usa ese y no el general."
+      : modo === "empleado"
+        ? "Estás viendo tu precio de empleado. Puede ser el de tu ficha, el del rubro o el general de empleados."
+        : modo === "admin"
+          ? "Como admin ves el precio de lista. En cada producto aparece el descuento de clientes y el de empleados."
+          : "Si te registrás como cliente ves el descuento de comercio. Los empleados ven el suyo al ingresar.";
 
   return (
     <main>
-      <CatalogHero total={productos.length} />
+      <CatalogHero total={publicados.length} />
       <ProductCatalog
         productos={vitrina}
         rubros={rubros}
         seccionInicial={seccion}
         aviso={aviso}
+        combos={combosVista}
       />
     </main>
   );

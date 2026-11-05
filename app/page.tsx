@@ -14,7 +14,7 @@ export default async function Home() {
   let productos: Awaited<ReturnType<typeof leerProductos>> = [];
   let rubros: Awaited<ReturnType<typeof leerRubros>> = [];
   try {
-    productos = await leerProductos();
+    productos = (await leerProductos()).filter((p) => p.mostrarEnCatalogo !== false);
     rubros = await leerRubros(productos.map((p) => p.seccion));
   } catch (error) {
     console.error("[home] catálogo", error);

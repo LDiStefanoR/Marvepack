@@ -7,7 +7,15 @@ export { leerSesionToken, firmarSesion };
 
 export async function getSesion(): Promise<SesionPublica | null> {
   const jar = await cookies();
-  return leerSesionToken(jar.get(COOKIE_SESION)?.value);
+  const base = await leerSesionToken(jar.get(COOKIE_SESION)?.value);
+  if (!base || (base.rol !== "cliente" && base.rol !== "caja")) return base;
+  const { buscarUsuarioPorEmail } = await import("@/lib/usuarios");
+  const { parseTipoCuenta } = await import("@/lib/tipo-cuenta");
+  const usuario = await buscarUsuarioPorEmail(base.email);
+  if (!usuario) return base;
+  const descuento = Math.min(100, Math.max(0, Math.round(usuario.perfil?.descuento ?? 0)));
+  if (base.rol === "caja") return { ...base, descuento };
+  return { ...base, tipoCuenta: parseTipoCuenta(usuario.tipoCuenta), descuento };
 }
 
 export async function guardarSesion(
@@ -28,5 +36,12 @@ export async function guardarSesion(
 
 export async function borrarSesion() {
   const jar = await cookies();
+  jar.set(COOKIE_SESION, "", {
+    httpOnly: true,
+    sameSite: "lax",
+    path: "/",
+    maxAge: 0,
+    secure: process.env.NODE_ENV === "production",
+  });
   jar.delete(COOKIE_SESION);
 }

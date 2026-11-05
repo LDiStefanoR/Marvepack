@@ -11,14 +11,14 @@ export function LoginForm() {
     ingresar,
     null,
   );
-  const [email, setEmail] = useState("");
+  const [login, setLogin] = useState("");
   const [recordar, setRecordar] = useState(false);
 
   useEffect(() => {
     try {
       const guardado = localStorage.getItem(CLAVE_USUARIO);
       if (guardado) {
-        setEmail(guardado);
+        setLogin(guardado);
         setRecordar(true);
       }
     } catch {
@@ -27,11 +27,11 @@ export function LoginForm() {
   }, []);
 
   function onSubmit(formData: FormData) {
-    const mail = String(formData.get("email") ?? "").trim();
+    const valor = String(formData.get("login") ?? "").trim();
     const quiereRecordar = formData.get("recordar") === "1";
     try {
-      if (quiereRecordar && mail) {
-        localStorage.setItem(CLAVE_USUARIO, mail);
+      if (quiereRecordar && valor) {
+        localStorage.setItem(CLAVE_USUARIO, valor);
       } else {
         localStorage.removeItem(CLAVE_USUARIO);
       }
@@ -45,28 +45,30 @@ export function LoginForm() {
     <form action={onSubmit} className="space-y-4">
       <label className="block">
         <span className="mb-1 block text-sm font-semibold text-neutral-700">
-          Mail
+          Teléfono o mail
         </span>
         <input
-          type="email"
-          name="email"
+          type="text"
+          name="login"
           required
-          autoComplete="email"
-          placeholder="digitalpreseciavip@gmail.com"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          autoComplete="username"
+          inputMode="email"
+          placeholder="tu teléfono o tu mail"
+          value={login}
+          onChange={(e) => setLogin(e.target.value)}
           className="w-full rounded-xl border border-movipack/20 bg-white px-4 py-3 outline-none ring-movipack/30 focus:border-movipack focus:ring-2"
         />
       </label>
       <label className="block">
         <span className="mb-1 block text-sm font-semibold text-neutral-700">
-          Contraseña
+          PIN o contraseña
         </span>
         <input
           type="password"
           name="password"
           required
           autoComplete="current-password"
+          placeholder="PIN de 4 números o tu clave"
           className="w-full rounded-xl border border-movipack/20 bg-white px-4 py-3 outline-none ring-movipack/30 focus:border-movipack focus:ring-2"
         />
       </label>

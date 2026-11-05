@@ -12,6 +12,8 @@ const nextConfig: NextConfig = {
     "googleapis",
     "@vercel/blob",
     "cloudinary",
+    "@libsql/client",
+    "sharp",
   ],
   images: {
     remotePatterns: [
