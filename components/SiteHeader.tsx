@@ -39,7 +39,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-40 border-b border-movipack/15 bg-white/95 shadow-sm shadow-movipack/5 backdrop-blur-md">
       <div className="mx-auto flex h-14 max-w-6xl min-w-0 items-center gap-2 px-3 sm:h-auto sm:justify-between sm:gap-3 sm:px-6 sm:py-3">
         <Link
-          href="/catalogo"
+          href="/"
           className="flex min-w-0 shrink items-center gap-2 rounded-lg outline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-movipack"
         >
           <BrandLogo variant="header" />

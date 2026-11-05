@@ -48,6 +48,7 @@ yarn-error.log*
 # cuentas locales (hashes)
 /data/usuarios.json
 /data/pedidos.json
+/data/reporte-actualizacion-tpv.json
 
 # Google Drive (cuenta de servicio)
 /secrets/
