@@ -105,7 +105,7 @@ const POR_PAGINA = 12;
 type Vista = "inicio" | "empleado" | "venta" | "cierre" | "listados" | "stock" | "clientes" | "productos" | "mantenimiento" | "deudas" | "pedidos";
 type Linea = { id: string; cantidad: number; precio?: number };
 
-const GRILLA_TICKET = "grid grid-cols-[minmax(0,1fr)_6.5rem_5.5rem_5.5rem] items-center gap-1";
+const GRILLA_TICKET = "grid grid-cols-[minmax(0,1fr)_5.5rem_4.75rem_4.75rem] items-center gap-1";
 
 export function CajaPanel({
   productos,
@@ -806,9 +806,50 @@ export function CajaPanel({
       )}
 
       {vista === "venta" && (
-        <div className="grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)_minmax(18.5rem,26rem)]">
-          <section className="flex min-h-0 flex-col">
-            <div className="min-h-0 flex-1 overflow-y-auto p-4">
+        <div className="flex min-h-0 flex-1 overflow-hidden">
+          <section className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
+            <form
+              className="flex shrink-0 flex-nowrap items-end gap-2 overflow-x-auto border-b border-neutral-200 bg-white px-3 py-2"
+              onSubmit={(e) => {
+                e.preventDefault();
+                buscarCodigo(codigoRef.current?.value ?? codigo);
+              }}
+            >
+              <label className="min-w-56 flex-1 text-xs font-bold">
+                Escanear
+                <input
+                  ref={codigoRef}
+                  value={codigo}
+                  onChange={(e) => setCodigo(e.target.value)}
+                  placeholder="Código de barras, código o nombre"
+                  className={`${caja.campo} mt-1 h-10`}
+                />
+              </label>
+              <button type="submit" className={`${caja.primario} h-10 shrink-0 px-3 py-0`}>
+                ➕ Agregar
+              </button>
+              <button type="button" className={`${caja.boton} h-10 shrink-0`} onClick={() => setBuscarProductos(true)}>
+                🔍 F6
+              </button>
+              <button type="button" className={`${caja.boton} h-10 shrink-0`} onClick={alternarEnvio}>
+                {llevaEnvio ? "🚫 Quitar envío" : "🚚 Envío"}
+              </button>
+              <button
+                type="button"
+                className={`${caja.boton} h-10 shrink-0`}
+                onClick={() => setRetiroAbierto((abierto) => !abierto)}
+              >
+                💵 Retiro
+              </button>
+              <button
+                type="button"
+                className={`${caja.boton} h-10 shrink-0 border-cape/30 text-cape`}
+                onClick={() => setUltimasAbiertas(true)}
+              >
+                ↩️ Devolución
+              </button>
+            </form>
+            <div className="min-h-0 flex-1 overflow-y-auto p-3">
             {cartel && (
               <div className="mb-3 rounded-2xl bg-movipack-deep px-4 py-3 text-white">
                 <div className="flex items-start justify-between gap-3">
@@ -857,23 +898,8 @@ export function CajaPanel({
                 setCliente(persona ? nombreVisible(persona) : "Cliente genérico");
               }}
             />
-            {clienteVenta && lineas.length > 0 && (
-              <div className="mb-3 rounded-2xl border-2 border-movipack/40 bg-movipack/5 p-3">
-                <p className="mb-2 text-sm font-semibold text-neutral-700">
-                  Cliente {nombreVisible(clienteVenta)} · {unidades} ítems · {formatoPesos(total)}
-                </p>
-                <button
-                  type="button"
-                  disabled={pending}
-                  className={`${caja.primario} inline-flex h-12 w-full items-center justify-center gap-2 sm:w-auto`}
-                  onClick={generarPresupuesto}
-                >
-                  📄 Generar presupuesto PDF
-                </button>
-              </div>
-            )}
             <p className={caja.kicker}>Secciones</p>
-            <div className="mt-2 flex gap-2 overflow-x-auto pb-2">
+            <div className="mt-1 flex gap-2 overflow-x-auto pb-1">
               {rubros.map((r) => (
                 <button
                   key={r.clave}
@@ -882,7 +908,7 @@ export function CajaPanel({
                     setSeccion(r.clave);
                     setPagina(0);
                   }}
-                  className={`${caja.chip} ${seccion === r.clave ? caja.chipActivo : caja.chipIdle}`}
+                  className={`${caja.chip} min-h-10 min-w-24 ${seccion === r.clave ? caja.chipActivo : caja.chipIdle}`}
                 >
                   {r.etiqueta}
                 </button>
@@ -946,7 +972,7 @@ export function CajaPanel({
             </div>
             </div>
             {retiroAbierto && (
-              <div className="shrink-0 border-t border-neutral-200 bg-amber-50 px-4 py-3">
+              <div className="shrink-0 border-t border-neutral-200 bg-amber-50 px-4 py-2">
                 <p className="text-sm font-black">Retiro de caja</p>
                 <div className="mt-2 grid gap-2 sm:grid-cols-[1fr_10rem_auto]">
                   <input
@@ -980,56 +1006,15 @@ export function CajaPanel({
                 </ul>
               </div>
             )}
-            <form
-              className="flex shrink-0 items-end gap-2 border-t border-neutral-200 bg-white p-3"
-              onSubmit={(e) => {
-                e.preventDefault();
-                buscarCodigo(codigoRef.current?.value ?? codigo);
-              }}
-            >
-              <label className="min-w-0 flex-1 text-sm font-bold">
-                Escanear
-                <input
-                  ref={codigoRef}
-                  value={codigo}
-                  onChange={(e) => setCodigo(e.target.value)}
-                  placeholder="Código de barras, código o nombre"
-                  className={`${caja.campo} mt-1`}
-                />
-              </label>
-              <button type="submit" className={caja.primario}>
-                ➕ Agregar
-              </button>
-              <button type="button" className={caja.boton} onClick={() => setBuscarProductos(true)}>
-                🔍 Buscar F6
-              </button>
-              <button type="button" className={caja.boton} onClick={alternarEnvio}>
-                {llevaEnvio ? "🚫 Quitar envío" : "🚚 Envío"}
-              </button>
-              <button
-                type="button"
-                className={caja.boton}
-                onClick={() => setRetiroAbierto((abierto) => !abierto)}
-              >
-                💵 Retiro
-              </button>
-              <button
-                type="button"
-                className={`${caja.boton} border-cape/30 text-cape`}
-                onClick={() => setUltimasAbiertas(true)}
-              >
-                ↩️ Devolución
-              </button>
-            </form>
           </section>
 
-          <aside className="flex min-h-0 flex-col border-l border-neutral-200 bg-white">
-            <div className="shrink-0 border-b border-neutral-100 bg-movipack-deep px-4 py-3 text-right text-white">
-              <p className="text-xs font-bold uppercase tracking-[0.16em] text-confetti">Venta actual</p>
-              <p className="font-display text-5xl font-bold leading-none">
+          <aside className="flex min-h-0 w-[min(24rem,40vw)] shrink-0 flex-col overflow-hidden border-l border-neutral-200 bg-white">
+            <div className="shrink-0 border-b border-neutral-100 bg-movipack-deep px-4 py-2 text-right text-white">
+              <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-confetti">Venta actual</p>
+              <p className="font-display text-3xl font-bold leading-none">
                 {formatoPesos(total)}
               </p>
-              <p className="text-sm text-white/70">{unidades} artículos</p>
+              <p className="text-xs text-white/70">{unidades} artículos</p>
             </div>
             <div className={`${GRILLA_TICKET} border-b border-neutral-100 px-3 py-2 text-[11px] font-bold uppercase tracking-wide text-neutral-500`}>
               <span>Detalle de venta</span>
@@ -1114,30 +1099,21 @@ export function CajaPanel({
               })}
             </ul>
 
-            <p className="shrink-0 px-4 pt-3 text-sm font-semibold text-neutral-600">
+            <p className="shrink-0 truncate px-3 py-1.5 text-xs font-semibold text-neutral-600">
               Cliente: <span className="text-foreground">{clienteVenta ? nombreVisible(clienteVenta) : cliente}</span>
               {descuentoVenta > 0 ? ` · descuento ${descuentoVenta}%` : ""}
             </p>
 
-            <div className="m-3 shrink-0 space-y-2 rounded-2xl bg-confetti/20 px-3 py-3 text-center">
-              <p className={caja.kicker}>Última venta</p>
-              <p className="mt-1 font-display text-3xl font-bold text-movipack">
-                {ultima ? formatoPesos(ultima.total) : formatoPesos(0)}
+            <div className="mx-3 mb-2 flex shrink-0 items-center justify-between gap-2 rounded-xl bg-confetti/20 px-3 py-2">
+              <p className="min-w-0 truncate text-xs font-semibold text-neutral-700">
+                Última: {ultima ? `${formatoPesos(ultima.total)} · ${etiquetaFormaPago(ultima.formaPago)}` : "—"}
               </p>
-              <p className="mt-1 text-sm font-semibold">
-                {ultima ? etiquetaFormaPago(ultima.formaPago) : "Contado"}
-              </p>
-              {ultima && (
-                <p className="text-xs text-neutral-600">
-                  Factura {ultima.numero} · {ultima.cliente}
-                </p>
-              )}
               <button
                 type="button"
-                className="mt-2 flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-cape text-sm font-bold text-white shadow-md shadow-cape/25 transition hover:brightness-110"
+                className="h-8 shrink-0 rounded-lg bg-cape px-2 text-[11px] font-bold text-white"
                 onClick={() => setUltimasAbiertas(true)}
               >
-                ↩️ Devolución / reimprimir
+                ↩️
               </button>
             </div>
 
@@ -1146,7 +1122,7 @@ export function CajaPanel({
                 <button
                   type="button"
                   disabled={pending}
-                  className={`${caja.boton} h-12 border-movipack/40 text-movipack`}
+                  className={`${caja.boton} h-10 border-movipack/40 text-movipack`}
                   onClick={generarPresupuesto}
                 >
                   📄 Presupuesto PDF
@@ -1155,7 +1131,7 @@ export function CajaPanel({
               <div className="grid grid-cols-2 gap-2">
                 <button
                   type="button"
-                  className={caja.boton}
+                  className={`${caja.boton} h-11`}
                   onClick={() => {
                     setLineas([]);
                     soltarPedidoWeb();
@@ -1167,10 +1143,10 @@ export function CajaPanel({
                 <button
                   type="button"
                   disabled={pending || lineas.length === 0}
-                  className={caja.oscuro}
+                  className={`${caja.oscuro} h-11 py-0`}
                   onClick={terminarVenta}
                 >
-                  ✅ Terminar venta F9
+                  ✅ Terminar F9
                 </button>
               </div>
             </div>
@@ -1202,7 +1178,7 @@ export function CajaPanel({
       )}
 
       {(vista === "cierre" || vista === "listados" || vista === "stock" || vista === "clientes" || vista === "productos" || vista === "mantenimiento" || vista === "deudas" || vista === "pedidos") && (
-        <div className={`min-h-0 flex-1 ${vista === "listados" ? "flex flex-col overflow-hidden" : "overflow-auto"}`}>
+        <div className="min-h-0 flex-1 overflow-auto">
       {vista === "cierre" && (
         <CajaCierre
           total={total}

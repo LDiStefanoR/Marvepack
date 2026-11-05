@@ -7,18 +7,9 @@ import { caja } from "@/components/caja-estilo";
 import { digitosMonto, formatoPesos, textoMonto } from "@/lib/format";
 import { sugerirPrecio } from "@/lib/margen";
 import type { Proveedor } from "@/lib/deposito";
+import { esFotoGenericaDeFamilia, sinFotoDeProducto } from "@/lib/foto-producto";
 import type { Producto } from "@/types/producto";
 import type { Rubro } from "@/types/rubro";
-
-function sinFotoDeProducto(imagen?: string) {
-  const img = (imagen || "").trim();
-  if (!img) return true;
-  if (img.includes("/imagenes-rubros/")) return true;
-  if (/\/logo\.(jpe?g|png|webp)$/i.test(img)) return true;
-  if (img.includes("/recursos/imagenes-productos/")) return false;
-  if (/^https?:\/\//i.test(img)) return false;
-  return true;
-}
 
 type Props = {
   productos: Producto[];
@@ -422,6 +413,13 @@ export function AdminImagesForm({
                   <span className="px-2 text-center text-xs font-bold text-neutral-500">Sin foto</span>
                 )}
               </div>
+              {elegido && sinFotoDeProducto(elegido.imagen) && (
+                <p className="mt-1 text-[11px] font-semibold text-neutral-500">
+                  {esFotoGenericaDeFamilia(elegido.imagen)
+                    ? "Foto genérica de familia: no cuenta como foto del producto."
+                    : "Este producto no tiene foto propia."}
+                </p>
+              )}
             </div>
           </div>
           <button type="submit" className="sr-only">
@@ -441,7 +439,7 @@ export function AdminImagesForm({
             </button>
           </div>
           <p className="mt-1 text-xs text-neutral-500">
-            Sin foto muestra los del catálogo que en la web salen sin foto propia: sin imagen o con la imagen del rubro.
+            Sin foto lista los que no tienen foto propia: vacíos o con foto genérica de familia. Esa genérica no cuenta.
           </p>
           <div className="mt-2 flex items-center gap-2">
             <button

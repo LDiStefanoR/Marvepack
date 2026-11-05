@@ -2,9 +2,9 @@
 export const caja = {
   pantalla: "min-h-screen bg-background text-foreground",
   header:
-    "sticky top-0 z-30 flex flex-wrap items-center gap-x-4 gap-y-2 border-b border-white/10 bg-movipack-deep px-4 py-3 text-white",
+    "sticky top-0 z-30 flex shrink-0 flex-nowrap items-center gap-x-3 overflow-x-auto border-b border-white/10 bg-movipack-deep px-4 py-2 text-white",
   marca: "font-display text-xl font-bold italic tracking-tight text-confetti",
-  reloj: "font-display text-3xl font-bold leading-none",
+  reloj: "font-display text-2xl font-bold leading-none",
   meta: "text-sm text-white/70",
   metaFuerte: "font-semibold text-white",
   botonHeader:
@@ -12,9 +12,9 @@ export const caja = {
   botonHeaderPrimario:
     "rounded-xl bg-confetti px-3 py-2 text-sm font-bold text-neutral-900 transition hover:brightness-110",
   avisoError:
-    "mx-4 mt-3 rounded-xl border border-cape/25 bg-red-50 px-3 py-2 text-sm font-semibold text-cape",
+    "mx-4 mt-2 shrink-0 rounded-xl border border-cape/25 bg-red-50 px-3 py-2 text-sm font-semibold text-cape",
   avisoOk:
-    "mx-4 mt-3 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm font-semibold text-emerald-800",
+    "mx-4 mt-2 shrink-0 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm font-semibold text-emerald-800",
   avisoErrorPlano:
     "mb-3 rounded-xl border border-cape/25 bg-red-50 px-3 py-2 text-sm font-semibold text-cape",
   avisoOkPlano:
@@ -42,7 +42,7 @@ export const caja = {
   chipIdle: "border-neutral-200 bg-white text-neutral-800 hover:border-movipack/40",
   chipActivo: "border-movipack bg-movipack text-white shadow-md shadow-movipack/25",
   producto:
-    "flex min-h-28 flex-col justify-between rounded-2xl border border-neutral-200 bg-white px-3 py-2.5 text-left shadow-sm transition hover:border-movipack/40 hover:shadow-md disabled:opacity-40",
+    "flex min-h-20 flex-col justify-between rounded-xl border border-neutral-200 bg-white px-2.5 py-2 text-left shadow-sm transition hover:border-movipack/40 hover:shadow-md disabled:opacity-40",
   precio: "block font-display text-xl font-bold leading-none text-movipack",
   pager:
     "flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-movipack text-lg font-bold text-white disabled:opacity-40",

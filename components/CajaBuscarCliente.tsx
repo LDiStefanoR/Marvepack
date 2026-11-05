@@ -118,8 +118,8 @@ export function CajaBuscarCliente({
   }
 
   return (
-    <div className="mb-3">
-      <div className="flex flex-wrap items-center gap-2">
+    <div className="mb-2">
+      <div className="flex flex-nowrap items-center gap-2 overflow-x-auto">
         <button
           type="button"
           onClick={() => {

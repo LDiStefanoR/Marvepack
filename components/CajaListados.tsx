@@ -163,7 +163,7 @@ export function CajaListados({
   if (fuera.length > 0) params.set("fuera", fuera.join(","));
 
   return (
-    <section className="flex min-h-0 flex-1 flex-col px-4 py-4">
+    <section className="px-4 py-4">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <p className={caja.kicker}>Informes</p>
@@ -182,17 +182,17 @@ export function CajaListados({
         </div>
       </div>
 
-      <div className="mt-4 grid shrink-0 gap-3 sm:grid-cols-2 xl:grid-cols-5">
+      <div className="mt-3 grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
         {GRUPOS.map((grupo) => (
           <div key={grupo.titulo}>
             <p className={caja.kicker}>{grupo.titulo}</p>
-            <div className="mt-2 flex flex-wrap gap-2">
+            <div className="mt-1.5 flex flex-wrap gap-1.5">
               {grupo.tipos.map((opcion) => (
                 <button
                   key={opcion.id}
                   type="button"
                   onClick={() => setTipo(opcion.id)}
-                  className={`${caja.chip} ${tipo === opcion.id ? caja.chipActivo : caja.chipIdle}`}
+                  className={`min-h-9 min-w-0 rounded-xl border px-2.5 text-xs font-bold shadow-sm transition ${tipo === opcion.id ? caja.chipActivo : caja.chipIdle}`}
                 >
                   {opcion.texto}
                 </button>
@@ -202,7 +202,7 @@ export function CajaListados({
         ))}
       </div>
 
-      <div className="mt-4 flex shrink-0 flex-wrap items-end gap-2">
+      <div className="mt-3 flex flex-wrap items-end gap-2">
         <label className="text-sm font-bold">
           Buscar
           <input
@@ -246,29 +246,29 @@ export function CajaListados({
         )}
       </div>
 
-      <h3 className="mt-4 shrink-0 font-display text-2xl font-bold">{tituloListado(tipo)}</h3>
-      {tabla.nota && <p className="mt-1 max-w-4xl shrink-0 text-sm text-neutral-600">{tabla.nota}</p>}
+      <h3 className="mt-4 font-display text-2xl font-bold">{tituloListado(tipo)}</h3>
+      {tabla.nota && <p className="mt-1 max-w-4xl text-sm text-neutral-600">{tabla.nota}</p>}
       {tipo === "valor-stock" && (
-        <p className="mt-1 max-w-3xl shrink-0 text-sm text-neutral-600">
+        <p className="mt-1 max-w-3xl text-sm text-neutral-600">
           Solo productos con unidades en stock. El costo es el último cargado. El valor de venta usa el precio de venta de cada producto.
         </p>
       )}
       {tipo === "compras-proveedor" && (
-        <p className="mt-1 max-w-3xl shrink-0 text-sm text-neutral-600">
+        <p className="mt-1 max-w-3xl text-sm text-neutral-600">
           Cada fila es una factura cargada al recepcionar un pedido o al entrar mercadería sin pedido. El importe es el costo de lo que entró.
         </p>
       )}
       {tipo === "salidas-caja" && (
-        <p className="mt-1 max-w-3xl shrink-0 text-sm text-neutral-600">
+        <p className="mt-1 max-w-3xl text-sm text-neutral-600">
           Retiros de efectivo registrados en la caja, por ejemplo pagos a proveedores o gastos.
         </p>
       )}
       {(tipo === "costo-ventas" || tipo === "ganancia") && (
-        <p className="mt-1 max-w-3xl shrink-0 text-sm text-neutral-600">
+        <p className="mt-1 max-w-3xl text-sm text-neutral-600">
           El costo es el último cargado en cada producto. La ganancia es la venta menos ese costo. No incluye los listados de clientes.
         </p>
       )}
-      <div className="mt-2 flex shrink-0 flex-wrap items-center gap-2 text-sm font-semibold text-neutral-600">
+      <div className="mt-2 flex flex-wrap items-center gap-2 text-sm font-semibold text-neutral-600">
         <span>
           {elegidas.length} de {datos.length} seleccionados
         </span>
@@ -281,7 +281,7 @@ export function CajaListados({
       </div>
 
       {tipo === "ventas" ? (
-        <div className="mt-3 flex min-h-0 flex-1 flex-col overflow-auto">
+        <div className="mt-3">
           <CajaVentasDia
             ventas={ventasOrdenadas}
             pending={pending}
@@ -299,7 +299,7 @@ export function CajaListados({
           </p>
         </div>
       ) : (
-        <div className="mt-3 min-h-0 flex-1 overflow-auto rounded-2xl border border-neutral-200 bg-white shadow-sm">
+        <div className="mt-3 rounded-2xl border border-neutral-200 bg-white shadow-sm">
           <table className="w-full min-w-[720px] text-left text-sm">
             <thead className="sticky top-0 z-10 bg-neutral-100 text-xs uppercase">
               <tr>
