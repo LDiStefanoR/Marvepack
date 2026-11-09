@@ -94,13 +94,15 @@
     "nombre": "RIÑON 20x30 LISA",
     "seccion": "BOLSAS",
     "precio": 3800,
-    "imagen": "/recursos/imagenes-productos/bolsa-rinon.jpg",
+    "imagen": "/api/media/fotos/imagenes-productos/carga-37-1793921595509.webp",
     "descripcion": "Bolsas para delivery, mostrador y e-commerce. Consultanos medidas y cantidades.",
     "precioMayorista": 3420,
     "costo": 2800,
     "stock": 1,
     "stockMinimo": 0,
-    "margen": 35.7
+    "margen": 35.7,
+    "mostrarEnCaja": true,
+    "mostrarEnCatalogo": true
   },
   {
     "id": "mp-393",
@@ -332,24 +334,24 @@
     "imagen": "/recursos/imagenes-productos/auto-23.jpg",
     "descripcion": "Bolsas para delivery, mostrador y e-commerce. Consultanos medidas y cantidades.",
     "precioMayorista": 1440,
-    "costo": 1090,
+    "costo": 1050,
     "stock": 3000,
     "stockMinimo": 0,
-    "margen": 46.8
+    "margen": 52.4
   },
   {
     "id": "mp-22",
     "codigo": "22",
     "nombre": "EMBLOCADA NOBLEZA 20x30 x100 (1000)",
     "seccion": "BOLSAS",
-    "precio": 1190,
+    "precio": 950,
     "imagen": "/recursos/imagenes-productos/auto-22.jpg",
     "descripcion": "Bolsas para delivery, mostrador y e-commerce. Consultanos medidas y cantidades.",
     "precioMayorista": 747,
-    "costo": 850,
+    "costo": 620,
     "stock": 3000,
     "stockMinimo": 0,
-    "margen": 40.0
+    "margen": 53.2
   },
   {
     "id": "mp-55",
@@ -576,7 +578,7 @@
     "nombre": "CAMISETASALE 45 X 60",
     "seccion": "BOLSAS",
     "precio": 3100,
-    "imagen": "/recursos/imagenes-productos/bolsa-camiseta.jpg",
+    "imagen": "/api/media/fotos/imagenes-productos/carga-510-1793938963684.jpg",
     "descripcion": "Bolsas para delivery, mostrador y e-commerce. Consultanos medidas y cantidades.",
     "precioMayorista": 2790
   },
@@ -816,13 +818,15 @@
     "nombre": "ARRANQUE 35x45 x 1 un",
     "seccion": "BOLSAS",
     "precio": 8550,
-    "imagen": "/recursos/imagenes-productos/auto-4.webp",
+    "imagen": "/api/media/fotos/imagenes-productos/carga-4-1794235052237.jpg",
     "descripcion": "Bolsas para delivery, mostrador y e-commerce. Consultanos medidas y cantidades.",
     "precioMayorista": 7191,
     "costo": 6090,
     "stock": 5,
     "stockMinimo": 0,
-    "margen": 40.4
+    "margen": 40.4,
+    "mostrarEnCaja": true,
+    "mostrarEnCatalogo": true
   },
   {
     "id": "mp-292",
@@ -991,14 +995,14 @@
     "codigo": "291",
     "nombre": "BOLSA C/MANIJA 18X8X20 FEST/INFAT X UN",
     "seccion": "BOLSAS",
-    "precio": 990,
+    "precio": 900,
     "imagen": "/recursos/imagenes-productos/auto-291.webp",
     "descripcion": "Bolsas para delivery, mostrador y e-commerce. Consultanos medidas y cantidades.",
     "precioMayorista": 810,
     "costo": 575,
     "stock": 14,
     "stockMinimo": 0,
-    "margen": 72.2
+    "margen": 56.5
   },
   {
     "id": "mp-1031",
@@ -1421,23 +1425,13 @@
     "nombre": "FRIZELINA C/MANIJA CRUDA 45X40X un",
     "seccion": "BOLSAS",
     "precio": 650,
-    "imagen": "/recursos/imagenes-productos/bolsa-delivery.jpg",
+    "imagen": "/api/media/fotos/imagenes-productos/carga-294-1793938928511.webp",
     "descripcion": "Bolsas para delivery, mostrador y e-commerce. Consultanos medidas y cantidades.",
     "precioMayorista": 432,
     "costo": 343,
     "stock": 0,
     "stockMinimo": 0,
     "margen": 89.5
-  },
-  {
-    "id": "mp-293",
-    "codigo": "293",
-    "nombre": "BOLSA DE TELA C/MANIJA FRIZELINA CRUDA P/1BOT 17.5X40X un",
-    "seccion": "BOLSAS",
-    "precio": 280,
-    "imagen": "/recursos/imagenes-productos/bolsa-delivery.jpg",
-    "descripcion": "Bolsas para delivery, mostrador y e-commerce. Consultanos medidas y cantidades.",
-    "precioMayorista": 252
   },
   {
     "id": "mp-1027",
@@ -2566,10 +2560,10 @@
     "imagen": "/recursos/imagenes-productos/auto-2312.webp",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "precioMayorista": 3591,
-    "costo": 1720,
+    "costo": 1985,
     "stock": 9,
     "stockMinimo": 0,
-    "margen": 132.0
+    "margen": 101.0
   },
   {
     "id": "mp-2286",
@@ -3228,14 +3222,14 @@
     "codigo": "2359",
     "nombre": "GLOBO NUMERO 32´´C/U",
     "seccion": "COTILLON",
-    "precio": 2500,
+    "precio": 2000,
     "imagen": "/recursos/imagenes-productos/auto-2359.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "precioMayorista": 1800,
-    "costo": 1150,
+    "costo": 357,
     "stock": 181,
     "stockMinimo": 0,
-    "margen": 117.4
+    "margen": 460.2
   },
   {
     "id": "mp-2437",
@@ -3378,10 +3372,10 @@
     "imagen": "/recursos/imagenes-productos/auto-2344.webp",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "precioMayorista": 1350,
-    "costo": 710,
+    "costo": 593,
     "stock": 67,
     "stockMinimo": 0,
-    "margen": 111.3
+    "margen": 153.0
   },
   {
     "id": "mp-2361",
@@ -5759,7 +5753,7 @@
     "nombre": "COPA DE CHAMPAGNE C/PIE KOVAL X 10 UN (100)",
     "seccion": "DESCARTABLES",
     "precio": 4200,
-    "imagen": "/recursos/imagenes-productos/copa-champagne.jpg",
+    "imagen": "/api/media/fotos/imagenes-productos/carga-153-1793939131329.webp",
     "descripcion": "Descartables de uso diario para gastronomía y comercio.",
     "precioMayorista": 3780,
     "costo": 26965,
@@ -5898,13 +5892,15 @@
     "nombre": "CUCHILLO BLANCO KOVAL X 50u (20)",
     "seccion": "DESCARTABLES",
     "precio": 1900,
-    "imagen": "/recursos/imagenes-productos/cubiertos.jpg",
+    "imagen": "/api/media/fotos/imagenes-productos/carga-156-1793939088306.jpg",
     "descripcion": "Descartables de uso diario para gastronomía y comercio.",
     "precioMayorista": 1710,
     "costo": 1330,
     "stock": 40,
     "stockMinimo": 0,
-    "margen": 42.9
+    "margen": 42.9,
+    "mostrarEnCaja": true,
+    "mostrarEnCatalogo": true
   },
   {
     "id": "mp-270",
@@ -7838,28 +7834,28 @@
     "codigo": "340",
     "nombre": "TALONARIO DUPLICADO GRANDE X UN (60)",
     "seccion": "LIBRERIA",
-    "precio": 3300,
+    "precio": 2990,
     "imagen": "/recursos/imagenes-productos/auto-340.jpg",
     "descripcion": "Librería y accesorios: cintas, moños, palitos y más.",
     "precioMayorista": 2691,
     "costo": 1970,
     "stock": 4,
     "stockMinimo": 0,
-    "margen": 67.5
+    "margen": 51.8
   },
   {
     "id": "mp-339",
     "codigo": "339",
     "nombre": "TALONARIO DUPLICADO CHICO X U (120)",
     "seccion": "LIBRERIA",
-    "precio": 2500,
+    "precio": 1800,
     "imagen": "/recursos/imagenes-productos/auto-339.png",
     "descripcion": "Librería y accesorios: cintas, moños, palitos y más.",
     "precioMayorista": 1620,
     "costo": 986,
     "stock": 4,
     "stockMinimo": 0,
-    "margen": 153.5
+    "margen": 82.6
   },
   {
     "id": "mp-338",
@@ -7880,14 +7876,14 @@
     "codigo": "337",
     "nombre": "TALONARIO DE BAR VARIOS X I UN (10)",
     "seccion": "LIBRERIA",
-    "precio": 1500,
+    "precio": 750,
     "imagen": "/recursos/imagenes-productos/auto-337.webp",
     "descripcion": "Librería y accesorios: cintas, moños, palitos y más.",
     "precioMayorista": 675,
-    "costo": 580,
+    "costo": 482,
     "stock": 100,
     "stockMinimo": 0,
-    "margen": 158.6
+    "margen": 55.6
   },
   {
     "id": "mp-336",
@@ -9884,7 +9880,9 @@
     "imagen": "/recursos/imagenes-productos/bolsa-plastica.jpg",
     "descripcion": "Bolsas para delivery, mostrador y e-commerce. Consultanos medidas y cantidades.",
     "stock": 6,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 375,
+    "margen": 166.7
   },
   {
     "id": "mp-839",
@@ -9895,7 +9893,9 @@
     "imagen": "/recursos/imagenes-productos/bolsa-plastica.jpg",
     "descripcion": "Bolsas para delivery, mostrador y e-commerce. Consultanos medidas y cantidades.",
     "stock": 6,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 5265,
+    "margen": 40.6
   },
   {
     "id": "mp-829",
@@ -9903,10 +9903,12 @@
     "nombre": "BOLSA 5X22 CIERRE ZIPLOC",
     "seccion": "BOLSAS",
     "precio": 250,
-    "imagen": "/recursos/imagenes-productos/bolsa-plastica.jpg",
+    "imagen": "/api/media/fotos/imagenes-productos/carga-829-1793921463148.webp",
     "descripcion": "Bolsas para delivery, mostrador y e-commerce. Consultanos medidas y cantidades.",
     "stock": 100,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 110,
+    "margen": 127.3
   },
   {
     "id": "mp-838",
@@ -9914,10 +9916,14 @@
     "nombre": "CAMISETA 40X50 SALE",
     "seccion": "BOLSAS",
     "precio": 1900,
-    "imagen": "/recursos/imagenes-productos/bolsa-plastica.jpg",
+    "imagen": "/api/media/fotos/imagenes-productos/carga-838-1793938800933.jpg",
     "descripcion": "Bolsas para delivery, mostrador y e-commerce. Consultanos medidas y cantidades.",
-    "stock": 16,
-    "stockMinimo": 0
+    "stock": 32,
+    "stockMinimo": 0,
+    "mostrarEnCaja": true,
+    "mostrarEnCatalogo": true,
+    "costo": 1240,
+    "margen": 53.2
   },
   {
     "id": "mp-837",
@@ -9928,7 +9934,9 @@
     "imagen": "/recursos/imagenes-productos/bolsa-plastica.jpg",
     "descripcion": "Bolsas para delivery, mostrador y e-commerce. Consultanos medidas y cantidades.",
     "stock": 19,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 973,
+    "margen": 54.2
   },
   {
     "id": "mp-835",
@@ -9936,10 +9944,14 @@
     "nombre": "ARRANQUE 12X 15 CRISTAL",
     "seccion": "BOLSAS",
     "precio": 3500,
-    "imagen": "/recursos/imagenes-productos/bolsa-plastica.jpg",
+    "imagen": "/api/media/fotos/imagenes-productos/carga-835-1793921526003.jpg",
     "descripcion": "Bolsas para delivery, mostrador y e-commerce. Consultanos medidas y cantidades.",
     "stock": 3,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "mostrarEnCaja": true,
+    "mostrarEnCatalogo": true,
+    "costo": 2222,
+    "margen": 57.5
   },
   {
     "id": "mp-857",
@@ -9950,7 +9962,9 @@
     "imagen": "/recursos/imagenes-productos/bolsa-plastica.jpg",
     "descripcion": "Bolsas para delivery, mostrador y e-commerce. Consultanos medidas y cantidades.",
     "stock": 8,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 550,
+    "margen": 136.4
   },
   {
     "id": "mp-629",
@@ -9961,7 +9975,9 @@
     "imagen": "/recursos/imagenes-productos/caja-comida.jpg",
     "descripcion": "Cajas microcorrugadas para hamburguesas, pizzas y delivery caliente.",
     "stock": 0,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 21363,
+    "margen": 35.0
   },
   {
     "id": "mp-628",
@@ -9972,7 +9988,9 @@
     "imagen": "/recursos/imagenes-productos/caja-comida.jpg",
     "descripcion": "Cajas microcorrugadas para hamburguesas, pizzas y delivery caliente.",
     "stock": 0,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 21995,
+    "margen": 35.0
   },
   {
     "id": "mp-627",
@@ -9983,7 +10001,9 @@
     "imagen": "/recursos/imagenes-productos/caja-comida.jpg",
     "descripcion": "Cajas microcorrugadas para hamburguesas, pizzas y delivery caliente.",
     "stock": 0,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 25083,
+    "margen": 35.0
   },
   {
     "id": "mp-752",
@@ -9994,7 +10014,9 @@
     "imagen": "/recursos/imagenes-productos/caja-regalo.jpg",
     "descripcion": "Cajas y estuches para regalos, desayunos y pastelería.",
     "stock": 2,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 945,
+    "margen": 48.1
   },
   {
     "id": "mp-642",
@@ -10005,7 +10027,9 @@
     "imagen": "/recursos/imagenes-productos/caja-regalo.jpg",
     "descripcion": "Cajas y estuches para regalos, desayunos y pastelería.",
     "stock": 10,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 615,
+    "margen": 62.6
   },
   {
     "id": "mp-640",
@@ -10016,7 +10040,9 @@
     "imagen": "/recursos/imagenes-productos/caja-regalo.jpg",
     "descripcion": "Cajas y estuches para regalos, desayunos y pastelería.",
     "stock": 2,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 3900,
+    "margen": 46.2
   },
   {
     "id": "mp-753",
@@ -10027,7 +10053,9 @@
     "imagen": "/recursos/imagenes-productos/caja-regalo.jpg",
     "descripcion": "Cajas y estuches para regalos, desayunos y pastelería.",
     "stock": 0,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1496,
+    "margen": 40.4
   },
   {
     "id": "mp-826",
@@ -10038,7 +10066,9 @@
     "imagen": "/recursos/imagenes-productos/caja-regalo.jpg",
     "descripcion": "Cajas y estuches para regalos, desayunos y pastelería.",
     "stock": 10,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 66,
+    "margen": 187.9
   },
   {
     "id": "mp-588",
@@ -10049,7 +10079,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 3,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1470,
+    "margen": 104.1
   },
   {
     "id": "mp-587",
@@ -10060,7 +10092,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 1,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 2130,
+    "margen": 78.4
   },
   {
     "id": "mp-586",
@@ -10071,7 +10105,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 3,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 2350,
+    "margen": 48.9
   },
   {
     "id": "mp-585",
@@ -10082,7 +10118,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 13,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1930,
+    "margen": 81.3
   },
   {
     "id": "mp-584",
@@ -10093,7 +10131,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 10,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 500,
+    "margen": 200.0
   },
   {
     "id": "mp-583",
@@ -10104,7 +10144,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 9,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 2080,
+    "margen": 68.3
   },
   {
     "id": "mp-657",
@@ -10114,7 +10156,9 @@
     "precio": 1000,
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 550,
+    "margen": 81.8
   },
   {
     "id": "mp-688",
@@ -10125,7 +10169,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 4,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1751,
+    "margen": 214.1
   },
   {
     "id": "mp-739",
@@ -10136,7 +10182,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 5,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1680,
+    "margen": 96.4
   },
   {
     "id": "mp-732",
@@ -10147,7 +10195,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 5,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1575,
+    "margen": 96.8
   },
   {
     "id": "mp-745",
@@ -10158,7 +10208,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 2,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 7350,
+    "margen": 104.1
   },
   {
     "id": "mp-744",
@@ -10169,7 +10221,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 2,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 4800,
+    "margen": 87.5
   },
   {
     "id": "mp-743",
@@ -10180,7 +10234,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 4,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 2775,
+    "margen": 98.2
   },
   {
     "id": "mp-742",
@@ -10191,7 +10247,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 3,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1365,
+    "margen": 97.8
   },
   {
     "id": "mp-747",
@@ -10202,7 +10260,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 3,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 6900,
+    "margen": 88.4
   },
   {
     "id": "mp-740",
@@ -10213,7 +10273,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 10,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1420,
+    "margen": 118.3
   },
   {
     "id": "mp-748",
@@ -10224,7 +10286,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 3,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 4800,
+    "margen": 87.5
   },
   {
     "id": "mp-738",
@@ -10235,7 +10299,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 5,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 2100,
+    "margen": 100.0
   },
   {
     "id": "mp-737",
@@ -10246,7 +10312,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 3,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 2415,
+    "margen": 78.1
   },
   {
     "id": "mp-736",
@@ -10257,7 +10325,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 7,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1470,
+    "margen": 158.5
   },
   {
     "id": "mp-735",
@@ -10268,7 +10338,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 2,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1300,
+    "margen": 107.7
   },
   {
     "id": "mp-734",
@@ -10279,7 +10351,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 2,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1305,
+    "margen": 99.2
   },
   {
     "id": "mp-779",
@@ -10290,7 +10364,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 3,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 2350,
+    "margen": 91.5
   },
   {
     "id": "mp-741",
@@ -10301,7 +10377,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 5,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 2300,
+    "margen": 100.0
   },
   {
     "id": "mp-770",
@@ -10312,7 +10390,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 2,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 2205,
+    "margen": 81.0
   },
   {
     "id": "mp-673",
@@ -10323,7 +10403,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 1,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1890,
+    "margen": 106.3
   },
   {
     "id": "mp-777",
@@ -10334,7 +10416,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 24,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 305,
+    "margen": 195.1
   },
   {
     "id": "mp-776",
@@ -10345,7 +10429,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 4,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 5760,
+    "margen": 73.6
   },
   {
     "id": "mp-775",
@@ -10356,7 +10442,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 9,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 13650,
+    "margen": 83.2
   },
   {
     "id": "mp-774",
@@ -10367,7 +10455,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 2,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 3465,
+    "margen": 101.7
   },
   {
     "id": "mp-746",
@@ -10378,7 +10468,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 3,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 7300,
+    "margen": 105.5
   },
   {
     "id": "mp-772",
@@ -10389,7 +10481,8 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 8,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 500
   },
   {
     "id": "mp-731",
@@ -10400,7 +10493,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 8,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1365,
+    "margen": 83.2
   },
   {
     "id": "mp-768",
@@ -10411,7 +10506,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 2,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 2150,
+    "margen": 81.4
   },
   {
     "id": "mp-767",
@@ -10422,7 +10519,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 4,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1106,
+    "margen": 216.5
   },
   {
     "id": "mp-764",
@@ -10433,7 +10532,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 6,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1022,
+    "margen": 144.6
   },
   {
     "id": "mp-758",
@@ -10444,7 +10545,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 2,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1050,
+    "margen": 100.0
   },
   {
     "id": "mp-757",
@@ -10455,7 +10558,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 20,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1180,
+    "margen": 94.9
   },
   {
     "id": "mp-749",
@@ -10466,7 +10571,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 2,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 6900,
+    "margen": 73.9
   },
   {
     "id": "mp-773",
@@ -10477,7 +10584,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 2,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1000,
+    "margen": 150.0
   },
   {
     "id": "mp-684",
@@ -10488,7 +10597,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 10,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 455,
+    "margen": 119.8
   },
   {
     "id": "mp-733",
@@ -10499,7 +10610,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 2,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 2150,
+    "margen": 85.6
   },
   {
     "id": "mp-707",
@@ -10510,7 +10623,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 5,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 3000,
+    "margen": 96.7
   },
   {
     "id": "mp-706",
@@ -10521,7 +10636,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 10,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 3675,
+    "margen": 76.9
   },
   {
     "id": "mp-705",
@@ -10532,7 +10649,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 2,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1850,
+    "margen": 89.2
   },
   {
     "id": "mp-704",
@@ -10543,7 +10662,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 11,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1500,
+    "margen": 100.0
   },
   {
     "id": "mp-709",
@@ -10554,7 +10675,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 5,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1100,
+    "margen": 172.7
   },
   {
     "id": "mp-689",
@@ -10565,7 +10688,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 19,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1012,
+    "margen": 147.0
   },
   {
     "id": "mp-710",
@@ -10576,7 +10701,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 2,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 2860,
+    "margen": 71.3
   },
   {
     "id": "mp-683",
@@ -10587,7 +10714,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 3,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 730,
+    "margen": 146.6
   },
   {
     "id": "mp-682",
@@ -10598,7 +10727,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 4,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 810,
+    "margen": 146.9
   },
   {
     "id": "mp-680",
@@ -10609,7 +10740,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 10,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1969,
+    "margen": 57.4
   },
   {
     "id": "mp-679",
@@ -10620,7 +10753,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 4,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 2100,
+    "margen": 66.7
   },
   {
     "id": "mp-678",
@@ -10631,7 +10766,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 280,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 55,
+    "margen": 263.6
   },
   {
     "id": "mp-674",
@@ -10642,7 +10779,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 60,
-    "stockMinimo": 6
+    "stockMinimo": 6,
+    "costo": 250,
+    "margen": 700.0
   },
   {
     "id": "mp-692",
@@ -10653,7 +10792,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 3,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 2100,
+    "margen": 114.3
   },
   {
     "id": "mp-723",
@@ -10664,7 +10805,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 5,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1300,
+    "margen": 92.3
   },
   {
     "id": "mp-730",
@@ -10675,7 +10818,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 3,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 2150,
+    "margen": 85.6
   },
   {
     "id": "mp-729",
@@ -10686,7 +10831,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 6,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1050,
+    "margen": 90.5
   },
   {
     "id": "mp-728",
@@ -10697,7 +10844,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 5,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 2590,
+    "margen": 96.9
   },
   {
     "id": "mp-727",
@@ -10708,7 +10857,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 5,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1524,
+    "margen": 96.9
   },
   {
     "id": "mp-726",
@@ -10719,7 +10870,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 3,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1750,
+    "margen": 100.0
   },
   {
     "id": "mp-708",
@@ -10730,7 +10883,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 8,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1500,
+    "margen": 133.3
   },
   {
     "id": "mp-724",
@@ -10741,7 +10896,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 5,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1905,
+    "margen": 99.5
   },
   {
     "id": "mp-780",
@@ -10752,7 +10909,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 48,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 480,
+    "margen": 212.5
   },
   {
     "id": "mp-722",
@@ -10763,7 +10922,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 21,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 6770,
+    "margen": 47.7
   },
   {
     "id": "mp-718",
@@ -10774,7 +10935,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 24,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 150,
+    "margen": 233.3
   },
   {
     "id": "mp-717",
@@ -10785,7 +10948,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 2,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 350,
+    "margen": 71.4
   },
   {
     "id": "mp-716",
@@ -10796,7 +10961,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 10,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 2195,
+    "margen": 105.0
   },
   {
     "id": "mp-712",
@@ -10807,7 +10974,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 41,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 2520,
+    "margen": 98.4
   },
   {
     "id": "mp-711",
@@ -10818,7 +10987,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 3,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 31150,
+    "margen": -81.1
   },
   {
     "id": "mp-725",
@@ -10829,7 +11000,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 4,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1960,
+    "margen": 104.1
   },
   {
     "id": "mp-824",
@@ -10840,7 +11013,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 1,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 9240,
+    "margen": 105.6
   },
   {
     "id": "mp-814",
@@ -10851,7 +11026,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 100,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1505,
+    "margen": -96.7
   },
   {
     "id": "mp-843",
@@ -10862,7 +11039,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 1,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 32000,
+    "margen": 18.8
   },
   {
     "id": "mp-842",
@@ -10873,7 +11052,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 3,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 238900,
+    "margen": -86.0
   },
   {
     "id": "mp-832",
@@ -10884,7 +11065,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 4,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 445,
+    "margen": 237.1
   },
   {
     "id": "mp-831",
@@ -10895,7 +11078,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 3,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 350,
+    "margen": 185.7
   },
   {
     "id": "mp-846",
@@ -10906,7 +11091,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 1,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 4225,
+    "margen": 89.1
   },
   {
     "id": "mp-825",
@@ -10917,7 +11104,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 20,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1570,
+    "margen": 103.8
   },
   {
     "id": "mp-848",
@@ -10928,7 +11117,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 2,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1100,
+    "margen": 172.7
   },
   {
     "id": "mp-821",
@@ -10939,7 +11130,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 30,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 500,
+    "margen": 200.0
   },
   {
     "id": "mp-820",
@@ -10950,7 +11143,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 6,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1150,
+    "margen": 117.4
   },
   {
     "id": "mp-819",
@@ -10961,7 +11156,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 18,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 480,
+    "margen": 108.3
   },
   {
     "id": "mp-818",
@@ -10972,7 +11169,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 11,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1888,
+    "margen": 96.0
   },
   {
     "id": "mp-817",
@@ -10983,7 +11182,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 3,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 3057,
+    "margen": 96.3
   },
   {
     "id": "mp-778",
@@ -10994,7 +11195,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 3,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1265,
+    "margen": 113.4
   },
   {
     "id": "mp-830",
@@ -11005,7 +11208,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 12,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 170,
+    "margen": 76.5
   },
   {
     "id": "mp-859",
@@ -11016,7 +11221,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 3,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1000,
+    "margen": 150.0
   },
   {
     "id": "mp-869",
@@ -11027,7 +11234,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 6,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1300,
+    "margen": 115.4
   },
   {
     "id": "mp-866",
@@ -11038,7 +11247,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 4,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 473,
+    "margen": 153.7
   },
   {
     "id": "mp-864",
@@ -11049,7 +11260,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 4,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 2625,
+    "margen": 147.6
   },
   {
     "id": "mp-863",
@@ -11060,7 +11273,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 7,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 600,
+    "margen": 200.0
   },
   {
     "id": "mp-862",
@@ -11071,7 +11286,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 4,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1320,
+    "margen": 165.2
   },
   {
     "id": "mp-844",
@@ -11082,7 +11299,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 1,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 15800,
+    "margen": 89.9
   },
   {
     "id": "mp-860",
@@ -11093,7 +11312,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 6,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 3450,
+    "margen": 88.4
   },
   {
     "id": "mp-813",
@@ -11104,7 +11325,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 24,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 150,
+    "margen": 233.3
   },
   {
     "id": "mp-858",
@@ -11115,7 +11338,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 5,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1953,
+    "margen": 115.1
   },
   {
     "id": "mp-855",
@@ -11126,7 +11351,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 3,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 4100,
+    "margen": 107.3
   },
   {
     "id": "mp-854",
@@ -11137,7 +11364,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 1,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 2850,
+    "margen": 75.4
   },
   {
     "id": "mp-852",
@@ -11148,7 +11377,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 6,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 2110,
+    "margen": 80.1
   },
   {
     "id": "mp-850",
@@ -11159,7 +11390,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 4,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1150,
+    "margen": 204.3
   },
   {
     "id": "mp-849",
@@ -11170,7 +11403,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 6,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 2900,
+    "margen": 89.7
   },
   {
     "id": "mp-861",
@@ -11181,7 +11416,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 6,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 2400,
+    "margen": 104.2
   },
   {
     "id": "mp-787",
@@ -11192,7 +11429,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 2,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 10200,
+    "margen": 76.5
   },
   {
     "id": "mp-815",
@@ -11203,7 +11442,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 2,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 9380,
+    "margen": 70.6
   },
   {
     "id": "mp-793",
@@ -11214,7 +11455,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 6,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1320,
+    "margen": 187.9
   },
   {
     "id": "mp-792",
@@ -11225,7 +11468,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 4,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 4730,
+    "margen": 100.8
   },
   {
     "id": "mp-791",
@@ -11236,7 +11481,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 9,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 2680,
+    "margen": 105.2
   },
   {
     "id": "mp-790",
@@ -11247,7 +11494,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 1,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 7880,
+    "margen": 103.0
   },
   {
     "id": "mp-795",
@@ -11258,7 +11507,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 36,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 925,
+    "margen": 94.6
   },
   {
     "id": "mp-788",
@@ -11269,7 +11520,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 2,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 7550,
+    "margen": 98.0
   },
   {
     "id": "mp-797",
@@ -11280,7 +11533,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 15,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1680,
+    "margen": 48.8
   },
   {
     "id": "mp-786",
@@ -11291,7 +11546,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 4,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 2480,
+    "margen": 85.5
   },
   {
     "id": "mp-785",
@@ -11302,7 +11559,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 1,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 19450,
+    "margen": 54.2
   },
   {
     "id": "mp-784",
@@ -11313,7 +11572,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 2,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 3230,
+    "margen": 82.7
   },
   {
     "id": "mp-783",
@@ -11324,7 +11585,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 2,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 2680,
+    "margen": 67.9
   },
   {
     "id": "mp-782",
@@ -11335,7 +11598,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 2,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 2680,
+    "margen": 67.9
   },
   {
     "id": "mp-781",
@@ -11346,7 +11611,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 1,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 2580,
+    "margen": 35.7
   },
   {
     "id": "mp-789",
@@ -11357,7 +11624,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 6,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 6730,
+    "margen": 122.9
   },
   {
     "id": "mp-805",
@@ -11368,7 +11637,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 63,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 250,
+    "margen": 300.0
   },
   {
     "id": "mp-812",
@@ -11379,7 +11650,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 1,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 21200,
+    "margen": 65.1
   },
   {
     "id": "mp-811",
@@ -11390,7 +11663,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 2,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 9880,
+    "margen": 51.7
   },
   {
     "id": "mp-810",
@@ -11401,7 +11676,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 3,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 4780,
+    "margen": 56.9
   },
   {
     "id": "mp-809",
@@ -11412,7 +11689,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 1,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1500,
+    "margen": 66.7
   },
   {
     "id": "mp-808",
@@ -11423,7 +11702,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 2,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 2811,
+    "margen": 60.1
   },
   {
     "id": "mp-794",
@@ -11434,7 +11715,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 51,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1000,
+    "margen": 90.0
   },
   {
     "id": "mp-806",
@@ -11445,7 +11728,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 6,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 3810,
+    "margen": 57.5
   },
   {
     "id": "mp-675",
@@ -11456,7 +11741,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 5,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 2915,
+    "margen": 99.0
   },
   {
     "id": "mp-804",
@@ -11467,7 +11754,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 0,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 12290,
+    "margen": 103.4
   },
   {
     "id": "mp-803",
@@ -11478,7 +11767,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 2,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 11000,
+    "margen": 109.1
   },
   {
     "id": "mp-802",
@@ -11489,7 +11780,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 2,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 13500,
+    "margen": 85.2
   },
   {
     "id": "mp-801",
@@ -11500,7 +11793,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 2,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 12290,
+    "margen": 103.4
   },
   {
     "id": "mp-800",
@@ -11511,7 +11806,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 2,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 8750,
+    "margen": 105.7
   },
   {
     "id": "mp-798",
@@ -11522,7 +11819,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 5,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 6400,
+    "margen": 43.8
   },
   {
     "id": "mp-807",
@@ -11533,7 +11832,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 6,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 5750,
+    "margen": 30.4
   },
   {
     "id": "mp-672",
@@ -11544,7 +11845,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 10,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 997,
+    "margen": 150.8
   },
   {
     "id": "mp-656",
@@ -11555,7 +11858,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 2,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 3025,
+    "margen": 81.8
   },
   {
     "id": "mp-647",
@@ -11566,7 +11871,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 10,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 400,
+    "margen": 50.0
   },
   {
     "id": "mp-659",
@@ -11577,7 +11884,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 12,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 180,
+    "margen": 116.7
   },
   {
     "id": "mp-652",
@@ -11588,7 +11897,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 2,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 945,
+    "margen": 111.6
   },
   {
     "id": "mp-665",
@@ -11599,7 +11910,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 1,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1540,
+    "margen": 107.8
   },
   {
     "id": "mp-662",
@@ -11610,7 +11923,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 13,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 650,
+    "margen": 100.0
   },
   {
     "id": "mp-658",
@@ -11621,7 +11936,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 2,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 2600,
+    "margen": 130.8
   },
   {
     "id": "mp-626",
@@ -11632,7 +11949,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 4,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 590,
+    "margen": 239.0
   },
   {
     "id": "mp-624",
@@ -11643,7 +11962,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 14,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1470,
+    "margen": 104.1
   },
   {
     "id": "mp-648",
@@ -11654,7 +11975,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 2,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 4490,
+    "margen": 44.8
   },
   {
     "id": "mp-625",
@@ -11665,7 +11988,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 4,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 590,
+    "margen": 408.5
   },
   {
     "id": "mp-655",
@@ -11676,7 +12001,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 2,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1180,
+    "margen": 111.9
   },
   {
     "id": "mp-649",
@@ -11687,7 +12014,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 2,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1100,
+    "margen": 127.3
   },
   {
     "id": "mp-650",
@@ -11698,7 +12027,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 8,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 400,
+    "margen": 275.0
   },
   {
     "id": "mp-664",
@@ -11709,7 +12040,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 5,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1523,
+    "margen": 129.8
   },
   {
     "id": "mp-651",
@@ -11720,7 +12053,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 4,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 656,
+    "margen": 128.7
   },
   {
     "id": "mp-653",
@@ -11731,7 +12066,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 36,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 225,
+    "margen": 166.7
   },
   {
     "id": "mp-668",
@@ -11742,7 +12079,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 6,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 2100,
+    "margen": 185.7
   },
   {
     "id": "mp-597",
@@ -11753,7 +12092,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 0,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 8000,
+    "margen": 62.5
   },
   {
     "id": "mp-609",
@@ -11764,7 +12105,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 30,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 262,
+    "margen": 663.4
   },
   {
     "id": "mp-610",
@@ -11775,7 +12118,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 2,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 166,
+    "margen": 201.2
   },
   {
     "id": "mp-661",
@@ -11786,7 +12131,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 36,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 105,
+    "margen": 185.7
   },
   {
     "id": "mp-614",
@@ -11797,7 +12144,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 2,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 2870,
+    "margen": 46.3
   },
   {
     "id": "mp-613",
@@ -11808,7 +12157,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 65,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 925,
+    "margen": 116.2
   },
   {
     "id": "mp-616",
@@ -11819,7 +12170,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 2,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 980,
+    "margen": 53.1
   },
   {
     "id": "mp-617",
@@ -11830,7 +12183,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 45,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 840,
+    "margen": 54.8
   },
   {
     "id": "mp-618",
@@ -11841,7 +12196,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 159,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 168,
+    "margen": 495.2
   },
   {
     "id": "mp-619",
@@ -11852,7 +12209,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 6,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 2100,
+    "margen": 66.7
   },
   {
     "id": "mp-623",
@@ -11863,7 +12222,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 7,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 677,
+    "margen": 121.6
   },
   {
     "id": "mp-666",
@@ -11874,7 +12235,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 40,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1000,
+    "margen": 100.0
   },
   {
     "id": "mp-660",
@@ -11885,7 +12248,9 @@
     "imagen": "/recursos/imagenes-productos/cotillon.jpg",
     "descripcion": "Cotillón, globos y detalles para fiestas. Stock para reponer al toque.",
     "stock": 12,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 630,
+    "margen": 138.1
   },
   {
     "id": "mp-622",
@@ -11896,7 +12261,9 @@
     "imagen": "/recursos/imagenes-productos/default.jpg",
     "descripcion": "Descartables de uso diario para gastronomía y comercio.",
     "stock": 100,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1785,
+    "margen": 34.5
   },
   {
     "id": "mp-796",
@@ -11907,7 +12274,9 @@
     "imagen": "/recursos/imagenes-productos/default.jpg",
     "descripcion": "Descartables de uso diario para gastronomía y comercio.",
     "stock": 375,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 68,
+    "margen": 47.1
   },
   {
     "id": "mp-669",
@@ -11918,7 +12287,9 @@
     "imagen": "/recursos/imagenes-productos/default.jpg",
     "descripcion": "Descartables de uso diario para gastronomía y comercio.",
     "stock": 999,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 218,
+    "margen": 60.6
   },
   {
     "id": "mp-670",
@@ -11929,7 +12300,9 @@
     "imagen": "/recursos/imagenes-productos/default.jpg",
     "descripcion": "Descartables de uso diario para gastronomía y comercio.",
     "stock": 988,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 260,
+    "margen": 42.3
   },
   {
     "id": "mp-671",
@@ -11940,7 +12313,9 @@
     "imagen": "/recursos/imagenes-productos/default.jpg",
     "descripcion": "Descartables de uso diario para gastronomía y comercio.",
     "stock": 999,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 234,
+    "margen": 41.0
   },
   {
     "id": "mp-590",
@@ -11951,7 +12326,9 @@
     "imagen": "/recursos/imagenes-productos/default.jpg",
     "descripcion": "Descartables de uso diario para gastronomía y comercio.",
     "stock": 4,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1430,
+    "margen": 53.8
   },
   {
     "id": "mp-591",
@@ -11962,7 +12339,9 @@
     "imagen": "/recursos/imagenes-productos/default.jpg",
     "descripcion": "Descartables de uso diario para gastronomía y comercio.",
     "stock": 4,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1360,
+    "margen": 47.1
   },
   {
     "id": "mp-574",
@@ -11973,7 +12352,9 @@
     "imagen": "/recursos/imagenes-productos/default.jpg",
     "descripcion": "Descartables de uso diario para gastronomía y comercio.",
     "stock": 10,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 3940,
+    "margen": 26.9
   },
   {
     "id": "mp-575",
@@ -11984,7 +12365,9 @@
     "imagen": "/recursos/imagenes-productos/default.jpg",
     "descripcion": "Descartables de uso diario para gastronomía y comercio.",
     "stock": 10,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 30680,
+    "margen": -86.0
   },
   {
     "id": "mp-685",
@@ -11995,7 +12378,9 @@
     "imagen": "/recursos/imagenes-productos/cinta.jpg",
     "descripcion": "Cintas, film stretch y burbuja para armar y proteger envíos.",
     "stock": 1,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 3550,
+    "margen": 54.9
   },
   {
     "id": "mp-646",
@@ -12006,7 +12391,9 @@
     "imagen": "/recursos/imagenes-productos/libreria.jpg",
     "descripcion": "Librería y accesorios: cintas, moños, palitos y más.",
     "stock": 90,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 260,
+    "margen": 53.8
   },
   {
     "id": "mp-615",
@@ -12017,7 +12404,9 @@
     "imagen": "/recursos/imagenes-productos/libreria.jpg",
     "descripcion": "Librería y accesorios: cintas, moños, palitos y más.",
     "stock": 6,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1050,
+    "margen": 52.4
   },
   {
     "id": "mp-611",
@@ -12028,7 +12417,9 @@
     "imagen": "/recursos/imagenes-productos/libreria.jpg",
     "descripcion": "Librería y accesorios: cintas, moños, palitos y más.",
     "stock": 0,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 4000,
+    "margen": 45.0
   },
   {
     "id": "mp-612",
@@ -12039,7 +12430,9 @@
     "imagen": "/recursos/imagenes-productos/libreria.jpg",
     "descripcion": "Librería y accesorios: cintas, moños, palitos y más.",
     "stock": 1,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 4570,
+    "margen": 42.2
   },
   {
     "id": "mp-702",
@@ -12050,7 +12443,9 @@
     "imagen": "/recursos/imagenes-productos/libreria.jpg",
     "descripcion": "Librería y accesorios: cintas, moños, palitos y más.",
     "stock": 3,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 706,
+    "margen": 112.5
   },
   {
     "id": "mp-762",
@@ -12061,7 +12456,9 @@
     "imagen": "/recursos/imagenes-productos/libreria.jpg",
     "descripcion": "Librería y accesorios: cintas, moños, palitos y más.",
     "stock": 2,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 2860,
+    "margen": 39.9
   },
   {
     "id": "mp-763",
@@ -12072,7 +12469,9 @@
     "imagen": "/recursos/imagenes-productos/libreria.jpg",
     "descripcion": "Librería y accesorios: cintas, moños, palitos y más.",
     "stock": 100,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 45,
+    "margen": 2122.2
   },
   {
     "id": "mp-765",
@@ -12082,7 +12481,9 @@
     "precio": 1100,
     "imagen": "/recursos/imagenes-productos/libreria.jpg",
     "descripcion": "Librería y accesorios: cintas, moños, palitos y más.",
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 580,
+    "margen": 89.7
   },
   {
     "id": "mp-766",
@@ -12093,7 +12494,9 @@
     "imagen": "/recursos/imagenes-productos/libreria.jpg",
     "descripcion": "Librería y accesorios: cintas, moños, palitos y más.",
     "stock": 588,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 15,
+    "margen": 566.7
   },
   {
     "id": "mp-873",
@@ -12115,7 +12518,9 @@
     "imagen": "/recursos/imagenes-productos/libreria.jpg",
     "descripcion": "Librería y accesorios: cintas, moños, palitos y más.",
     "stock": 50,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 137,
+    "margen": 265.0
   },
   {
     "id": "mp-871",
@@ -12137,7 +12542,9 @@
     "imagen": "/recursos/imagenes-productos/libreria.jpg",
     "descripcion": "Librería y accesorios: cintas, moños, palitos y más.",
     "stock": 1,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 3230,
+    "margen": 39.3
   },
   {
     "id": "mp-759",
@@ -12148,7 +12555,9 @@
     "imagen": "/recursos/imagenes-productos/libreria.jpg",
     "descripcion": "Librería y accesorios: cintas, moños, palitos y más.",
     "stock": 50,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 782,
+    "margen": 91.8
   },
   {
     "id": "mp-872",
@@ -12170,7 +12579,9 @@
     "imagen": "/recursos/imagenes-productos/bolsa-friselina.jpg",
     "descripcion": "Bolsas personalizadas. Te asesoramos en medidas y cantidades.",
     "stock": 2,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1500,
+    "margen": 100.0
   },
   {
     "id": "mp-576",
@@ -12181,7 +12592,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 1,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1435,
+    "margen": 46.3
   },
   {
     "id": "mp-868",
@@ -12191,7 +12604,8 @@
     "precio": 2200,
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 0
   },
   {
     "id": "mp-870",
@@ -12202,7 +12616,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 1,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 2135,
+    "margen": 110.8
   },
   {
     "id": "mp-578",
@@ -12213,7 +12629,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 2,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 840,
+    "margen": 126.2
   },
   {
     "id": "mp-833",
@@ -12224,7 +12642,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 3,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 4800,
+    "margen": 39.6
   },
   {
     "id": "mp-579",
@@ -12235,7 +12655,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 1,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1382,
+    "margen": 52.0
   },
   {
     "id": "mp-834",
@@ -12246,7 +12668,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 8,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 900,
+    "margen": 66.7
   },
   {
     "id": "mp-840",
@@ -12257,7 +12681,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 0,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 530,
+    "margen": 45.3
   },
   {
     "id": "mp-596",
@@ -12268,7 +12694,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 100,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 20,
+    "margen": 150.0
   },
   {
     "id": "mp-605",
@@ -12279,7 +12707,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 0,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 5320,
+    "margen": 37.2
   },
   {
     "id": "mp-608",
@@ -12290,7 +12720,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 14,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1365,
+    "margen": 42.9
   },
   {
     "id": "mp-603",
@@ -12301,7 +12733,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 10,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1073,
+    "margen": 53.8
   },
   {
     "id": "mp-607",
@@ -12312,7 +12746,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 10,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1875,
+    "margen": 44.0
   },
   {
     "id": "mp-600",
@@ -12323,7 +12759,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 0,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 780,
+    "margen": 41.0
   },
   {
     "id": "mp-601",
@@ -12333,7 +12771,9 @@
     "precio": 600,
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 780,
+    "margen": -23.1
   },
   {
     "id": "mp-598",
@@ -12344,7 +12784,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 2,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1000,
+    "margen": 100.0
   },
   {
     "id": "mp-606",
@@ -12355,7 +12797,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 0,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 5730,
+    "margen": 48.3
   },
   {
     "id": "mp-602",
@@ -12366,7 +12810,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 3,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1250,
+    "margen": 44.0
   },
   {
     "id": "mp-641",
@@ -12377,7 +12823,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 1,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 2142,
+    "margen": 49.4
   },
   {
     "id": "mp-867",
@@ -12388,7 +12836,8 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 0,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 0
   },
   {
     "id": "mp-604",
@@ -12398,7 +12847,9 @@
     "precio": 2900,
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 2170,
+    "margen": 33.6
   },
   {
     "id": "mp-841",
@@ -12409,7 +12860,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 0,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 880,
+    "margen": 47.7
   },
   {
     "id": "mp-760",
@@ -12420,7 +12873,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 3,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 2260,
+    "margen": 41.6
   },
   {
     "id": "mp-691",
@@ -12431,7 +12886,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 2,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1000,
+    "margen": 430.0
   },
   {
     "id": "mp-693",
@@ -12442,7 +12899,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 80,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 100,
+    "margen": 150.0
   },
   {
     "id": "mp-694",
@@ -12453,7 +12912,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 79,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1000,
+    "margen": -70.0
   },
   {
     "id": "mp-695",
@@ -12464,7 +12925,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 44,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1000,
+    "margen": -65.0
   },
   {
     "id": "mp-696",
@@ -12475,7 +12938,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 48,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 100,
+    "margen": 250.0
   },
   {
     "id": "mp-697",
@@ -12486,7 +12951,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 10,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 10000,
+    "margen": -95.0
   },
   {
     "id": "mp-698",
@@ -12497,7 +12964,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 11,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1000,
+    "margen": -50.0
   },
   {
     "id": "mp-699",
@@ -12508,7 +12977,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 8,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1000,
+    "margen": -25.0
   },
   {
     "id": "mp-638",
@@ -12519,7 +12990,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 2,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 2093,
+    "margen": 43.3
   },
   {
     "id": "mp-701",
@@ -12530,7 +13003,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 1,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 28000,
+    "margen": 25.0
   },
   {
     "id": "mp-686",
@@ -12541,7 +13016,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 2,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1010,
+    "margen": 127.7
   },
   {
     "id": "mp-756",
@@ -12552,7 +13029,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 25,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 87,
+    "margen": 49.4
   },
   {
     "id": "mp-755",
@@ -12563,7 +13042,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 25,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 105,
+    "margen": 42.9
   },
   {
     "id": "mp-754",
@@ -12574,7 +13055,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 25,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 123,
+    "margen": 38.2
   },
   {
     "id": "mp-750",
@@ -12585,7 +13068,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 10,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 2500,
+    "margen": 40.0
   },
   {
     "id": "mp-721",
@@ -12596,7 +13081,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 10,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1100,
+    "margen": 81.8
   },
   {
     "id": "mp-720",
@@ -12607,7 +13094,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 10,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 2390,
+    "margen": 46.4
   },
   {
     "id": "mp-714",
@@ -12618,7 +13107,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 3,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 3622,
+    "margen": 51.8
   },
   {
     "id": "mp-703",
@@ -12629,7 +13120,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 16,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1335,
+    "margen": 49.8
   },
   {
     "id": "mp-700",
@@ -12640,7 +13133,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 40,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 150,
+    "margen": 1566.7
   },
   {
     "id": "mp-639",
@@ -12651,7 +13146,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 3,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 415,
+    "margen": 80.7
   },
   {
     "id": "mp-621",
@@ -12662,7 +13159,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 1,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 3300,
+    "margen": 30.3
   },
   {
     "id": "mp-828",
@@ -12673,7 +13172,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 2,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 602,
+    "margen": 149.2
   },
   {
     "id": "mp-632",
@@ -12684,7 +13185,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 6,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 275,
+    "margen": 81.8
   },
   {
     "id": "mp-633",
@@ -12695,7 +13198,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 3,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1560,
+    "margen": 34.6
   },
   {
     "id": "mp-827",
@@ -12706,7 +13211,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 1,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 13900,
+    "margen": 36.7
   },
   {
     "id": "mp-634",
@@ -12717,7 +13224,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 0,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 72,
+    "margen": 38.9
   },
   {
     "id": "mp-635",
@@ -12728,7 +13237,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 0,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 80,
+    "margen": 87.5
   },
   {
     "id": "mp-636",
@@ -12738,7 +13249,9 @@
     "precio": 175,
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 95,
+    "margen": 84.2
   },
   {
     "id": "mp-690",
@@ -12749,7 +13262,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 2,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1000,
+    "margen": 550.0
   },
   {
     "id": "mp-637",
@@ -12760,7 +13275,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 10,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1050,
+    "margen": 42.9
   },
   {
     "id": "mp-687",
@@ -12771,7 +13288,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 8,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 190,
+    "margen": 321.1
   },
   {
     "id": "mp-643",
@@ -12782,7 +13301,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 1,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 4090,
+    "margen": 44.3
   },
   {
     "id": "mp-644",
@@ -12793,7 +13314,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 4,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 2730,
+    "margen": 41.0
   },
   {
     "id": "mp-816",
@@ -12804,7 +13327,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 10,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1380,
+    "margen": 88.4
   },
   {
     "id": "mp-645",
@@ -12815,7 +13340,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 2,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 3530,
+    "margen": 38.8
   },
   {
     "id": "mp-654",
@@ -12826,7 +13353,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 1,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 9732,
+    "margen": 34.6
   },
   {
     "id": "mp-676",
@@ -12837,7 +13366,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 0,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 2160,
+    "margen": 38.9
   },
   {
     "id": "mp-677",
@@ -12847,7 +13378,9 @@
     "precio": 1800,
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 950,
+    "margen": 89.5
   },
   {
     "id": "mp-620",
@@ -12858,7 +13391,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 5,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1328,
+    "margen": 50.6
   },
   {
     "id": "mp-823",
@@ -12869,7 +13404,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 12,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 1500,
+    "margen": 86.7
   },
   {
     "id": "mp-595",
@@ -12880,7 +13417,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 50,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 162,
+    "margen": 85.2
   },
   {
     "id": "mp-580",
@@ -12891,7 +13430,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 2,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 2020,
+    "margen": 48.5
   },
   {
     "id": "mp-581",
@@ -12902,7 +13443,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 2,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 3625,
+    "margen": 50.3
   },
   {
     "id": "mp-582",
@@ -12913,7 +13456,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 0,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 2255,
+    "margen": 68.5
   },
   {
     "id": "mp-589",
@@ -12923,7 +13468,9 @@
     "precio": 1400,
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 680,
+    "margen": 105.9
   },
   {
     "id": "mp-592",
@@ -12934,7 +13481,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 0,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 120,
+    "margen": 66.7
   },
   {
     "id": "mp-594",
@@ -12945,7 +13494,9 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 25,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 235,
+    "margen": 112.8
   },
   {
     "id": "mp-593",
@@ -12956,6 +13507,8 @@
     "imagen": "/recursos/imagenes-productos/reposteria.jpg",
     "descripcion": "Insumos y descartables de repostería para el obrador.",
     "stock": 100,
-    "stockMinimo": 0
+    "stockMinimo": 0,
+    "costo": 20,
+    "margen": 150.0
   }
 ]
