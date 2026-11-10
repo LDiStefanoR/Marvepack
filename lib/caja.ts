@@ -140,15 +140,16 @@ export async function registrarVentaCaja(datos: {
     const producto = productos.find((p) => p.id === linea.productoId);
     if (!producto) return { error: "Hay un producto que ya no está en el catálogo." as const };
     const cantidad = Math.round(linea.cantidad);
-    const controlaStock = typeof producto.stock === "number";
+    const stock = producto.stock;
+    const controlaStock = typeof stock === "number";
     if (
       controlaStock &&
       !permitirNegativo &&
-      producto.stock >= 0 &&
-      producto.stock < cantidad
+      stock >= 0 &&
+      stock < cantidad
     ) {
       return {
-        error: `No hay stock de ${producto.nombre} (cód. ${producto.codigo}). Quedan ${producto.stock}.` as const,
+        error: `No hay stock de ${producto.nombre} (cód. ${producto.codigo}). Quedan ${stock}.` as const,
       };
     }
     armadas.push({
