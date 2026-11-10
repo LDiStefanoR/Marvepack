@@ -62,6 +62,15 @@ export function IconoMantenimiento() {
   );
 }
 
+export function IconoConfiguracion() {
+  return (
+    <Icono>
+      <circle cx="12" cy="12" r="3" />
+      <path d="M12 3v2.2M12 18.8V21M4.9 6.5l1.6 1.6M17.5 15.9l1.6 1.6M3 12h2.2M18.8 12H21M4.9 17.5l1.6-1.6M17.5 8.1l1.6-1.6" />
+    </Icono>
+  );
+}
+
 export function IconoDeuda() {
   return (
     <Icono>

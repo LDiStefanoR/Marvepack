@@ -5,6 +5,7 @@ export const PERMISOS_CAJA = [
   "clientes",
   "productos",
   "mantenimiento",
+  "configuracion",
   "deudas",
 ] as const;
 
@@ -17,6 +18,7 @@ export const ETIQUETA_PERMISO_CAJA: Record<PermisoCaja, string> = {
   clientes: "Clientes",
   productos: "Productos",
   mantenimiento: "Mantenimiento",
+  configuracion: "Configuración",
   deudas: "Deudas",
 };
 
@@ -27,6 +29,7 @@ const BASE_CAJA: PermisoCaja[] = [
   "clientes",
   "productos",
   "mantenimiento",
+  "configuracion",
 ];
 
 export function esPermisoCaja(valor: unknown): valor is PermisoCaja {
@@ -35,8 +38,13 @@ export function esPermisoCaja(valor: unknown): valor is PermisoCaja {
 
 export function permisosCajaDe(rol: string, guardados?: readonly string[] | null): PermisoCaja[] {
   if (rol === "admin") return [...PERMISOS_CAJA];
-  if (!guardados) return [...BASE_CAJA];
-  return PERMISOS_CAJA.filter((permiso) => guardados.includes(permiso));
+  const lista = !guardados
+    ? [...BASE_CAJA]
+    : PERMISOS_CAJA.filter((permiso) => guardados.includes(permiso));
+  if (lista.includes("mantenimiento") && !lista.includes("configuracion")) {
+    lista.push("configuracion");
+  }
+  return lista;
 }
 
 export function leerPermisosForm(form: FormData): PermisoCaja[] {

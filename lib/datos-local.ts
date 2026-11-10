@@ -5,7 +5,7 @@ import {
   PHONE_DISPLAY,
 } from "@/lib/brand";
 
-/** Datos públicos del local. Los carga caja desde Mantenimiento. */
+/** Datos públicos del local. Los carga caja desde Configuración. */
 export type DatosLocal = {
   nombre: string;
   mail: string;

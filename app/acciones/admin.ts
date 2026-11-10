@@ -205,7 +205,7 @@ export async function guardarEnvioAdmin(form: FormData): Promise<EstadoAdmin> {
 export async function guardarPermitirStockNegativo(
   activo: boolean,
 ): Promise<EstadoAdmin> {
-  if (!(await exigirPermisoCaja("stock")) && !(await exigirPermisoCaja("mantenimiento"))) {
+  if (!(await exigirPermisoCaja("configuracion"))) {
     return { error: "No tenés permiso para cambiar esta opción." };
   }
   const ajustes = await leerAjustes();

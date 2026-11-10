@@ -54,14 +54,12 @@ export function MenuStock({
   onRegularizar,
   onInventario,
   onSalir,
-  permitirStockNegativo = false,
 }: {
   onPedido: () => void;
   onEntrada: () => void;
   onRegularizar: () => void;
   onInventario: () => void;
   onSalir: () => void;
-  permitirStockNegativo?: boolean;
 }) {
   return (
     <section className="mx-auto max-w-5xl px-4 py-6">
@@ -73,7 +71,6 @@ export function MenuStock({
         <TarjetaAccion icono={<IconoRegularizar />} titulo="Regularizar stock" detalle="Corregir o descontar lo contado" onClick={onRegularizar} />
         <TarjetaAccion icono={<IconoInventario />} titulo="Inventario" detalle="Ver, filtrar y editar productos" onClick={onInventario} />
       </div>
-      <InterruptorStockNegativo activo={permitirStockNegativo} />
       <button type="button" className={`${caja.boton} mt-8`} onClick={onSalir}>
         Salir
       </button>

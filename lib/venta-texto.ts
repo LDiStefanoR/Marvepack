@@ -11,9 +11,9 @@ export function nombreVisible(persona: { nombre: string; apellido?: string }) {
 export function etiquetaFormaPago(forma: string) {
   if (forma === "contado") return "Contado";
   if (forma === "tarjeta") return "Tarjeta";
-  if (forma === "moto") return "Moto";
+  if (forma === "moto" || forma === "Moto" || forma === "mixto") return "Pago mixto";
   if (forma === "deuda") return "Deuda";
-  return forma;
+  return forma.replace(/transferencia/gi, "Tarjeta");
 }
 
 export function fechaHoraVenta(iso: string) {

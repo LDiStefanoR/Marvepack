@@ -10,8 +10,8 @@
     "efectivo": false
   },
   {
-    "id": "moto",
-    "nombre": "Moto",
+    "id": "mixto",
+    "nombre": "Pago mixto",
     "efectivo": false
   }
 ]

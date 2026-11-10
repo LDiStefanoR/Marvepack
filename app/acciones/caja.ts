@@ -11,6 +11,7 @@ import { agregarTicket, asegurarClienteCredito, leerCuentas } from "@/lib/cuenta
 import { leerAjustes } from "@/lib/ajustes";
 import { leerProductos } from "@/lib/productos";
 import { leerMediosPago } from "@/lib/medios-pago";
+import { esPagoMixto } from "@/lib/pago-mixto";
 import { costoEnvio } from "@/lib/envio";
 import { formatoPesos } from "@/lib/format";
 import { ID_LINEA_ENVIO } from "@/lib/carrito";
@@ -153,22 +154,22 @@ export async function cobrarVenta(form: FormData): Promise<EstadoCaja> {
   const pedido = String(form.get("formaPago") ?? "").trim();
   const total = lineas.reduce((suma, l) => suma + l.precio * l.cantidad, 0);
   let formaPago = pedido;
-  if (pedido === "mixto") {
+  if (esPagoMixto(pedido)) {
     const efectivo = Math.round(Number(String(form.get("efectivoMixto") ?? "").replace(/\D/g, ""))) || 0;
     const transferencia = Math.round(Number(String(form.get("transferenciaMixto") ?? "").replace(/\D/g, ""))) || 0;
     if (efectivo < 1 || transferencia < 1) {
-      return { error: "En el pago mixto cargá efectivo y transferencia." };
+      return { error: "En el pago mixto cargá efectivo y tarjeta." };
     }
     if (efectivo + transferencia !== total) {
-      return { error: "Efectivo más transferencia tiene que dar el total de la venta." };
+      return { error: "Efectivo más tarjeta tiene que dar el total de la venta." };
     }
-    formaPago = `Efectivo ${formatoPesos(efectivo)} + Transferencia ${formatoPesos(transferencia)}`;
+    formaPago = `Efectivo ${formatoPesos(efectivo)} + Tarjeta ${formatoPesos(transferencia)}`;
   } else {
     const medios = await leerMediosPago();
     const medio = medios.find(
       (m) => m.id === pedido || m.nombre.toLowerCase() === pedido.toLowerCase(),
     );
-    if (!medio) return { error: "Esa forma de pago no está cargada en mantenimiento." };
+    if (!medio) return { error: "Esa forma de pago no está cargada en medios de pago." };
     formaPago = medio.nombre;
   }
   const resultado = await registrarVentaCaja({

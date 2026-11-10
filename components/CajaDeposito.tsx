@@ -41,6 +41,7 @@ import { nombreVisible } from "@/lib/venta-texto";
 import { digitosMonto, formatoPesos, nombreVitrina, textoMonto } from "@/lib/format";
 import type { EscalaEnvio } from "@/types/ajustes";
 import type { MedioPago } from "@/lib/medios-pago";
+import { esPagoMixto } from "@/lib/pago-mixto";
 import type { EntradaStock, PedidoProveedor, Proveedor, RegularizacionStock } from "@/lib/deposito";
 import { EntradaMercaderia, InterruptorStockNegativo, InventarioProductos, MenuStock, PedidoProveedorPanel } from "@/components/CajaStock";
 import type { ProductoCaja } from "@/components/CajaPanel";
@@ -107,7 +108,7 @@ export type DeudaCaja = {
 
 type PantallaStock = "menu" | "pedido" | "regularizar" | "entrada" | "inventario";
 type PantallaMant = "menu" | "proveedores" | "clientes" | "empleados" | "productos" | "secciones" | "pagos" | "descuento" | "catalogo" | "envio" | "local";
-type ModoDeposito = "stock" | "mantenimiento" | "clientes" | "productos";
+type ModoDeposito = "stock" | "mantenimiento" | "configuracion" | "clientes" | "productos";
 
 const BOTON = caja.botonAlto;
 const CAMPO = caja.campo;
@@ -227,7 +228,6 @@ export function CajaDeposito({
         onRegularizar={() => setStock("regularizar")}
         onInventario={() => setStock("inventario")}
         onSalir={onSalir}
-        permitirStockNegativo={permitirStockNegativo}
       />
     );
   }
@@ -312,6 +312,39 @@ export function CajaDeposito({
     );
   }
 
+  if (modo === "configuracion" && mant === "menu") {
+    return (
+      <section className="mx-auto max-w-5xl px-4 py-6">
+        <h2 className="font-display text-3xl font-bold">Configuración</h2>
+        {aviso}
+        <div className="mt-6 grid gap-3 sm:grid-cols-2">
+          <button type="button" className={BOTON} onClick={() => setMant("local")}>
+            Datos del local
+          </button>
+          {esAdmin && (
+            <button type="button" className={BOTON} onClick={() => setMant("catalogo")}>
+              Catálogo web
+            </button>
+          )}
+          {esAdmin && (
+            <button type="button" className={BOTON} onClick={() => setMant("envio")}>
+              Envío a domicilio
+            </button>
+          )}
+          {esAdmin && (
+            <button type="button" className={BOTON} onClick={() => setMant("descuento")}>
+              Intereses créditos y cuentas corrientes
+            </button>
+          )}
+        </div>
+        <InterruptorStockNegativo activo={permitirStockNegativo} />
+        <button type="button" className={`${BOTON} mt-8`} onClick={onSalir}>
+          Salir
+        </button>
+      </section>
+    );
+  }
+
   if (mant === "menu") {
     return (
       <section className="mx-auto max-w-5xl px-4 py-6">
@@ -343,28 +376,7 @@ export function CajaDeposito({
               Medios de pago
             </button>
           )}
-          {mantenimientoCompleto && (
-            <button type="button" className={BOTON} onClick={() => setMant("local")}>
-              Datos del local
-            </button>
-          )}
-          {mantenimientoCompleto && esAdmin && (
-            <button type="button" className={BOTON} onClick={() => setMant("catalogo")}>
-              Catálogo web
-            </button>
-          )}
-          {mantenimientoCompleto && esAdmin && (
-            <button type="button" className={BOTON} onClick={() => setMant("descuento")}>
-              Intereses créditos y cuentas corrientes
-            </button>
-          )}
-          {mantenimientoCompleto && esAdmin && (
-            <button type="button" className={BOTON} onClick={() => setMant("envio")}>
-              Envío a domicilio
-            </button>
-          )}
         </div>
-        <InterruptorStockNegativo activo={permitirStockNegativo} />
         <button type="button" className={`${BOTON} mt-8`} onClick={onSalir}>
           Salir
         </button>
@@ -894,7 +906,7 @@ function EnvioDomicilio({ escala, onVolver }: { escala: EscalaEnvio; onVolver: (
 
   return (
     <section className="mx-auto max-w-3xl px-4 py-6">
-      <p className={caja.kicker}>Mantenimiento</p>
+      <p className={caja.kicker}>Configuración</p>
       <h2 className="font-display text-3xl font-bold">Envío a domicilio</h2>
       <p className="mt-2 text-sm text-neutral-600">
         El primer importe es el precio que aparece en caja al tocar Envío, también si la venta todavía está vacía. El código se puede escribir o escanear para agregar el envío. El pedido online sigue usando la escala según el total.
@@ -962,7 +974,7 @@ function DatosDelLocal({ onVolver }: { onVolver: () => void }) {
 
   return (
     <section className="mx-auto max-w-3xl px-4 py-6">
-      <p className={caja.kicker}>Mantenimiento</p>
+      <p className={caja.kicker}>Configuración</p>
       <h2 className="font-display text-3xl font-bold">Datos del local</h2>
       <p className="mt-2 text-sm text-neutral-600">
         Nombre, contacto, horarios, logo del presupuesto y el alias o CBU que ve el cliente cuando paga por transferencia.
@@ -1172,7 +1184,7 @@ function CatalogoWeb({
 
   return (
     <section className="mx-auto max-w-3xl px-4 py-6">
-      <p className={caja.kicker}>Mantenimiento</p>
+      <p className={caja.kicker}>Configuración</p>
       <h2 className="font-display text-3xl font-bold">Catálogo web</h2>
       <p className="mt-2 text-sm text-neutral-600">
         El catálogo usa el precio guardado de cada producto. Los clientes de comercio y los empleados tienen descuentos distintos: un % general y, si lo activás, un % propio por rubro.
@@ -1352,7 +1364,7 @@ function DescuentoClientes({
 
   return (
     <section className="mx-auto max-w-3xl px-4 py-6">
-      <p className={caja.kicker}>Mantenimiento</p>
+      <p className={caja.kicker}>Configuración</p>
       <h2 className="font-display text-3xl font-bold">Intereses créditos y cuentas corrientes</h2>
       <p className="mt-2 text-sm text-neutral-600">
         El interés de las cuotas y el recargo si no pagan el crédito o la mercadería de cuenta corriente.
@@ -1459,7 +1471,7 @@ function MediosPago({
       <p className={caja.kicker}>Mantenimiento</p>
       <h2 className="font-display text-3xl font-bold">Medios de pago</h2>
       <p className="mt-2 text-sm text-neutral-600">
-        Estos botones aparecen al cobrar. El marcado como efectivo pide con cuánto paga el cliente y muestra el vuelto. Contado es el efectivo inicial.
+        Estos botones aparecen al cobrar. El marcado como efectivo pide con cuánto paga el cliente y muestra el vuelto. Pago mixto es parte en efectivo y el resto con tarjeta: no se puede quitar.
       </p>
       <div className="mt-4">{aviso}</div>
       <form
@@ -1489,12 +1501,17 @@ function MediosPago({
         </div>
       </form>
       <ul className="mt-4 space-y-2">
-        {medios.map((medio) => (
+        {medios.map((medio) => {
+          const mixto = esPagoMixto(medio.id) || esPagoMixto(medio.nombre);
+          return (
           <li key={medio.id} className="flex items-center gap-3 rounded-2xl border border-neutral-200 bg-white px-4 py-3 shadow-sm">
-            <span className="min-w-0 flex-1 font-bold">{medio.nombre}</span>
+            <span className="min-w-0 flex-1 font-bold">{mixto ? "Pago mixto" : medio.nombre}</span>
             {medio.efectivo && (
               <span className="rounded-full bg-confetti/40 px-2 py-1 text-xs font-bold">Efectivo</span>
             )}
+            {mixto ? (
+              <span className="text-xs font-bold text-neutral-500">No se quita</span>
+            ) : (
             <button
               type="button"
               disabled={pending || medios.length < 2}
@@ -1508,8 +1525,10 @@ function MediosPago({
             >
               Quitar
             </button>
+            )}
           </li>
-        ))}
+          );
+        })}
       </ul>
     </section>
   );

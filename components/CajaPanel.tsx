@@ -24,6 +24,7 @@ import type { VentaCaja } from "@/lib/caja";
 import type { EntradaStock } from "@/lib/deposito";
 import {
   IconoCliente,
+  IconoConfiguracion,
   IconoListado,
   IconoMantenimiento,
   IconoPedido,
@@ -31,6 +32,7 @@ import {
   IconoVenta,
   TarjetaAccion,
 } from "@/components/CajaIconos";
+import { CajaVersion } from "@/components/CajaVersion";
 import type { PermisoCaja } from "@/lib/permisos-caja";
 import { CajaListados } from "@/components/CajaListados";
 import {
@@ -102,7 +104,7 @@ function sonarError() {
 }
 
 const POR_PAGINA = 12;
-type Vista = "inicio" | "empleado" | "venta" | "cierre" | "listados" | "stock" | "clientes" | "productos" | "mantenimiento" | "deudas" | "pedidos";
+type Vista = "inicio" | "empleado" | "venta" | "cierre" | "listados" | "stock" | "clientes" | "productos" | "mantenimiento" | "configuracion" | "deudas" | "pedidos";
 type Linea = { id: string; cantidad: number; precio?: number };
 
 const GRILLA_TICKET = "grid grid-cols-[minmax(0,1fr)_5.5rem_4.75rem_4.75rem] items-center gap-1";
@@ -524,7 +526,7 @@ export function CajaPanel({
     const importe = total;
     const forma =
       datos.formaPago === "mixto"
-        ? `Efectivo ${formatoPesos(datos.efectivoMixto ?? 0)} + Transferencia ${formatoPesos(datos.transferenciaMixto ?? 0)}`
+        ? `Efectivo ${formatoPesos(datos.efectivoMixto ?? 0)} + Tarjeta ${formatoPesos(datos.transferenciaMixto ?? 0)}`
         : datos.formaPago;
     setCliente(datos.cliente);
     setMensaje(null);
@@ -792,6 +794,7 @@ export function CajaPanel({
           onStock={() => setVista("stock")}
           onClientes={() => setVista("clientes")}
           onMantenimiento={() => setVista("mantenimiento")}
+          onConfiguracion={() => setVista("configuracion")}
           onPedidos={() => setVista("pedidos")}
         />
       )}
@@ -1188,7 +1191,7 @@ export function CajaPanel({
         />
       )}
 
-      {(vista === "cierre" || vista === "listados" || vista === "stock" || vista === "clientes" || vista === "productos" || vista === "mantenimiento" || vista === "deudas" || vista === "pedidos") && (
+      {(vista === "cierre" || vista === "listados" || vista === "stock" || vista === "clientes" || vista === "productos" || vista === "mantenimiento" || vista === "configuracion" || vista === "deudas" || vista === "pedidos") && (
         <div className="flex-1">
       {vista === "cierre" && (
         <CajaCierre
@@ -1361,6 +1364,38 @@ export function CajaPanel({
           permitirStockNegativo={permitirStockNegativo}
           mostrarProductos={permisos.includes("productos")}
           mantenimientoCompleto={permisos.includes("mantenimiento")}
+          onSalir={() => setVista("inicio")}
+        />
+      )}
+
+      {vista === "configuracion" && (
+        <CajaDeposito
+          modo="configuracion"
+          productos={productos}
+          proveedores={proveedores}
+          pedidos={pedidosProveedor}
+          regularizaciones={regularizaciones}
+          entradas={entradas}
+          personas={personas}
+          esAdmin={esAdmin}
+          etiqueta={etiqueta}
+          compras={compras}
+          deudas={deudas}
+          fichaProductos={fichaProductos}
+          fichaRubros={fichaRubros}
+          descuentoClienteGenerico={descuentoClienteGenerico}
+          descuentoClientePorSeccion={descuentoClientePorSeccion}
+          descuentoEmpleadoGenerico={descuentoEmpleadoGenerico}
+          descuentoEmpleadoPorSeccion={descuentoEmpleadoPorSeccion}
+          recargoWeb={recargoWeb}
+          tasasCuota={tasasCuota}
+          moraCredito={moraCredito}
+          moraCuenta={moraCuenta}
+          plazoCuenta={plazoCuenta}
+          envio={envio}
+          ajustePorSeccion={ajustePorSeccion}
+          mediosPago={mediosPago}
+          permitirStockNegativo={permitirStockNegativo}
           onSalir={() => setVista("inicio")}
         />
       )}
@@ -1657,6 +1692,7 @@ function MenuCaja({
   onStock,
   onClientes,
   onMantenimiento,
+  onConfiguracion,
   onPedidos,
 }: {
   esAdmin: boolean;
@@ -1666,6 +1702,7 @@ function MenuCaja({
   onStock: () => void;
   onClientes: () => void;
   onMantenimiento: () => void;
+  onConfiguracion: () => void;
   onPedidos: () => void;
 }) {
   const puede = (permiso: PermisoCaja) => permisos.includes(permiso);
@@ -1677,13 +1714,15 @@ function MenuCaja({
           MarvePack
         </a>
         <p className="mt-3 text-sm text-white/80">Caja · Hilarión de la Quintana 2667</p>
+        <CajaVersion className="mt-4" />
       </div>
       <div className="grid gap-3 sm:grid-cols-2">
         {puede("venta") && <TarjetaAccion icono={<IconoVenta />} titulo="Caja / Ventas" detalle="Cobrar en el local" onClick={onVenta} />}
         {puede("listados") && <TarjetaAccion icono={<IconoListado />} titulo="Listados" detalle="Ventas, stock y clientes" onClick={onListados} />}
         {puede("stock") && <TarjetaAccion icono={<IconoStock />} titulo="Stock" detalle="Pedidos, entrada e inventario" onClick={onStock} />}
         {(puede("clientes") || puede("deudas")) && <TarjetaAccion icono={<IconoCliente />} titulo="Clientes" detalle="Fichas, altas y deudas" onClick={onClientes} />}
-        {(puede("mantenimiento") || puede("productos")) && <TarjetaAccion icono={<IconoMantenimiento />} titulo="Mantenimiento" detalle="Productos, local y tasas" onClick={onMantenimiento} />}
+        {(puede("mantenimiento") || puede("productos")) && <TarjetaAccion icono={<IconoMantenimiento />} titulo="Mantenimiento" detalle="Productos, proveedores y pagos" onClick={onMantenimiento} />}
+        {puede("configuracion") && <TarjetaAccion icono={<IconoConfiguracion />} titulo="Configuración" detalle="Local, web, envío e intereses" onClick={onConfiguracion} />}
         {esAdmin && <TarjetaAccion icono={<IconoPedido />} titulo="Pedidos" detalle="Web, crédito y saldo" onClick={onPedidos} />}
       </div>
     </div>

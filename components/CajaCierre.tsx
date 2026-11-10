@@ -5,6 +5,7 @@ import { caja } from "@/components/caja-estilo";
 import { digitosMonto, formatoPesos, textoMonto } from "@/lib/format";
 import type { CargaPedidoCaja } from "@/lib/caja-pedido-web";
 import type { MedioPago } from "@/lib/medios-pago";
+import { esPagoMixto } from "@/lib/pago-mixto";
 import { etiquetaFormaPago, fechaHoraVenta, nombreVisible } from "@/lib/venta-texto";
 import type { PersonaCaja } from "@/components/CajaDeposito";
 
@@ -93,7 +94,7 @@ export function CajaCierre({
   const [verVentas, setVerVentas] = useState(false);
   const [aviso, setAviso] = useState("");
   const campoEntrega = useRef<HTMLInputElement>(null);
-  const esMixto = pago === "mixto";
+  const esMixto = esPagoMixto(pago);
   const medio = medios.find((m) => m.id === pago) ?? efectivoInicial;
   const esEfectivo = !esMixto && medio?.efectivo !== false;
 
@@ -135,11 +136,11 @@ export function CajaCierre({
   function cobrar() {
     if (esMixto) {
       if (efectivoNum < 1 || transferenciaNum < 1) {
-        setAviso("Cargá cuánto entra en efectivo y cuánto por transferencia.");
+        setAviso("Cargá cuánto entra en efectivo y cuánto con tarjeta.");
         return;
       }
       if (efectivoNum + transferenciaNum !== total) {
-        setAviso("Efectivo más transferencia tiene que dar el total.");
+        setAviso("Efectivo más tarjeta tiene que dar el total.");
         return;
       }
       setAviso("");
@@ -377,7 +378,7 @@ export function CajaCierre({
               <div className="sm:col-span-2">
                 <p className="text-sm text-white/80">
                   {faltaMixto === 0
-                    ? "El mixto cierra el total."
+                    ? "Efectivo más tarjeta cierra el total."
                     : `Falta ${formatoPesos(Math.abs(faltaMixto))}${faltaMixto < 0 ? " de más" : ""}.`}
                 </p>
               </div>
@@ -470,7 +471,7 @@ export function CajaCierre({
               />
             </label>
             <label className="text-sm font-bold">
-              Transferencia
+              Tarjeta
               <input
                 inputMode="numeric"
                 value={textoMonto(transferenciaMixto)}
@@ -488,37 +489,27 @@ export function CajaCierre({
         <div>
           <p className="mb-2 text-sm font-black">Forma de pago</p>
           <div className="grid grid-cols-2 gap-2">
-            {medios.map((item) => (
-              <button
-                key={item.id}
-                type="button"
-                onClick={() => {
-                  setAviso("");
-                  setPago(item.id);
-                }}
-                className={`min-h-14 rounded-2xl border text-sm font-bold transition ${
-                  pago === item.id
-                    ? "border-movipack bg-movipack text-white shadow-md shadow-movipack/25"
-                    : "border-neutral-200 bg-white hover:border-movipack/40"
-                }`}
-              >
-                {item.nombre}
-              </button>
-            ))}
-            <button
-              type="button"
-              onClick={() => {
-                setAviso("");
-                setPago("mixto");
-              }}
-              className={`min-h-14 rounded-2xl border text-sm font-bold transition ${
-                esMixto
-                  ? "border-movipack bg-movipack text-white shadow-md shadow-movipack/25"
-                  : "border-neutral-200 bg-white hover:border-movipack/40"
-              }`}
-            >
-              Efectivo y transferencia
-            </button>
+            {medios.map((item) => {
+              const mixto = esPagoMixto(item.id) || esPagoMixto(item.nombre);
+              const activo = mixto ? esMixto : pago === item.id;
+              return (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => {
+                    setAviso("");
+                    setPago(mixto ? "mixto" : item.id);
+                  }}
+                  className={`min-h-14 rounded-2xl border text-sm font-bold transition ${
+                    activo
+                      ? "border-movipack bg-movipack text-white shadow-md shadow-movipack/25"
+                      : "border-neutral-200 bg-white hover:border-movipack/40"
+                  }`}
+                >
+                  {mixto ? "Pago mixto" : item.nombre}
+                </button>
+              );
+            })}
           </div>
         </div>
 
