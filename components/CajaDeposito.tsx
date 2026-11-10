@@ -42,7 +42,7 @@ import { digitosMonto, formatoPesos, nombreVitrina, textoMonto } from "@/lib/for
 import type { EscalaEnvio } from "@/types/ajustes";
 import type { MedioPago } from "@/lib/medios-pago";
 import type { EntradaStock, PedidoProveedor, Proveedor, RegularizacionStock } from "@/lib/deposito";
-import { EntradaMercaderia, InventarioProductos, MenuStock, PedidoProveedorPanel } from "@/components/CajaStock";
+import { EntradaMercaderia, InterruptorStockNegativo, InventarioProductos, MenuStock, PedidoProveedorPanel } from "@/components/CajaStock";
 import type { ProductoCaja } from "@/components/CajaPanel";
 import type { Producto } from "@/types/producto";
 import type { Rubro } from "@/types/rubro";
@@ -141,6 +141,7 @@ export function CajaDeposito({
   onDeudas,
   mostrarProductos = false,
   mantenimientoCompleto = true,
+  permitirStockNegativo = false,
   onSalir,
 }: {
   modo: ModoDeposito;
@@ -171,6 +172,7 @@ export function CajaDeposito({
   onDeudas?: () => void;
   mostrarProductos?: boolean;
   mantenimientoCompleto?: boolean;
+  permitirStockNegativo?: boolean;
   onSalir: () => void;
 }) {
   const router = useRouter();
@@ -225,6 +227,7 @@ export function CajaDeposito({
         onRegularizar={() => setStock("regularizar")}
         onInventario={() => setStock("inventario")}
         onSalir={onSalir}
+        permitirStockNegativo={permitirStockNegativo}
       />
     );
   }
@@ -361,6 +364,7 @@ export function CajaDeposito({
             </button>
           )}
         </div>
+        <InterruptorStockNegativo activo={permitirStockNegativo} />
         <button type="button" className={`${BOTON} mt-8`} onClick={onSalir}>
           Salir
         </button>

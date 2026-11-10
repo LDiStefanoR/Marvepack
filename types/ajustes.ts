@@ -22,6 +22,8 @@ export type AjustesPrecios = {
   plazoCuenta: number;
   /** Escala de envío a domicilio. Los cortes y los costos se editan en mantenimiento. */
   envio: EscalaEnvio;
+  /** Si está activo, la caja vende aunque no haya stock y deja el saldo en negativo. */
+  permitirStockNegativo: boolean;
 };
 
 export type EscalaEnvio = {

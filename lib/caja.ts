@@ -118,6 +118,8 @@ export async function registrarVentaCaja(datos: {
     return { error: "La venta está vacía." as const };
   }
   const productos = await leerProductos();
+  const ajustes = await leerAjustes();
+  const permitirNegativo = ajustes.permitirStockNegativo === true;
   const armadas: LineaVentaCaja[] = [];
   for (const linea of datos.lineas) {
     if (!Number.isFinite(linea.cantidad) || linea.cantidad < 1) {
@@ -125,7 +127,6 @@ export async function registrarVentaCaja(datos: {
     }
     if (linea.productoId === ID_LINEA_ENVIO) {
       const precio = Math.max(0, Math.round(linea.precio));
-      const ajustes = await leerAjustes();
       armadas.push({
         productoId: ID_LINEA_ENVIO,
         codigo: codigoEnvio(ajustes.envio),
@@ -139,7 +140,13 @@ export async function registrarVentaCaja(datos: {
     const producto = productos.find((p) => p.id === linea.productoId);
     if (!producto) return { error: "Hay un producto que ya no está en el catálogo." as const };
     const cantidad = Math.round(linea.cantidad);
-    if (typeof producto.stock === "number" && producto.stock >= 0 && producto.stock < cantidad) {
+    const controlaStock = typeof producto.stock === "number";
+    if (
+      controlaStock &&
+      !permitirNegativo &&
+      producto.stock >= 0 &&
+      producto.stock < cantidad
+    ) {
       return {
         error: `No hay stock de ${producto.nombre} (cód. ${producto.codigo}). Quedan ${producto.stock}.` as const,
       };
@@ -150,7 +157,7 @@ export async function registrarVentaCaja(datos: {
       nombre: producto.nombre,
       precio: Math.round(linea.precio),
       cantidad,
-      descontoStock: typeof producto.stock === "number" && producto.stock >= 0,
+      descontoStock: controlaStock,
     });
   }
 
@@ -158,7 +165,8 @@ export async function registrarVentaCaja(datos: {
     if (!linea.descontoStock) continue;
     const producto = productos.find((p) => p.id === linea.productoId);
     if (producto && typeof producto.stock === "number") {
-      producto.stock = Math.max(0, producto.stock - linea.cantidad);
+      const siguiente = producto.stock - linea.cantidad;
+      producto.stock = permitirNegativo ? siguiente : Math.max(0, siguiente);
     }
   }
   await guardarProductos(productos);
@@ -297,7 +305,8 @@ export async function guardarStockProducto(
   stock: number,
   mostrarEnCaja = true,
 ) {
-  if (!Number.isFinite(stock) || stock < 0) {
+  const permitirNegativo = (await leerAjustes()).permitirStockNegativo === true;
+  if (!Number.isFinite(stock) || (!permitirNegativo && stock < 0)) {
     return { error: "El stock no puede ser negativo." as const };
   }
   const productos = await leerProductos();

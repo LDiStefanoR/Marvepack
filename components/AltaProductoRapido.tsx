@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { crearProductoRapido } from "@/app/acciones/imagenes";
 import { caja } from "@/components/caja-estilo";
+import { siguienteCodigoCorrelativo } from "@/lib/codigo-producto";
 import { digitosMonto, formatoPesos, textoMonto } from "@/lib/format";
 import { sugerirPrecio } from "@/lib/margen";
 import type { Proveedor } from "@/lib/deposito";
@@ -12,12 +13,14 @@ export function AltaProductoRapido({
   rubros,
   proveedores,
   proveedorId,
+  productos = [],
   onCerrar,
   onListo,
 }: {
   rubros: { clave: string; etiqueta: string }[];
   proveedores: Proveedor[];
   proveedorId?: string;
+  productos?: { codigo: string }[];
   onCerrar: () => void;
   onListo: (
     mensaje: string,
@@ -32,6 +35,7 @@ export function AltaProductoRapido({
   const [precio, setPrecio] = useState("");
   const [preview, setPreview] = useState<string | null>(null);
   const sugerido = sugerirPrecio(costo, margen);
+  const codigoInicial = siguienteCodigoCorrelativo(productos.map((p) => p.codigo));
 
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center overflow-auto bg-black/40 p-3 pt-6">
@@ -69,7 +73,7 @@ export function AltaProductoRapido({
         <div className="mt-4 grid gap-3 sm:grid-cols-2">
           <label className="text-sm font-bold">
             Código
-            <input name="codigo" required className={`${caja.campo} mt-1`} />
+            <input name="codigo" defaultValue={codigoInicial} className={`${caja.campo} mt-1`} />
           </label>
           <label className="text-sm font-bold">
             Nombre

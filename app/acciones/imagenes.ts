@@ -8,6 +8,7 @@ import { getSesion } from "@/lib/sesion";
 import { guardarProductos, leerProductos } from "@/lib/productos";
 import { borrarFotoSitioSiLibre, guardarFotoSitio } from "@/lib/fotos-sitio";
 import { persistirFotosGithub } from "@/lib/persistir-github";
+import { siguienteCodigoCorrelativo } from "@/lib/codigo-producto";
 import { leerRubros } from "@/lib/rubros";
 import { exigirPermisoCaja } from "@/lib/exigir-permiso";
 import { puedeCobrar } from "@/lib/roles";
@@ -291,8 +292,9 @@ export async function crearProducto(form: FormData): Promise<EstadoImagen> {
   if (nombre.length < 3) {
     return { error: "Ingresá un nombre de al menos 3 caracteres." };
   }
-  if (!codigo) return { error: "Ingresá un código." };
   const productos = await leerProductos();
+  const codigoUsar = codigo || siguienteCodigoCorrelativo(productos.map((p) => p.codigo));
+  if (!codigoUsar) return { error: "Ingresá un código." };
   const rubros = await leerRubros(productos.map((p) => p.seccion));
   if (!rubros.some((r) => r.clave === seccion)) {
     return { error: "Elegí un rubro válido." };
@@ -302,7 +304,7 @@ export async function crearProducto(form: FormData): Promise<EstadoImagen> {
   }
 
   if (
-    productos.some((p) => p.codigo.toLowerCase() === codigo.toLowerCase())
+    productos.some((p) => p.codigo.toLowerCase() === codigoUsar.toLowerCase())
   ) {
     return { error: "Ya hay un producto con ese código." };
   }
@@ -317,7 +319,7 @@ export async function crearProducto(form: FormData): Promise<EstadoImagen> {
   const imagen =
     delRubro?.imagen ?? "/recursos/imagenes-productos/bolsa-cierre.jpg";
 
-  const idBase = `mp-${codigo.replace(/[^a-zA-Z0-9_-]/g, "").toLowerCase() || Date.now()}`;
+  const idBase = `mp-${codigoUsar.replace(/[^a-zA-Z0-9_-]/g, "").toLowerCase() || Date.now()}`;
   let id = idBase;
   let n = 2;
   while (productos.some((p) => p.id === id)) {
@@ -327,7 +329,7 @@ export async function crearProducto(form: FormData): Promise<EstadoImagen> {
 
   productos.unshift({
     id,
-    codigo,
+    codigo: codigoUsar,
     nombre,
     seccion,
     precio,
@@ -341,7 +343,7 @@ export async function crearProducto(form: FormData): Promise<EstadoImagen> {
   });
   await guardarProductos(productos);
   revalidarCatalogo();
-  return { ok: `Creamos ${codigo}. Ya está en el catálogo.` };
+  return { ok: `Creamos ${codigoUsar}. Ya está en el catálogo.` };
 }
 
 export async function guardarFichaProducto(
@@ -367,15 +369,15 @@ export async function guardarFichaProducto(
   if (nombre.length < 3) {
     return { error: "Ingresá un nombre de al menos 3 caracteres." };
   }
-  if (!codigo) return { error: "Ingresá un código." };
   if (!Number.isFinite(bruto) || bruto < 1) {
     return { error: "Ingresá un precio válido." };
   }
 
+  const permitirNegativo = (await leerAjustes()).permitirStockNegativo === true;
   let stock: number | undefined;
   if (stockRaw !== "") {
     const n = Number(stockRaw.replace(",", "."));
-    if (!Number.isFinite(n) || n < 0) {
+    if (!Number.isFinite(n) || (!permitirNegativo && n < 0)) {
       return { error: "El stock no puede ser negativo." };
     }
     stock = Math.round(n);
@@ -401,13 +403,15 @@ export async function guardarFichaProducto(
   }
 
   const productos = await leerProductos();
+  const codigoUsar = codigo || siguienteCodigoCorrelativo(productos.map((p) => p.codigo));
+  if (!codigoUsar) return { error: "Ingresá un código." };
   const rubros = await leerRubros(productos.map((p) => p.seccion));
   if (!rubros.some((r) => r.clave === seccion)) {
     return { error: "Elegí una sección válida." };
   }
   if (
     productos.some(
-      (p) => p.id !== productoId && p.codigo.toLowerCase() === codigo.toLowerCase(),
+      (p) => p.id !== productoId && p.codigo.toLowerCase() === codigoUsar.toLowerCase(),
     )
   ) {
     return { error: "Ya hay un producto con ese código." };
@@ -422,7 +426,7 @@ export async function guardarFichaProducto(
     const delRubro = productos.find((p) => p.seccion === seccion);
     const imagen =
       delRubro?.imagen ?? "/recursos/imagenes-productos/bolsa-cierre.jpg";
-    const idBase = `mp-${codigo.replace(/[^a-zA-Z0-9_-]/g, "").toLowerCase() || Date.now()}`;
+    const idBase = `mp-${codigoUsar.replace(/[^a-zA-Z0-9_-]/g, "").toLowerCase() || Date.now()}`;
     let id = idBase;
     let n = 2;
     while (productos.some((p) => p.id === id)) {
@@ -431,7 +435,7 @@ export async function guardarFichaProducto(
     }
     productos.unshift({
       id,
-      codigo,
+      codigo: codigoUsar,
       nombre,
       seccion,
       precio,
@@ -452,12 +456,12 @@ export async function guardarFichaProducto(
     });
     await guardarProductos(productos);
     revalidarCatalogo();
-    return { ok: `Creamos ${codigo}. Ya está en el catálogo y en la caja.`, id };
+    return { ok: `Creamos ${codigoUsar}. Ya está en el catálogo y en la caja.`, id };
   }
 
   const producto = productos.find((p) => p.id === productoId);
   if (!producto) return { error: "No encontramos ese producto." };
-  producto.codigo = codigo;
+  producto.codigo = codigoUsar;
   producto.nombre = nombre;
   producto.seccion = seccion;
   producto.precio = precio;
@@ -475,7 +479,7 @@ export async function guardarFichaProducto(
   else delete producto.proveedorId;
   await guardarProductos(productos);
   revalidarCatalogo();
-  return { ok: `Guardamos ${codigo} — ${nombre}.`, id: producto.id };
+  return { ok: `Guardamos ${codigoUsar} — ${nombre}.`, id: producto.id };
 }
 
 export async function guardarCodigosBarra(form: FormData): Promise<EstadoImagen> {
@@ -544,13 +548,17 @@ export async function crearProductoRapido(form: FormData): Promise<EstadoImagen>
   const barra = String(form.get("barra") ?? "").trim();
 
   if (nombre.length < 3) return { error: "Ingresá un nombre de al menos 3 caracteres." };
-  if (!codigo) return { error: "Ingresá un código." };
   if (!Number.isFinite(bruto) || bruto < 1) return { error: "Ingresá un precio válido." };
 
+  const productos = await leerProductos();
+  const codigoUsar = codigo || siguienteCodigoCorrelativo(productos.map((p) => p.codigo));
+  if (!codigoUsar) return { error: "Ingresá un código." };
+
+  const permitirNegativo = (await leerAjustes()).permitirStockNegativo === true;
   let stock: number | undefined;
   if (stockRaw !== "") {
     const n = Number(stockRaw.replace(",", "."));
-    if (!Number.isFinite(n) || n < 0) return { error: "El stock no puede ser negativo." };
+    if (!Number.isFinite(n) || (!permitirNegativo && n < 0)) return { error: "El stock no puede ser negativo." };
     stock = Math.round(n);
   }
   let costo: number | undefined;
@@ -564,10 +572,9 @@ export async function crearProductoRapido(form: FormData): Promise<EstadoImagen>
   const minimo = leerEnteroOpcional(minimoRaw, "El stock mínimo");
   if ("error" in minimo) return { error: minimo.error };
 
-  const productos = await leerProductos();
   const rubros = await leerRubros(productos.map((p) => p.seccion));
   if (!rubros.some((r) => r.clave === seccion)) return { error: "Elegí una sección válida." };
-  if (productos.some((p) => p.codigo.toLowerCase() === codigo.toLowerCase())) {
+  if (productos.some((p) => p.codigo.toLowerCase() === codigoUsar.toLowerCase())) {
     return { error: "Ya hay un producto con ese código." };
   }
   if (proveedorId) {
@@ -582,7 +589,7 @@ export async function crearProductoRapido(form: FormData): Promise<EstadoImagen>
     if (!codigoBarra) continue;
     if (codigoBarra.length > 32) return { error: "Un código de barra es demasiado largo." };
     const clave = codigoBarra.toLowerCase();
-    if (vistos.has(clave) || clave === codigo.toLowerCase()) continue;
+    if (vistos.has(clave) || clave === codigoUsar.toLowerCase()) continue;
     vistos.add(clave);
     const otro = productos.find(
       (p) =>
@@ -618,7 +625,7 @@ export async function crearProductoRapido(form: FormData): Promise<EstadoImagen>
     try {
       imagen = await guardarFotoSitio({
         carpeta: "imagenes-productos",
-        nombre: nombreArchivo(codigo, ext),
+        nombre: nombreArchivo(codigoUsar, ext),
         buffer: Buffer.from(await archivo.arrayBuffer()),
         mime,
       });
@@ -628,7 +635,7 @@ export async function crearProductoRapido(form: FormData): Promise<EstadoImagen>
     }
   }
 
-  const idBase = `mp-${codigo.replace(/[^a-zA-Z0-9_-]/g, "").toLowerCase() || Date.now()}`;
+  const idBase = `mp-${codigoUsar.replace(/[^a-zA-Z0-9_-]/g, "").toLowerCase() || Date.now()}`;
   let id = idBase;
   let n = 2;
   while (productos.some((p) => p.id === id)) {
@@ -637,7 +644,7 @@ export async function crearProductoRapido(form: FormData): Promise<EstadoImagen>
   }
   productos.unshift({
     id,
-    codigo,
+    codigo: codigoUsar,
     nombre,
     seccion,
     precio,
@@ -659,11 +666,11 @@ export async function crearProductoRapido(form: FormData): Promise<EstadoImagen>
   await guardarProductos(productos);
   revalidarCatalogo();
   return {
-    ok: `Cargamos ${codigo} — ${nombre}.`,
+    ok: `Cargamos ${codigoUsar} — ${nombre}.`,
     id,
     producto: {
       id,
-      codigo,
+      codigo: codigoUsar,
       nombre,
       costo: costo ?? null,
       margen: margen.margen ?? null,

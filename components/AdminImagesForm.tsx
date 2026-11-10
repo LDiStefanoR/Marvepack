@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { guardarCodigosBarra, guardarFichaProducto, subirImagenProducto, eliminarProducto } from "@/app/acciones/imagenes";
 import { caja } from "@/components/caja-estilo";
 import { digitosMonto, formatoPesos, textoMonto } from "@/lib/format";
+import { siguienteCodigoCorrelativo } from "@/lib/codigo-producto";
 import { sugerirPrecio } from "@/lib/margen";
 import type { Proveedor } from "@/lib/deposito";
 import { esFotoGenericaDeFamilia, sinFotoDeProducto } from "@/lib/foto-producto";
@@ -133,7 +134,7 @@ export function AdminImagesForm({
   function nuevo() {
     setBorrador({
       id: null,
-      codigo: "",
+      codigo: siguienteCodigoCorrelativo(productos.map((p) => p.codigo)),
       nombre: "",
       seccion: seccionFiltro !== "todas" ? seccionFiltro : (rubros[0]?.clave ?? ""),
       precio: "",
@@ -240,7 +241,6 @@ export function AdminImagesForm({
             Código *
             <input
               name="codigo"
-              required
               value={borrador.codigo}
               onChange={(e) => setBorrador({ ...borrador, codigo: e.target.value })}
               className={`${campo} bg-confetti/25`}
@@ -378,7 +378,7 @@ export function AdminImagesForm({
             />
           </label>
           <p className="pl-[7.5rem] text-[11px] font-semibold text-neutral-600">
-            Vacío: el stock no se controla. 0: no se puede vender.
+            Vacío: el stock no se controla. 0: no se vende, salvo que actives stock negativo en Stock.
           </p>
           <label className="flex items-center gap-2 pl-[7.5rem] text-sm font-bold">
             <input

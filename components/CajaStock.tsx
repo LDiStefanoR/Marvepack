@@ -1,6 +1,8 @@
 "use client";
 
-import { useMemo, useState, type ReactNode } from "react";
+import { useMemo, useState, useTransition, type ReactNode } from "react";
+import { useRouter } from "next/navigation";
+import { guardarPermitirStockNegativo } from "@/app/acciones/admin";
 import type { EstadoDeposito } from "@/app/acciones/deposito";
 import { AltaProductoRapido } from "@/components/AltaProductoRapido";
 import { caja } from "@/components/caja-estilo";
@@ -17,18 +19,49 @@ import { sugerirPrecio } from "@/lib/margen";
 import { diaArgentina } from "@/lib/venta-texto";
 import type { EntradaStock, PedidoProveedor, Proveedor } from "@/lib/deposito";
 
+export function InterruptorStockNegativo({ activo }: { activo: boolean }) {
+  const router = useRouter();
+  const [pending, start] = useTransition();
+  const [aviso, setAviso] = useState("");
+  return (
+    <div className="mt-8 rounded-2xl border border-neutral-200 bg-white p-4 shadow-sm">
+      <p className="text-sm font-bold">Permitir stock negativo</p>
+      <p className="mt-1 text-sm text-neutral-600">
+        Por defecto está desactivado: la caja no vende si no hay unidades. Si lo activás, se puede cerrar una venta con stock 0 y el saldo queda en negativo. El catálogo web sigue sin vender sin stock.
+      </p>
+      <button
+        type="button"
+        disabled={pending}
+        onClick={() =>
+          start(async () => {
+            const r = await guardarPermitirStockNegativo(!activo);
+            setAviso(r?.ok ?? r?.error ?? "");
+            router.refresh();
+          })
+        }
+        className={`${activo ? caja.primario : caja.boton} mt-3`}
+      >
+        {pending ? "Guardando…" : activo ? "Activado — tocá para desactivar" : "Desactivado — tocá para activar"}
+      </button>
+      {aviso ? <p className="mt-2 text-sm font-semibold text-neutral-700">{aviso}</p> : null}
+    </div>
+  );
+}
+
 export function MenuStock({
   onPedido,
   onEntrada,
   onRegularizar,
   onInventario,
   onSalir,
+  permitirStockNegativo = false,
 }: {
   onPedido: () => void;
   onEntrada: () => void;
   onRegularizar: () => void;
   onInventario: () => void;
   onSalir: () => void;
+  permitirStockNegativo?: boolean;
 }) {
   return (
     <section className="mx-auto max-w-5xl px-4 py-6">
@@ -40,6 +73,7 @@ export function MenuStock({
         <TarjetaAccion icono={<IconoRegularizar />} titulo="Regularizar stock" detalle="Corregir o descontar lo contado" onClick={onRegularizar} />
         <TarjetaAccion icono={<IconoInventario />} titulo="Inventario" detalle="Ver, filtrar y editar productos" onClick={onInventario} />
       </div>
+      <InterruptorStockNegativo activo={permitirStockNegativo} />
       <button type="button" className={`${caja.boton} mt-8`} onClick={onSalir}>
         Salir
       </button>
@@ -229,6 +263,7 @@ export function PedidoProveedorPanel({
           rubros={rubros}
           proveedores={proveedores}
           proveedorId={proveedorId}
+          productos={productos}
           onCerrar={() => setAlta(false)}
           onListo={(mensaje, producto) => {
             onAviso(mensaje);
@@ -674,6 +709,7 @@ function RecepcionPedido({
           rubros={rubros}
           proveedores={proveedores}
           proveedorId={pedido.proveedorId}
+          productos={productos}
           onCerrar={() => setAlta(false)}
           onListo={(mensaje, producto) => {
             onAviso(mensaje);
@@ -960,6 +996,7 @@ export function EntradaMercaderia({
           rubros={rubros}
           proveedores={proveedores}
           proveedorId={proveedorId}
+          productos={productos}
           onCerrar={() => setAlta(false)}
           onListo={(mensaje, producto) => {
             onAviso(mensaje);
@@ -1146,7 +1183,7 @@ export function InventarioProductos({
     return productos.filter((p) => {
       if (seccion !== "todas" && p.seccion !== seccion) return false;
       if (situacion === "bajo" && !(p.stock != null && p.stockMinimo != null && p.stock <= p.stockMinimo)) return false;
-      if (situacion === "sin" && p.stock !== 0) return false;
+      if (situacion === "sin" && !(typeof p.stock === "number" && p.stock <= 0)) return false;
       if (situacion === "con" && !(typeof p.stock === "number" && p.stock > 0)) return false;
       if (!t) return true;
       return (

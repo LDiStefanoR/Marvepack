@@ -194,6 +194,7 @@ export default async function CajaPage({
       pedidosWeb={pedidosWeb}
       creditos={creditos}
       vistaInicial={vistaPedidos && sesion.rol === "admin" ? "pedidos" : "inicio"}
+      permitirStockNegativo={ajustes.permitirStockNegativo === true}
     />
   );
 }

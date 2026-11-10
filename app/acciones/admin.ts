@@ -202,6 +202,22 @@ export async function guardarEnvioAdmin(form: FormData): Promise<EstadoAdmin> {
   return { ok: "Guardamos la escala de envío a domicilio." };
 }
 
+export async function guardarPermitirStockNegativo(
+  activo: boolean,
+): Promise<EstadoAdmin> {
+  if (!(await exigirPermisoCaja("stock")) && !(await exigirPermisoCaja("mantenimiento"))) {
+    return { error: "No tenés permiso para cambiar esta opción." };
+  }
+  const ajustes = await leerAjustes();
+  await guardarAjustes({ ...ajustes, permitirStockNegativo: Boolean(activo) });
+  revalidarSitio();
+  return {
+    ok: activo
+      ? "La caja puede vender sin stock y dejar el saldo en negativo."
+      : "La caja vuelve a bloquear la venta si no hay stock.",
+  };
+}
+
 export async function crearRubro(form: FormData): Promise<EstadoAdmin> {
   if (!(await exigirCaja())) {
     return { error: "No tenés permiso para crear rubros." };

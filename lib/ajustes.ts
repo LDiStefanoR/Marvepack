@@ -17,6 +17,7 @@ export const AJUSTES_PRECIOS_BASE: AjustesPrecios = {
   moraCuenta: [...MORA_BASE],
   plazoCuenta: 7,
   envio: { ...ENVIO_BASE },
+  permitirStockNegativo: false,
 };
 
 const vacio = AJUSTES_PRECIOS_BASE;
@@ -86,6 +87,7 @@ export async function leerAjustes(): Promise<AjustesPrecios> {
     moraCuenta: escala(parsed.moraCuenta),
     plazoCuenta: diasPlazoValido(parsed.plazoCuenta) ?? 7,
     envio: escalaEnvio(parsed.envio),
+    permitirStockNegativo: parsed.permitirStockNegativo === true,
   };
 }
 

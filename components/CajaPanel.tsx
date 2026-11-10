@@ -146,6 +146,7 @@ export function CajaPanel({
   pedidosWeb,
   creditos,
   vistaInicial = "inicio",
+  permitirStockNegativo = false,
 }: {
   productos: ProductoCaja[];
   rubros: { clave: string; etiqueta: string }[];
@@ -185,6 +186,7 @@ export function CajaPanel({
   pedidosWeb: Pedido[];
   creditos: CreditoPendiente[];
   vistaInicial?: Vista;
+  permitirStockNegativo?: boolean;
 }) {
   const router = useRouter();
   const [vista, setVista] = useState<Vista>(vistaInicial);
@@ -322,7 +324,7 @@ export function CajaPanel({
     setLineas((prev) => {
       const actual = prev.find((l) => l.id === id);
       const siguiente = (actual?.cantidad ?? 0) + 1;
-      if (p.stock != null && p.stock >= 0 && siguiente > p.stock) {
+      if (!permitirStockNegativo && p.stock != null && p.stock >= 0 && siguiente > p.stock) {
         sonarError();
         setMensaje({
           error: `${nombreVitrina(p.nombre)} (cód. ${p.codigo}) no tiene stock. Quedan ${p.stock}.`,
@@ -343,7 +345,7 @@ export function CajaPanel({
     setLineas((prev) => {
       if (cantidad < 1) return prev.filter((l) => l.id !== id);
       const p = porId.get(id);
-      if (p?.stock != null && p.stock >= 0 && cantidad > p.stock) {
+      if (!permitirStockNegativo && p?.stock != null && p.stock >= 0 && cantidad > p.stock) {
         sonarError();
         setMensaje({
           error: `${nombreVitrina(p.nombre)} (cód. ${p.codigo}) no tiene stock. Quedan ${p.stock}.`,
@@ -950,7 +952,7 @@ export function CajaPanel({
 
             <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3 xl:grid-cols-4">
               {visibles.map((p) => {
-                const agotado = p.stock === 0;
+                const agotado = !permitirStockNegativo && p.stock === 0;
                 return (
                   <button
                     key={p.id}
@@ -965,7 +967,11 @@ export function CajaPanel({
                     <span>
                       <span className={caja.precio}>{formatoPesos(p.precio)}</span>
                       <span className="mt-1 block text-[11px] font-semibold text-neutral-500">
-                        {p.stock == null ? `Cód. ${p.codigo}` : agotado ? "Sin stock" : `Stock ${p.stock}`}
+                        {p.stock == null
+                          ? `Cód. ${p.codigo}`
+                          : agotado
+                            ? "Sin stock"
+                            : `Stock ${p.stock}`}
                       </span>
                     </span>
                   </button>
@@ -1280,6 +1286,7 @@ export function CajaPanel({
           envio={envio}
           ajustePorSeccion={ajustePorSeccion}
           mediosPago={mediosPago}
+          permitirStockNegativo={permitirStockNegativo}
           onSalir={() => setVista("inicio")}
         />
       )}
@@ -1311,6 +1318,7 @@ export function CajaPanel({
           envio={envio}
           ajustePorSeccion={ajustePorSeccion}
           mediosPago={mediosPago}
+          permitirStockNegativo={permitirStockNegativo}
           onDeudas={
             permisos.includes("deudas")
               ? () => {
@@ -1350,6 +1358,7 @@ export function CajaPanel({
           envio={envio}
           ajustePorSeccion={ajustePorSeccion}
           mediosPago={mediosPago}
+          permitirStockNegativo={permitirStockNegativo}
           mostrarProductos={permisos.includes("productos")}
           mantenimientoCompleto={permisos.includes("mantenimiento")}
           onSalir={() => setVista("inicio")}
