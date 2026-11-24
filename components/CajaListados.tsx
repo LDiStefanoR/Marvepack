@@ -59,15 +59,6 @@ const GRUPOS: { titulo: string; tipos: { id: TipoListado; texto: string }[] }[] 
       { id: "deudas-mercaderia", texto: "Deuda de mercadería" },
     ],
   },
-  {
-    titulo: "Préstamos",
-    tipos: [
-      { id: "prestamos-cobrar", texto: "A cobrar" },
-      { id: "prestamos-mora", texto: "En mora" },
-      { id: "prestamos-lineas", texto: "Líneas de crédito" },
-      { id: "prestamos-pedidos", texto: "Pedidos de crédito" },
-    ],
-  },
 ];
 
 const CON_FECHAS = new Set<TipoListado>([

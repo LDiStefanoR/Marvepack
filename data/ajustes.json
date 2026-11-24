@@ -1,7 +1,39 @@
 {
   "descuentoClienteGenerico": 10,
+  "recargoWeb": 0,
   "ajustePorSeccion": {
     "BOLSAS": -50
   },
-  "descuentoClientePorSeccion": {}
+  "descuentoClientePorSeccion": {},
+  "descuentoEmpleadoGenerico": 0,
+  "descuentoEmpleadoPorSeccion": {},
+  "tasasCuota": {
+    "1": 15,
+    "2": 25,
+    "3": 35,
+    "6": 50
+  },
+  "moraCredito": [
+    5,
+    10,
+    20,
+    40
+  ],
+  "moraCuenta": [
+    5,
+    10,
+    20,
+    40
+  ],
+  "plazoCuenta": 7,
+  "envio": {
+    "base": 5998,
+    "medioDesde": 15000,
+    "medio": 4890,
+    "bajoDesde": 30000,
+    "bajo": 4000,
+    "sinCargoDesde": 60000,
+    "codigo": "ENVIO"
+  },
+  "permitirStockNegativo": true
 }

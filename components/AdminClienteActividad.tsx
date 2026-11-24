@@ -252,7 +252,7 @@ export function AdminClienteActividad({
       <section className="rounded-2xl border border-movipack/15 bg-white p-4 shadow-sm">
         <p className="text-sm font-bold text-movipack-deep">Así lo ve el cliente</p>
         <p className="mt-1 text-sm text-neutral-600">
-          Pedidos, estados y comprobantes. Préstamos y cuenta corriente solo si están habilitados en la ficha.
+          Pedidos, estados y comprobantes.
         </p>
         <div className="mt-3">
           <PerfilCuenta
@@ -263,8 +263,8 @@ export function AdminClienteActividad({
             cbu=""
             titular=""
             nombreLocal="MarvePack"
-            verPrestamos={resumen.cliente.mostrarPrestamos === true}
-            verCuenta={resumen.cliente.mostrarCuenta === true}
+            verPrestamos={false}
+            verCuenta={false}
             limiteCredito={resumen.cliente.limiteEfectivo}
             usadoCredito={resumen.saldoEfectivo}
             cuotasMaximas={resumen.cliente.cuotasMaximas}

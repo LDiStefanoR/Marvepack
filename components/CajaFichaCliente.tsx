@@ -2,7 +2,6 @@
 
 import { useState, useTransition } from "react";
 import { actualizarClienteCaja, generarClaveClienteCaja } from "@/app/acciones/deposito";
-import { CondicionesCliente } from "@/components/CamposCredito";
 import { caja } from "@/components/caja-estilo";
 import type { CompraCaja, DeudaCaja, PersonaCaja } from "@/components/CajaDeposito";
 import { formatoPesos } from "@/lib/format";
@@ -193,43 +192,6 @@ export function CajaFichaCliente({
             <Dato etiqueta="Cuenta web" valor={actual.cuentaWeb ? actual.email : "Solo cliente de caja"} />
           </dl>
 
-          <div className="mt-4 grid gap-3 lg:grid-cols-2">
-            <article className="rounded-3xl border border-neutral-200 bg-white p-5 shadow-sm">
-              <p className={caja.kicker}>Crédito</p>
-              <h3 className="font-display text-2xl font-bold">{tieneCredito ? formatoPesos(actual.limiteEfectivo) : "Sin acceso"}</h3>
-              <p className="mt-1 text-xs font-bold uppercase tracking-wide text-neutral-500">
-                {actual.mostrarPrestamos ? "Visible en su perfil" : "Oculto en su perfil"}
-              </p>
-              {tieneCredito ? (
-                <ul className="mt-3 space-y-2 text-sm text-neutral-700">
-                  <li>Cuotas: {textoCuotas(cuotas)}</li>
-                  <li>{modoInteres === "propio" ? `Interés de esta ficha. ${interesPropio}` : "Interés de la escala general"}</li>
-                  <li>{textoMoraSemanal(moraC.modo, moraC.porcentaje, "Si se vencen", moraCredito)}</li>
-                </ul>
-              ) : (
-                <p className="mt-2 text-sm text-neutral-600">Este cliente no puede llevarse plata en cuotas.</p>
-              )}
-            </article>
-            <article className="rounded-3xl border border-neutral-200 bg-white p-5 shadow-sm">
-              <p className={caja.kicker}>Cuenta corriente</p>
-              <h3 className="font-display text-2xl font-bold">{tieneCuenta ? formatoPesos(actual.limiteAlmacen) : "Sin acceso"}</h3>
-              <p className="mt-1 text-xs font-bold uppercase tracking-wide text-neutral-500">
-                {actual.mostrarCuenta ? "Visible en su perfil" : "Oculto en su perfil"}
-              </p>
-              {tieneCuenta ? (
-                <ul className="mt-3 space-y-2 text-sm text-neutral-700">
-                  <li>
-                    {actual.plazoCuenta
-                      ? `${actual.plazoCuenta} días para pagar la mercadería`
-                      : `El plazo general, ${plazoGeneral} días`}
-                  </li>
-                  <li>{textoMoraSemanal(moraM.modo, moraM.porcentaje, "Si no paga", moraCuenta)}</li>
-                </ul>
-              ) : (
-                <p className="mt-2 text-sm text-neutral-600">No tiene mercadería fiada.</p>
-              )}
-            </article>
-          </div>
           {actual.nota && <p className={`${caja.nota} mt-3`}>{actual.nota}</p>}
         </>
       )}
@@ -371,52 +333,6 @@ function EditorCliente({
         </div>
       )}
 
-      <div className="mt-4 space-y-2 rounded-2xl border border-neutral-200 bg-neutral-50 p-3">
-        <p className="text-xs font-bold uppercase tracking-wide text-neutral-500">
-          Condiciones de pago
-        </p>
-        <label className="flex items-start gap-3 rounded-xl border border-neutral-200 bg-white px-3 py-3 text-sm">
-          <input
-            type="checkbox"
-            className="mt-1"
-            checked={credito}
-            onChange={(e) => setCredito(e.target.checked)}
-          />
-          <span>
-            <span className="block font-black">Préstamos en su perfil</span>
-            <span className="text-xs font-semibold text-neutral-600">
-              Si está marcado, ve la línea y puede pedir crédito. Si lo desmarcás, esa parte desaparece de su cuenta.
-            </span>
-          </span>
-        </label>
-        <label className="flex items-start gap-3 rounded-xl border border-neutral-200 bg-white px-3 py-3 text-sm">
-          <input
-            type="checkbox"
-            className="mt-1"
-            checked={corriente}
-            onChange={(e) => setCorriente(e.target.checked)}
-          />
-          <span>
-            <span className="block font-black">Cuenta corriente en su perfil</span>
-            <span className="text-xs font-semibold text-neutral-600">
-              Si está marcado, ve el fiado y puede comprar a cuenta. Si lo desmarcás, no aparece en su perfil.
-            </span>
-          </span>
-        </label>
-      </div>
-      {(credito || corriente) && (
-        <CondicionesCliente
-          credito={credito}
-          corriente={corriente}
-          ficha={persona}
-          tasas={tasas}
-          moraCredito={moraCredito}
-          moraCuenta={moraCuenta}
-          plazoGeneral={plazoGeneral}
-          limiteCredito={persona.limiteEfectivo || ""}
-          limiteMercaderia={persona.limiteAlmacen || ""}
-        />
-      )}
 
       {error && <p className={`${caja.avisoErrorPlano} mt-3`}>{error}</p>}
       <div className="mt-4 grid grid-cols-2 gap-2">

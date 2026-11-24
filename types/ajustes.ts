@@ -5,8 +5,12 @@ export type EscalaMora = [number, number, number, number];
 
 export type AjustesPrecios = {
   descuentoClienteGenerico: number;
-  /** Porcentaje que se suma al precio de la base para el catálogo web. */
+  /** Tope de fiado de catálogo por cliente, en pesos. */
+  topeFiado: number;
+  /** Porcentaje que se suma al precio guardado en la base (mostrador). */
   recargoWeb: number;
+  /** Porcentaje que se suma después, sobre el precio de lista. */
+  recargoLista: number;
   ajustePorSeccion: Record<string, number>;
   /** Si la clave está, ese rubro usa este % en vez del descuento general. */
   descuentoClientePorSeccion: Record<string, number>;

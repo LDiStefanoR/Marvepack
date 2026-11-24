@@ -6,13 +6,11 @@ import {
   guardarAliasCliente,
   guardarClaveCliente,
   informarPagoCliente,
-  solicitarEfectivo,
   resumenPorEmail,
   actualizarContactoFiado,
 } from "@/lib/cuentas";
 import { guardarFotoSitio } from "@/lib/fotos-sitio";
 import { getSesion } from "@/lib/sesion";
-import { parseTipoCuenta, tieneLineaCredito } from "@/lib/tipo-cuenta";
 import { actualizarContactoCliente, buscarUsuarioPorEmail, cambiarPasswordUsuario } from "@/lib/usuarios";
 import { whatsappUrl } from "@/lib/whatsapp";
 import { formatoPesos } from "@/lib/format";
@@ -74,29 +72,9 @@ async function comprobanteDesdeForm(form: FormData) {
 
 export async function clienteSolicitarEfectivo(
   _prev: EstadoCuentaCliente,
-  form: FormData,
+  _form: FormData,
 ): Promise<EstadoCuentaCliente> {
-  const sesion = await exigirCliente();
-  if (!sesion) return { error: "Ingresá con tu cuenta de cliente." };
-  const usuario = await buscarUsuarioPorEmail(sesion.email);
-  if (!tieneLineaCredito(parseTipoCuenta(usuario?.tipoCuenta))) {
-    return { error: "Tu cuenta no tiene línea de crédito habilitada." };
-  }
-  const monto = Number(texto(form, "monto").replace(/\./g, "").replace(",", "."));
-  const aliasCbu = texto(form, "aliasCbu");
-  const resultado = await solicitarEfectivo({
-    email: sesion.email,
-    monto,
-    aliasCbu,
-    nota: texto(form, "nota"),
-  });
-  if ("error" in resultado) return { error: resultado.error };
-  revalidar();
-  const mensaje = `Hola, soy ${resultado.cliente.nombre}. Solicito un préstamo en efectivo de ${formatoPesos(monto)}. Alias/CBU: ${aliasCbu}. El plazo de acreditación es de ${resultado.plazoHoras} horas.`;
-  return {
-    ok: `Pedimos el efectivo. El plazo de acreditación es de ${resultado.plazoHoras} horas. El administrador ya tiene la alerta.`,
-    whatsapp: whatsappUrl(mensaje),
-  };
+  return { error: "Los préstamos en efectivo ya no están disponibles. La línea de crédito es solo fiado de mercadería del catálogo." };
 }
 
 export async function clienteInformarPago(

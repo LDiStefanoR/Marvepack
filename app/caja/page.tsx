@@ -177,6 +177,8 @@ export default async function CajaPage({
       descuentoEmpleadoGenerico={ajustes.descuentoEmpleadoGenerico}
       descuentoEmpleadoPorSeccion={ajustes.descuentoEmpleadoPorSeccion}
       recargoWeb={ajustes.recargoWeb}
+      recargoLista={ajustes.recargoLista}
+      topeFiado={ajustes.topeFiado}
       tasasCuota={ajustes.tasasCuota}
       moraCredito={ajustes.moraCredito}
       moraCuenta={ajustes.moraCuenta}

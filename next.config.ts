@@ -14,6 +14,7 @@ const nextConfig: NextConfig = {
     "cloudinary",
     "@libsql/client",
     "sharp",
+    "jszip",
   ],
   images: {
     remotePatterns: [
@@ -38,7 +39,7 @@ const nextConfig: NextConfig = {
   },
   experimental: {
     serverActions: {
-      bodySizeLimit: "8mb",
+      bodySizeLimit: "250mb",
     },
   },
   turbopack: {

@@ -8,7 +8,7 @@ import {
 } from "@/lib/auth-config";
 import { escribirJsonData, leerJsonData } from "@/lib/data-fs";
 import { esPermisoCaja } from "@/lib/permisos-caja";
-import { parseTipoCuenta } from "@/lib/tipo-cuenta";
+import { eraTipoCredito, parseTipoCuenta } from "@/lib/tipo-cuenta";
 import type {
   EstadoCuenta,
   PerfilCliente,
@@ -44,6 +44,7 @@ function normalizarUsuario(
       raw.rol === "admin" || raw.rol === "caja"
         ? undefined
         : parseTipoCuenta(raw.tipoCuenta),
+    creditoMercaderia: raw.creditoMercaderia === true || eraTipoCredito(raw.tipoCuenta),
     notaInterna: raw.notaInterna?.trim() || "",
     permisosCaja: Array.isArray(raw.permisosCaja)
       ? raw.permisosCaja.filter(esPermisoCaja)
@@ -56,24 +57,7 @@ async function leerArchivo(): Promise<Usuario[]> {
   const parsed = await leerJsonData<Partial<Usuario>[]>("usuarios.json", []);
   if (!Array.isArray(parsed)) return [];
   const crudos = parsed.filter((u) => u?.id && u?.email);
-  const hayTiposNuevos = crudos.some(
-    (u) =>
-      u.tipoCuenta === "descuentos" ||
-      u.tipoCuenta === "credito_super" ||
-      u.tipoCuenta === "linea_credito",
-  );
-  if (!hayTiposNuevos) {
-    for (const u of crudos) {
-      if (u.rol === "admin") continue;
-      if ((u.tipoCuenta as string) === "credito") u.tipoCuenta = "credito_super";
-      else u.tipoCuenta = "descuentos";
-    }
-  }
-  const usuarios = crudos.map((u) => normalizarUsuario(u as Usuario));
-  if (!hayTiposNuevos && usuarios.some((u) => u.rol === "cliente")) {
-    await escribirArchivo(usuarios);
-  }
-  return usuarios;
+  return crudos.map((u) => normalizarUsuario(u as Usuario));
 }
 
 async function escribirArchivo(usuarios: Usuario[]) {
@@ -364,6 +348,7 @@ export async function cambiarEmailUsuario(id: string, emailNuevo: string) {
 export async function actualizarTipoCuenta(
   id: string,
   tipo: TipoCuentaCliente,
+  extras?: { creditoMercaderia?: boolean; descuento?: number },
 ) {
   const usuarios = await asegurarSemilla();
   const usuario = usuarios.find((u) => u.id === id);
@@ -372,6 +357,29 @@ export async function actualizarTipoCuenta(
     return { error: "Un administrador no usa cuenta de cliente." as const };
   }
   usuario.tipoCuenta = tipo;
+  if (extras?.creditoMercaderia !== undefined) {
+    usuario.creditoMercaderia = extras.creditoMercaderia;
+  }
+  if (extras?.descuento !== undefined) {
+    const base = usuario.perfil;
+    usuario.perfil = {
+      tipoPersona: base?.tipoPersona === "empresa" ? "empresa" : "persona",
+      tipoLocal: base?.tipoLocal ?? "",
+      productosInteres: base?.productosInteres ?? "",
+      direccion: base?.direccion ?? "",
+      telefono: base?.telefono ?? "",
+      horarioAtencion: base?.horarioAtencion ?? "",
+      deseaAsesor: base?.deseaAsesor ?? false,
+      franjaReparto: base?.franjaReparto,
+      fotoPerfil: base?.fotoPerfil,
+      codigo: base?.codigo,
+      apellido: base?.apellido,
+      cumpleanos: base?.cumpleanos,
+      documento: base?.documento,
+      direcciones: base?.direcciones,
+      descuento: extras.descuento,
+    };
+  }
   await escribirArchivo(usuarios);
   return { usuario: sinPassword(usuario) };
 }
@@ -557,7 +565,8 @@ export async function asegurarUsuariosFiado(
       passwordHash: await bcrypt.hash(pin, rondas),
       estado: "activa",
       perfil: perfilFiado(datos.telefono),
-      tipoCuenta: "credito_super",
+      tipoCuenta: "generico",
+      creditoMercaderia: true,
       creadoEn: new Date().toISOString(),
     };
     usuarios.push(creado);

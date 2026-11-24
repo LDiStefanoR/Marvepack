@@ -9,10 +9,11 @@ export function precioLista(producto: Producto, ajustes: AjustesPrecios) {
   return Math.round(producto.precio * (1 + extra / 100));
 }
 
-/** Precio del catálogo web: base, más el ajuste del rubro y el recargo del catálogo. */
+/** Precio publicado: base de datos, recargo de base, ajuste del rubro y recargo de lista. */
 export function precioWeb(producto: Producto, ajustes: AjustesPrecios) {
-  const recargo = ajustes.recargoWeb ?? 0;
-  return Math.round(precioLista(producto, ajustes) * (1 + recargo / 100));
+  const conBase = Math.round(producto.precio * (1 + (ajustes.recargoWeb ?? 0) / 100));
+  const lista = Math.round(conBase * (1 + (ajustes.ajustePorSeccion[producto.seccion] ?? 0) / 100));
+  return Math.round(lista * (1 + (ajustes.recargoLista ?? 0) / 100));
 }
 
 export function sinStock(stock: number | null | undefined) {
@@ -92,11 +93,10 @@ export function armarVitrina(
 ): ProductoVitrina {
   const lista = precioWeb(producto, ajustes);
   const especialCliente =
-    sesion?.rol === "cliente"
+    sesion?.rol === "cliente" && sesion.tipoCuenta === "descuento_especial"
       ? Math.min(100, Math.max(0, Math.round(sesion.descuento ?? 0)))
       : 0;
-  const generalCliente = Math.max(0, descuentoClienteDe(producto.seccion, ajustes));
-  const descuentoCliente = especialCliente > 0 ? especialCliente : generalCliente;
+  const descuentoCliente = especialCliente;
   const descuentoEmpleado = descuentoEmpleadoDe(
     producto.seccion,
     ajustes,

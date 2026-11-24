@@ -2,7 +2,7 @@
 
 import { useMemo, useState, useTransition, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
-import { adminCambiarEstadoPedido, adminCancelarPedido, adminResolverCredito, adminResolverRecarga, type EstadoAdminCuentas } from "@/app/acciones/cuentas";
+import { adminCambiarEstadoPedido, adminCancelarPedido, adminResolverRecarga, type EstadoAdminCuentas } from "@/app/acciones/cuentas";
 import { caja } from "@/components/caja-estilo";
 import { digitosMonto, formatoPesos, nombreVitrina, textoMonto } from "@/lib/format";
 import { fechaHoraVenta } from "@/lib/venta-texto";
@@ -27,7 +27,7 @@ const MOTIVOS_RAPIDOS = ["Falta de pago", "El cliente canceló", "Sin stock", "D
 
 export function AdminPedidosPanel({
   pedidos,
-  creditos,
+  creditos: _creditos,
 }: {
   pedidos: Pedido[];
   creditos: CreditoPendiente[];
@@ -154,70 +154,14 @@ export function AdminPedidosPanel({
     <div className="space-y-8">
       <section className={`${caja.panel} p-4`}>
         <p className={caja.kicker}>Pendientes</p>
-        <h2 className="font-display text-2xl font-bold">Crédito y saldo</h2>
+        <h2 className="font-display text-2xl font-bold">Recargas de saldo</h2>
         <p className="mt-1 text-sm text-amber-950/80">
-          Los pedidos de efectivo y las recargas de saldo se atienden acá, separados de la mercadería. Podés corregir el importe antes de aceptar, por si transfirieron otro monto o no transfirieron.
+          Las recargas de saldo se atienden acá. Los préstamos en efectivo ya no se aceptan.
         </p>
-        {creditos.length === 0 && recargas.length === 0 && (
-          <p className="mt-3 text-sm text-amber-950/70">No hay créditos ni recargas pendientes.</p>
+        {recargas.length === 0 && (
+          <p className="mt-3 text-sm text-amber-950/70">No hay recargas pendientes.</p>
         )}
         <ul className="mt-3 space-y-3">
-          {creditos.map((credito) => (
-            <li key={credito.id} className={`${caja.panel} p-3`}>
-              <p className="font-bold">Crédito solicitado · {credito.nombre}</p>
-              <p className="text-sm text-neutral-600">
-                Acreditar en {credito.aliasCbu || "sin alias"}
-                {credito.nota ? ` · ${credito.nota}` : ""}
-              </p>
-              <label className="mt-2 block text-xs font-bold text-neutral-600">
-                Importe a aceptar
-                <input
-                  inputMode="numeric"
-                  value={textoMonto(montoDe(credito.id, credito.monto))}
-                  onChange={(e) => setMontos((prev) => ({ ...prev, [credito.id]: digitosMonto(e.target.value) }))}
-                  className={`${caja.campo} mt-1 max-w-40`}
-                />
-              </label>
-              <div className="mt-2 flex flex-wrap gap-2">
-                <button
-                  type="button"
-                  disabled={pending}
-                  className={caja.primario}
-                  onClick={() => {
-                    const data = new FormData();
-                    data.set("id", credito.id);
-                    data.set("aceptar", "1");
-                    data.set("monto", montoDe(credito.id, credito.monto));
-                    start(async () => {
-                      const resultado = await adminResolverCredito(data);
-                      setMensaje(resultado);
-                      if (resultado?.ok) router.refresh();
-                    });
-                  }}
-                >
-                  Aceptar crédito
-                </button>
-                <button
-                  type="button"
-                  disabled={pending}
-                  className={caja.boton}
-                  onClick={() => {
-                    const data = new FormData();
-                    data.set("id", credito.id);
-                    data.set("aceptar", "0");
-                    data.set("monto", "0");
-                    start(async () => {
-                      const resultado = await adminResolverCredito(data);
-                      setMensaje(resultado);
-                      if (resultado?.ok) router.refresh();
-                    });
-                  }}
-                >
-                  Rechazar
-                </button>
-              </div>
-            </li>
-          ))}
           {recargas.map((pedido) => (
             <li key={pedido.id} className={`${caja.panel} p-3`}>
               <p className="font-bold">Saldo a cuenta · {pedido.contacto.nombre}</p>

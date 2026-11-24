@@ -61,6 +61,10 @@ async function guardarVentas(ventas: VentaCaja[]) {
   await escribirJsonData("ventas-caja.json", ventas);
 }
 
+export async function reemplazarVentasRespaldo(ventas: VentaCaja[]) {
+  await guardarVentas(ventas);
+}
+
 export async function ventasDelDia(dia = hoyArgentina()) {
   const ventas = await leerVentasCaja();
   return ventas

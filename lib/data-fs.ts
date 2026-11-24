@@ -39,12 +39,8 @@ function usarSoloTurso() {
 }
 
 export async function leerJsonData<T>(nombre: string, vacio: T): Promise<T> {
-  if (!process.env.VERCEL) {
-    const enMemoria = memoria.get(nombre);
-    if (enMemoria) return parsear(enMemoria, vacio);
-  }
-
-  // Prioridad: Turso (reemplaza Vercel Blob para JSON de datos)
+  // Turso es la copia vigente. La memoria solo acelera la misma lectura
+  // y, si se consulta antes, deja alarmas viejas después de aceptar o rechazar.
   if (tursoConfigurado()) {
     try {
       const remoto = await leerDocTurso(nombre);
@@ -55,6 +51,11 @@ export async function leerJsonData<T>(nombre: string, vacio: T): Promise<T> {
     } catch (error) {
       console.error(`[data] Turso lectura ${nombre}`, error);
     }
+  }
+
+  if (!process.env.VERCEL) {
+    const enMemoria = memoria.get(nombre);
+    if (enMemoria) return parsear(enMemoria, vacio);
   }
 
   // Fallback legado: Blob (solo si Turso no está configurado)

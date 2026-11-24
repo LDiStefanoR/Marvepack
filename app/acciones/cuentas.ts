@@ -17,6 +17,7 @@ import {
   eliminarUsuario,
   listarUsuarios,
 } from "@/lib/usuarios";
+import { parseTipoCuenta } from "@/lib/tipo-cuenta";
 import type { EstadoCuenta, PerfilCliente, RolUsuario, TipoPersona } from "@/types/auth";
 import type { EstadoPedido } from "@/types/pedido";
 
@@ -119,22 +120,79 @@ export async function adminResolverRecarga(form: FormData): Promise<EstadoAdminC
   };
 }
 
-export async function adminResolverCredito(form: FormData): Promise<EstadoAdminCuentas> {
+export async function adminResolverCredito(
+  _form: FormData,
+): Promise<EstadoAdminCuentas> {
+  return { error: "Los préstamos en efectivo ya no se aceptan. La línea de crédito es fiado del catálogo." };
+}
+
+export async function resolverSolicitudRegistro(
+  form: FormData,
+): Promise<EstadoAdminCuentas> {
   if (!(await exigirAdmin())) return { error: "No tenés permiso." };
-  const { resolverCreditoSolicitado } = await import("@/lib/cuentas");
-  const aceptar = texto(form, "aceptar") === "1";
-  const monto = Math.round(Number(String(form.get("monto") ?? "").replace(/[^\d]/g, "")));
-  const resultado = await resolverCreditoSolicitado({
-    solicitudId: texto(form, "id"),
-    monto,
-    aceptar,
-  });
-  if ("error" in resultado) return { error: resultado.error };
+  const id = texto(form, "id");
+  const decision = texto(form, "decision");
+  const rol = texto(form, "rol") as RolUsuario;
+  const tipo = parseTipoCuenta(texto(form, "tipoCuenta"));
+  const conCredito = texto(form, "credito") === "1";
+  const montoCredito = Math.max(0, Math.round(Number(texto(form, "montoCredito").replace(/\./g, "").replace(",", ".")) || 0));
+  const descuentoEspecial = Math.min(90, Math.max(0, Math.round(Number(texto(form, "descuentoEspecial")) || 0)));
+  if (decision !== "aceptar" && decision !== "rechazar") {
+    return { error: "Elegí aceptar o rechazar." };
+  }
+  if (rol !== "admin" && rol !== "cliente" && rol !== "caja") {
+    return { error: "Elegí un perfil." };
+  }
+  const usuario = await buscarUsuarioPorId(id);
+  if (!usuario || usuario.estado !== "pendiente") {
+    return { error: "Esa solicitud ya no está pendiente." };
+  }
+  if (decision === "rechazar") {
+    const rechazo = await cambiarEstadoCuenta(id, "rechazada");
+    if ("error" in rechazo) return { error: rechazo.error };
+    revalidar();
+    return { ok: `Rechazamos la solicitud de ${usuario.nombre}.` };
+  }
+  const cambioRol = await cambiarRolUsuario(id, rol);
+  if ("error" in cambioRol) return { error: cambioRol.error };
+  if (rol === "cliente") {
+    if (conCredito && montoCredito < 1) return { error: "Ingresá cuánto de crédito dejás." };
+    const { leerAjustes } = await import("@/lib/ajustes");
+    const tope = (await leerAjustes()).topeFiado;
+    if (conCredito && montoCredito > tope) {
+      return { error: `El crédito no puede pasar el tope general de ${tope} pesos.` };
+    }
+    const cambioTipo = await actualizarTipoCuenta(id, tipo, {
+      creditoMercaderia: conCredito,
+      descuento: tipo === "descuento_especial" ? descuentoEspecial : 0,
+    });
+    if ("error" in cambioTipo) return { error: cambioTipo.error };
+  }
+  const alta = await cambiarEstadoCuenta(id, "activa");
+  if ("error" in alta) return { error: alta.error };
+  if (rol === "cliente") {
+    const { asegurarFichaRegistro, asegurarClienteCredito } = await import("@/lib/cuentas");
+    await asegurarFichaRegistro({
+      nombre: usuario.nombre,
+      telefono: usuario.perfil?.telefono ?? "",
+      email: usuario.email,
+    });
+    if (conCredito) {
+      await asegurarClienteCredito({
+        email: usuario.email,
+        nombre: usuario.nombre,
+        telefono: usuario.perfil?.telefono ?? "",
+        limiteAlmacen: montoCredito,
+        limiteEfectivo: 0,
+        credito: true,
+      });
+    }
+  }
   revalidar();
   return {
-    ok: aceptar
-      ? `Aceptamos el crédito${resultado.nombre ? ` de ${resultado.nombre}` : ""}. Quedó como deuda en efectivo.`
-      : "Rechazamos el crédito. No se generó deuda.",
+    ok: rol === "cliente"
+      ? `Aceptamos a ${usuario.nombre} y creamos la ficha de cliente.`
+      : `Aceptamos a ${usuario.nombre}.`,
   };
 }
 
@@ -225,9 +283,7 @@ export async function adminCrearUsuario(
 ): Promise<EstadoAdminCuentas> {
   if (!(await exigirAdmin())) return { error: "No tenés permiso." };
   const rol = texto(form, "rol") as RolUsuario;
-  const { parseTipoCuenta, tieneCreditoSuper, tieneLineaCredito } = await import(
-    "@/lib/tipo-cuenta"
-  );
+  const { parseTipoCuenta } = await import("@/lib/tipo-cuenta");
   const tipo = parseTipoCuenta(texto(form, "tipoCuenta"));
   const resultado = await crearUsuarioAdmin({
     email: texto(form, "email"),
@@ -245,7 +301,7 @@ export async function adminCrearUsuario(
       telefono: resultado.usuario.perfil?.telefono ?? "",
       limiteAlmacen: 0,
       limiteEfectivo: 0,
-      credito: tieneCreditoSuper(tipo) || tieneLineaCredito(tipo),
+      credito: false,
     });
   }
   revalidar();
@@ -310,24 +366,34 @@ export async function adminGuardarCreditoCliente(
   form: FormData,
 ): Promise<EstadoAdminCuentas> {
   if (!(await exigirAdmin())) return { error: "No tenés permiso." };
-  const { parseTipoCuenta, mensajeGuardarTipo, tieneCreditoSuper, tieneLineaCredito } =
-    await import("@/lib/tipo-cuenta");
+  const { parseTipoCuenta, mensajeGuardarTipo } = await import("@/lib/tipo-cuenta");
   const id = texto(form, "id");
   const tipo = parseTipoCuenta(texto(form, "tipoCuenta"));
+  const conCredito = texto(form, "credito") === "1";
   const usuarios = await listarUsuarios();
   const usuario = usuarios.find((u) => u.id === id);
   if (!usuario) return { error: "No encontramos ese cliente." };
-  const resultado = await actualizarTipoCuenta(id, tipo);
-  if ("error" in resultado) return { error: resultado.error };
   const monto = Number(texto(form, "montoCredito").replace(/\./g, "").replace(",", ".")) || 0;
+  const descuento = Math.min(90, Math.max(0, Math.round(Number(texto(form, "descuentoEspecial")) || 0)));
+  if (conCredito && monto < 1) return { error: "Ingresá cuánto de crédito dejás." };
+  const { leerAjustes } = await import("@/lib/ajustes");
+  const tope = (await leerAjustes()).topeFiado;
+  if (conCredito && monto > tope) {
+    return { error: `El crédito no puede pasar el tope general de ${tope} pesos.` };
+  }
+  const resultado = await actualizarTipoCuenta(id, tipo, {
+    creditoMercaderia: conCredito,
+    descuento: tipo === "descuento_especial" ? descuento : 0,
+  });
+  if ("error" in resultado) return { error: resultado.error };
   const { asegurarClienteCredito } = await import("@/lib/cuentas");
   await asegurarClienteCredito({
     email: usuario.email,
     nombre: usuario.nombre,
     telefono: usuario.perfil?.telefono ?? "",
-    limiteAlmacen: tieneCreditoSuper(tipo) ? monto : 0,
-    limiteEfectivo: tieneLineaCredito(tipo) ? monto : 0,
-    credito: tieneCreditoSuper(tipo) || tieneLineaCredito(tipo),
+    limiteAlmacen: conCredito ? monto : 0,
+    limiteEfectivo: 0,
+    credito: conCredito,
   });
   revalidar();
   revalidatePath("/cuenta");

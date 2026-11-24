@@ -1,1 +1,1172 @@
-﻿[]
+[
+  {
+    "id": "04accdd1-ff61-4a1d-9bdf-866f37bca8c0",
+    "numero": 1,
+    "creadoEn": "2026-11-05T16:42:38.359Z",
+    "empleado": "Gisela Veronica",
+    "empleadoEmail": "giselavdistefano@gmail.com",
+    "cliente": "Cliente genérico",
+    "formaPago": "Contado",
+    "lineas": [
+      {
+        "productoId": "mp-2348",
+        "codigo": "2348",
+        "nombre": "VINCHA ARGENTINA FLORES TELA X UN (12)",
+        "precio": 2000,
+        "cantidad": 1,
+        "descontoStock": false
+      },
+      {
+        "productoId": "mp-40",
+        "codigo": "40",
+        "nombre": "RIÑON FANTASIA TERLIZZI 20x30 x50",
+        "precio": 3800,
+        "cantidad": 1,
+        "descontoStock": false
+      }
+    ],
+    "total": 5800
+  },
+  {
+    "id": "75a66010-11c0-456b-a4ee-bf334c1c5c9e",
+    "numero": 2,
+    "creadoEn": "2026-11-05T22:49:44.641Z",
+    "empleado": "Gisela Veronica",
+    "empleadoEmail": "giselavdistefano@gmail.com",
+    "cliente": "Cliente genérico",
+    "formaPago": "Contado",
+    "lineas": [
+      {
+        "productoId": "mp-474",
+        "codigo": "474",
+        "nombre": "CHALECOS FLUOR",
+        "precio": 3500,
+        "cantidad": 7,
+        "descontoStock": false
+      }
+    ],
+    "total": 24500
+  },
+  {
+    "id": "0ff8a7b9-2e9b-4e4e-ab6b-e323a2e07fdb",
+    "numero": 3,
+    "creadoEn": "2026-11-05T22:51:35.044Z",
+    "empleado": "Gisela Veronica",
+    "empleadoEmail": "giselavdistefano@gmail.com",
+    "cliente": "Cliente genérico",
+    "formaPago": "Contado",
+    "lineas": [
+      {
+        "productoId": "mp-310",
+        "codigo": "310",
+        "nombre": "MANGA REPOSTERA N°3 X 10 UN (100)",
+        "precio": 1000,
+        "cantidad": 1,
+        "descontoStock": false
+      }
+    ],
+    "total": 1000
+  },
+  {
+    "id": "621b580a-7903-4f0c-bf20-00796d8e0486",
+    "numero": 4,
+    "creadoEn": "2026-11-05T22:54:27.965Z",
+    "empleado": "Gisela Veronica",
+    "empleadoEmail": "giselavdistefano@gmail.com",
+    "cliente": "Cliente genérico",
+    "formaPago": "Contado",
+    "lineas": [
+      {
+        "productoId": "mp-156",
+        "codigo": "156",
+        "nombre": "CUCHILLO BLANCO KOVAL X 50u (20)",
+        "precio": 3000,
+        "cantidad": 1,
+        "descontoStock": true
+      },
+      {
+        "productoId": "mp-242",
+        "codigo": "242",
+        "nombre": "TENEDOR BLANCO KOVAL X50 un (20)",
+        "precio": 3000,
+        "cantidad": 1,
+        "descontoStock": true
+      }
+    ],
+    "total": 6000
+  },
+  {
+    "id": "e2a1126f-a1d1-4566-9ee8-62e0b40326b2",
+    "numero": 5,
+    "creadoEn": "2026-11-10T20:08:02.351Z",
+    "empleado": "Gisela Veronica",
+    "empleadoEmail": "giselavdistefano@gmail.com",
+    "cliente": "Cliente genérico",
+    "formaPago": "Contado",
+    "lineas": [
+      {
+        "productoId": "mp-38",
+        "codigo": "38",
+        "nombre": "RIÑON 20x30 LISO ROJO",
+        "precio": 3800,
+        "cantidad": 1,
+        "descontoStock": true
+      }
+    ],
+    "total": 3800,
+    "devoluciones": [
+      {
+        "id": "6d7795d1-497e-405f-9d33-5b74164d88d1",
+        "creadoEn": "2026-11-10T20:08:50.107Z",
+        "empleado": "Gisela Veronica",
+        "reponerStock": false,
+        "lineas": [
+          {
+            "productoId": "mp-38",
+            "codigo": "38",
+            "nombre": "RIÑON 20x30 LISO ROJO",
+            "cantidad": 1,
+            "precio": 3800
+          }
+        ],
+        "total": 3800
+      }
+    ],
+    "anulada": true
+  },
+  {
+    "id": "f1e43da3-812a-4b4b-ba40-fea718cd0731",
+    "numero": 6,
+    "creadoEn": "2026-11-10T21:38:43.766Z",
+    "empleado": "Gisela Veronica",
+    "empleadoEmail": "giselavdistefano@gmail.com",
+    "cliente": "Cliente genérico",
+    "formaPago": "Contado",
+    "lineas": [
+      {
+        "productoId": "mp-281",
+        "codigo": "281",
+        "nombre": "FILM STRECH VIRGEN CON MANGO X 2.5 KG INCA (6)",
+        "precio": 17600,
+        "cantidad": 1,
+        "descontoStock": false
+      },
+      {
+        "productoId": "mp-2238",
+        "codigo": "2238",
+        "nombre": "SERVILLETA NAPTRES X 20 UN FANTASIA Y COLOR",
+        "precio": 2800,
+        "cantidad": 1,
+        "descontoStock": true
+      },
+      {
+        "productoId": "mp-2343",
+        "codigo": "2343",
+        "nombre": "VELA MAGICA CORAZON/ESTRELLA XUN",
+        "precio": 1000,
+        "cantidad": 1,
+        "descontoStock": true
+      },
+      {
+        "productoId": "mp-2267",
+        "codigo": "2267",
+        "nombre": "GLOBO 12\" GLOBOX STANDAR SURTIDO X 1 (BOLSA X 50) (20)",
+        "precio": 250,
+        "cantidad": 8,
+        "descontoStock": true
+      },
+      {
+        "productoId": "mp-892",
+        "codigo": "892",
+        "nombre": "MICRO ESFERAS TELGOPOR (4-6)",
+        "precio": 2100,
+        "cantidad": 2,
+        "descontoStock": true
+      },
+      {
+        "productoId": "mp-615",
+        "codigo": "615",
+        "nombre": "CINTA SCOCH ESTAMPADA X 5M",
+        "precio": 1600,
+        "cantidad": 1,
+        "descontoStock": true
+      }
+    ],
+    "total": 29200
+  },
+  {
+    "id": "a29082ff-856b-4c29-83d9-c1e096acf752",
+    "numero": 7,
+    "creadoEn": "2026-11-11T14:22:05.109Z",
+    "empleado": "Gisela Veronica",
+    "empleadoEmail": "giselavdistefano@gmail.com",
+    "cliente": "Cliente genérico",
+    "formaPago": "Contado",
+    "lineas": [
+      {
+        "productoId": "mp-2344",
+        "codigo": "2344",
+        "nombre": "VELA NRO CON BRILLO BLISTER",
+        "precio": 1500,
+        "cantidad": 2,
+        "descontoStock": true
+      },
+      {
+        "productoId": "mp-2359",
+        "codigo": "2359",
+        "nombre": "GLOBO NUMERO 32´´C/U",
+        "precio": 2000,
+        "cantidad": 2,
+        "descontoStock": true
+      }
+    ],
+    "total": 7000
+  },
+  {
+    "id": "bfecf84b-45d4-49fe-83da-30222411ac9d",
+    "numero": 8,
+    "creadoEn": "2026-11-11T14:24:09.701Z",
+    "empleado": "Gisela Veronica",
+    "empleadoEmail": "giselavdistefano@gmail.com",
+    "cliente": "Cliente genérico",
+    "formaPago": "Contado",
+    "lineas": [
+      {
+        "productoId": "mp-778",
+        "codigo": "778",
+        "nombre": "CORTINA CON FORMA EST/CORA",
+        "precio": 2700,
+        "cantidad": 2,
+        "descontoStock": true
+      },
+      {
+        "productoId": "mp-23",
+        "codigo": "23",
+        "nombre": "EMBLOCADA NOBLEZA 25x35 x 100 (1000)",
+        "precio": 1600,
+        "cantidad": 1,
+        "descontoStock": true
+      }
+    ],
+    "total": 7000
+  },
+  {
+    "id": "ee456d23-1f67-4835-88bd-9a20e4dc47d3",
+    "numero": 9,
+    "creadoEn": "2026-11-11T14:46:38.895Z",
+    "empleado": "Gisela Veronica",
+    "empleadoEmail": "giselavdistefano@gmail.com",
+    "cliente": "Cliente genérico",
+    "formaPago": "Contado",
+    "lineas": [
+      {
+        "productoId": "mp-1046",
+        "codigo": "1046",
+        "nombre": "BOLSA CONCORCIO POLIABY 60 X 90 X 10 UN",
+        "precio": 1500,
+        "cantidad": 1,
+        "descontoStock": false
+      },
+      {
+        "productoId": "mp-778",
+        "codigo": "778",
+        "nombre": "CORTINA CON FORMA EST/CORA",
+        "precio": 2700,
+        "cantidad": 2,
+        "descontoStock": true
+      },
+      {
+        "productoId": "mp-417",
+        "codigo": "417",
+        "nombre": "VASO C/TAPA MILANO X 10 UN",
+        "precio": 250,
+        "cantidad": 1,
+        "descontoStock": true
+      },
+      {
+        "productoId": "mp-244",
+        "codigo": "244",
+        "nombre": "VASO PLASTICO PP 1000CC WORK X 10 un  (100)(6)",
+        "precio": 250,
+        "cantidad": 1,
+        "descontoStock": true
+      },
+      {
+        "productoId": "mp-23",
+        "codigo": "23",
+        "nombre": "EMBLOCADA NOBLEZA 25x35 x 100 (1000)",
+        "precio": 1600,
+        "cantidad": 1,
+        "descontoStock": true
+      }
+    ],
+    "total": 9000
+  },
+  {
+    "id": "c6e6bf66-a00b-430f-9bfd-5bdb30f50e8d",
+    "numero": 10,
+    "creadoEn": "2026-11-11T21:56:12.626Z",
+    "empleado": "Gisela Veronica",
+    "empleadoEmail": "giselavdistefano@gmail.com",
+    "cliente": "Cliente genérico",
+    "formaPago": "Contado",
+    "lineas": [
+      {
+        "productoId": "mp-79",
+        "codigo": "79",
+        "nombre": "OBLEA EXPANDIDONº 19 x 10 (400)",
+        "precio": 1200,
+        "cantidad": 2,
+        "descontoStock": true
+      }
+    ],
+    "total": 2400
+  },
+  {
+    "id": "8e2e2477-a94e-45ca-b034-e6f31f17cd99",
+    "numero": 11,
+    "creadoEn": "2026-11-11T23:00:45.924Z",
+    "empleado": "Gisela Veronica",
+    "empleadoEmail": "giselavdistefano@gmail.com",
+    "cliente": "Cliente genérico",
+    "formaPago": "Contado",
+    "lineas": [
+      {
+        "productoId": "mp-856",
+        "codigo": "856",
+        "nombre": "BOLSA MANIJA COLOR KP1 (12X6X19.5)",
+        "precio": 1000,
+        "cantidad": 3,
+        "descontoStock": true
+      }
+    ],
+    "total": 3000
+  },
+  {
+    "id": "be00f8dc-5adc-4647-ab2c-8feb95b2a97d",
+    "numero": 12,
+    "creadoEn": "2026-11-12T15:07:58.447Z",
+    "empleado": "Gisela Veronica",
+    "empleadoEmail": "giselavdistefano@gmail.com",
+    "cliente": "Cliente genérico",
+    "formaPago": "Contado",
+    "lineas": [
+      {
+        "productoId": "mp-87",
+        "codigo": "87",
+        "nombre": "BANDEJA PET CRISTAL 103 (FRIO) x 100(4)",
+        "precio": 80,
+        "cantidad": 50,
+        "descontoStock": true
+      },
+      {
+        "productoId": "mp-217",
+        "codigo": "217",
+        "nombre": "POTE BISAGRAPET 1165 ZAPLAST 500CC X 100 (5)",
+        "precio": 250,
+        "cantidad": 50,
+        "descontoStock": true
+      },
+      {
+        "productoId": "mp-155",
+        "codigo": "155",
+        "nombre": "CUCHARA BLANCA SUNDAE BLANCA KOVAL X50 U (20)",
+        "precio": 2500,
+        "cantidad": 1,
+        "descontoStock": true
+      }
+    ],
+    "total": 19000
+  },
+  {
+    "id": "1359acd7-18bd-4159-89f6-4fec86746a50",
+    "numero": 13,
+    "creadoEn": "2026-11-12T22:19:24.856Z",
+    "empleado": "Gisela Veronica",
+    "empleadoEmail": "giselavdistefano@gmail.com",
+    "cliente": "Cliente genérico",
+    "formaPago": "Contado",
+    "lineas": [
+      {
+        "productoId": "mp-1",
+        "codigo": "1",
+        "nombre": "ARRANQUE  20x30 x 1 un (12)",
+        "precio": 4900,
+        "cantidad": 1,
+        "descontoStock": true
+      }
+    ],
+    "total": 4900
+  },
+  {
+    "id": "6235001f-ecf3-4d71-9b7f-23cafddf53b3",
+    "numero": 14,
+    "creadoEn": "2026-11-13T13:48:37.757Z",
+    "empleado": "Gisela Veronica",
+    "empleadoEmail": "giselavdistefano@gmail.com",
+    "cliente": "Cliente genérico",
+    "formaPago": "Contado",
+    "lineas": [
+      {
+        "productoId": "mp-2305",
+        "codigo": "2305",
+        "nombre": "CORTINA METAL/HOLOGRAF/ONDUL 1X2 MTRS X UN",
+        "precio": 3000,
+        "cantidad": 1,
+        "descontoStock": true
+      },
+      {
+        "productoId": "mp-877",
+        "codigo": "877",
+        "nombre": "GLOBOS NROS 16`",
+        "precio": 1500,
+        "cantidad": 2,
+        "descontoStock": false
+      },
+      {
+        "productoId": "mp-511",
+        "codigo": "511",
+        "nombre": "GRANA COLORES X 100 GRS (1)",
+        "precio": 700,
+        "cantidad": 1,
+        "descontoStock": false
+      }
+    ],
+    "total": 6700
+  },
+  {
+    "id": "3b195514-52ce-4764-ba6d-972add8db67a",
+    "numero": 15,
+    "creadoEn": "2026-11-13T14:15:21.267Z",
+    "empleado": "Gisela Veronica",
+    "empleadoEmail": "giselavdistefano@gmail.com",
+    "cliente": "Cliente genérico",
+    "formaPago": "Contado",
+    "lineas": [
+      {
+        "productoId": "mp-246",
+        "codigo": "246",
+        "nombre": "VASO PASTICO PP 330CC WORK X 10 (25)",
+        "precio": 1800,
+        "cantidad": 1,
+        "descontoStock": true
+      }
+    ],
+    "total": 1800
+  },
+  {
+    "id": "84a0c95d-cb46-41b2-8eda-b67a2d12c824",
+    "numero": 16,
+    "creadoEn": "2026-11-16T13:05:57.622Z",
+    "empleado": "Gisela Veronica",
+    "empleadoEmail": "giselavdistefano@gmail.com",
+    "cliente": "Cliente genérico",
+    "formaPago": "Contado",
+    "lineas": [
+      {
+        "productoId": "mp-526",
+        "codigo": "526",
+        "nombre": "MOUSSE CHANTILLY/ X 100 GMS",
+        "precio": 3300,
+        "cantidad": 2,
+        "descontoStock": false
+      },
+      {
+        "productoId": "mp-2288",
+        "codigo": "2288",
+        "nombre": "BENGALA HOLOGRAFICA X UN (x4un) (15)",
+        "precio": 900,
+        "cantidad": 1,
+        "descontoStock": true
+      }
+    ],
+    "total": 7500
+  },
+  {
+    "id": "bb669723-7130-4c4e-8999-cced754fba5a",
+    "numero": 17,
+    "creadoEn": "2026-11-16T13:06:42.991Z",
+    "empleado": "Gisela Veronica",
+    "empleadoEmail": "giselavdistefano@gmail.com",
+    "cliente": "Cliente genérico",
+    "formaPago": "Contado",
+    "lineas": [
+      {
+        "productoId": "mp-473",
+        "codigo": "473",
+        "nombre": "BANDEJA MICRO OVAL 105 X UN (100)",
+        "precio": 150,
+        "cantidad": 10,
+        "descontoStock": false
+      }
+    ],
+    "total": 1500
+  },
+  {
+    "id": "eb6b3ac4-f965-481f-84c2-01cc541363d5",
+    "numero": 18,
+    "creadoEn": "2026-11-17T14:09:10.997Z",
+    "empleado": "Gisela Veronica",
+    "empleadoEmail": "giselavdistefano@gmail.com",
+    "cliente": "Cliente genérico",
+    "formaPago": "Contado",
+    "lineas": [
+      {
+        "productoId": "mp-689",
+        "codigo": "689",
+        "nombre": "GORRO FUNYI GIBRADO X UN",
+        "precio": 2500,
+        "cantidad": 1,
+        "descontoStock": true
+      }
+    ],
+    "total": 2500
+  },
+  {
+    "id": "d66d3d44-38e2-4d52-9961-6423b00772a0",
+    "numero": 19,
+    "creadoEn": "2026-11-17T21:20:58.620Z",
+    "empleado": "Gisela Veronica",
+    "empleadoEmail": "giselavdistefano@gmail.com",
+    "cliente": "Cliente genérico",
+    "formaPago": "Contado",
+    "lineas": [
+      {
+        "productoId": "mp-334",
+        "codigo": "334",
+        "nombre": "SOBRE PAPEL MANILA REC MEDORO 6525 (19X24) X 1 U (1000)",
+        "precio": 150,
+        "cantidad": 2,
+        "descontoStock": true
+      },
+      {
+        "productoId": "mp-291",
+        "codigo": "291",
+        "nombre": "BOLSA C/MANIJA 18X8X20 FEST/INFAT X UN",
+        "precio": 900,
+        "cantidad": 1,
+        "descontoStock": true
+      },
+      {
+        "productoId": "mp-546",
+        "codigo": "546",
+        "nombre": "VELA LARGA METALIZADA X UN  (*6)",
+        "precio": 3800,
+        "cantidad": 1,
+        "descontoStock": false
+      }
+    ],
+    "total": 5000
+  },
+  {
+    "id": "f4b3facd-0c4f-48b8-b521-61c1569e7297",
+    "numero": 20,
+    "creadoEn": "2026-11-17T22:20:09.580Z",
+    "empleado": "Gisela Veronica",
+    "empleadoEmail": "giselavdistefano@gmail.com",
+    "cliente": "Cliente genérico",
+    "formaPago": "Contado",
+    "lineas": [
+      {
+        "productoId": "mp-957",
+        "codigo": "957",
+        "nombre": "SOMBRERO COWBOY PLASTICO SHERIF",
+        "precio": 3000,
+        "cantidad": 5,
+        "descontoStock": true
+      }
+    ],
+    "total": 15000
+  },
+  {
+    "id": "389df4bd-ac71-4521-bbb6-67b44c3cbb52",
+    "numero": 21,
+    "creadoEn": "2026-11-17T22:20:42.034Z",
+    "empleado": "Gisela Veronica",
+    "empleadoEmail": "giselavdistefano@gmail.com",
+    "cliente": "Cliente genérico",
+    "formaPago": "Contado",
+    "lineas": [
+      {
+        "productoId": "mp-552",
+        "codigo": "552",
+        "nombre": "PULSERA PAPEL COLORES VARIOS X 100 U",
+        "precio": 7500,
+        "cantidad": 1,
+        "descontoStock": true
+      }
+    ],
+    "total": 7500
+  },
+  {
+    "id": "d5072d01-fdd1-4627-8fb2-21caef77097c",
+    "numero": 22,
+    "creadoEn": "2026-11-17T22:31:39.250Z",
+    "empleado": "Gisela Veronica",
+    "empleadoEmail": "giselavdistefano@gmail.com",
+    "cliente": "Cliente genérico",
+    "formaPago": "Contado",
+    "lineas": [
+      {
+        "productoId": "mp-143",
+        "codigo": "143",
+        "nombre": "CINTA ADHESIVA TRANSPARENTE 48X50 NOBLEZA X UN (36)",
+        "precio": 2450,
+        "cantidad": 3,
+        "descontoStock": true
+      },
+      {
+        "productoId": "mp-441",
+        "codigo": "441",
+        "nombre": "CINTA DOBVLE FAZ",
+        "precio": 6500,
+        "cantidad": 1,
+        "descontoStock": true
+      },
+      {
+        "productoId": "mp-280",
+        "codigo": "280",
+        "nombre": "CINTA BLANCA FRAGIL 48X50 NOBLEZA X UN (36)",
+        "precio": 2500,
+        "cantidad": 3,
+        "descontoStock": true
+      }
+    ],
+    "total": 21350
+  },
+  {
+    "id": "728d3810-2393-4e2a-bb66-e6852601e6d1",
+    "numero": 23,
+    "creadoEn": "2026-11-17T22:52:55.709Z",
+    "empleado": "Gisela Veronica",
+    "empleadoEmail": "giselavdistefano@gmail.com",
+    "cliente": "Cliente genérico",
+    "formaPago": "Contado",
+    "lineas": [
+      {
+        "productoId": "mp-2238",
+        "codigo": "2238",
+        "nombre": "SERVILLETA NAPTRES X 20 UN FANTASIA Y COLOR",
+        "precio": 2800,
+        "cantidad": 2,
+        "descontoStock": true
+      },
+      {
+        "productoId": "mp-192",
+        "codigo": "192",
+        "nombre": "BENGALA CON BRILLO X UN",
+        "precio": 1000,
+        "cantidad": 2,
+        "descontoStock": true
+      }
+    ],
+    "total": 7600
+  },
+  {
+    "id": "890a534f-da3a-47cf-bf6b-27bb27b5884b",
+    "numero": 24,
+    "creadoEn": "2026-11-18T22:02:50.215Z",
+    "empleado": "Gisela Veronica",
+    "empleadoEmail": "giselavdistefano@gmail.com",
+    "cliente": "Cliente genérico",
+    "formaPago": "Contado",
+    "lineas": [
+      {
+        "productoId": "mp-473",
+        "codigo": "473",
+        "nombre": "BANDEJA MICRO OVAL 105 X UN (100)",
+        "precio": 150,
+        "cantidad": 15,
+        "descontoStock": false
+      },
+      {
+        "productoId": "mp-87",
+        "codigo": "87",
+        "nombre": "BANDEJA PET CRISTAL 103 (FRIO) x 100(4)",
+        "precio": 80,
+        "cantidad": 20,
+        "descontoStock": true
+      },
+      {
+        "productoId": "mp-68",
+        "codigo": "68",
+        "nombre": "BANDEJA CARTON ECO GRIS Nº 3 x 100 (12)",
+        "precio": 41,
+        "cantidad": 5,
+        "descontoStock": true
+      },
+      {
+        "productoId": "mp-69",
+        "codigo": "69",
+        "nombre": "BANDEJA CARTON ECO GRIS Nº4  x 100 (12)",
+        "precio": 55,
+        "cantidad": 5,
+        "descontoStock": true
+      },
+      {
+        "productoId": "mp-165",
+        "codigo": "165",
+        "nombre": "FILM PVC REPUESTO 38X300 ROJO ESPECIAL INCA (8)",
+        "precio": 9930,
+        "cantidad": 1,
+        "descontoStock": true
+      }
+    ],
+    "total": 14260
+  },
+  {
+    "id": "a48a8c41-4dd3-4560-9257-aecf1cb2fba6",
+    "numero": 25,
+    "creadoEn": "2026-11-19T13:03:58.794Z",
+    "empleado": "Gisela Veronica",
+    "empleadoEmail": "giselavdistefano@gmail.com",
+    "cliente": "Cliente genérico",
+    "formaPago": "Contado",
+    "lineas": [
+      {
+        "productoId": "mp-446",
+        "codigo": "446",
+        "nombre": "TIARA STRASS",
+        "precio": 9000,
+        "cantidad": 1,
+        "descontoStock": true
+      },
+      {
+        "productoId": "mp-1049",
+        "codigo": "1049",
+        "nombre": "BANDERINES HOLOGRAFICO FELIZ CUMPL",
+        "precio": 3000,
+        "cantidad": 1,
+        "descontoStock": true
+      },
+      {
+        "productoId": "mp-544",
+        "codigo": "544",
+        "nombre": "TOPPER PERLAS",
+        "precio": 4300,
+        "cantidad": 1,
+        "descontoStock": true
+      },
+      {
+        "productoId": "mp-680",
+        "codigo": "680",
+        "nombre": "ESPUMA NIEVE",
+        "precio": 3100,
+        "cantidad": 2,
+        "descontoStock": true
+      },
+      {
+        "productoId": "mp-2444",
+        "codigo": "2444",
+        "nombre": "SET GLOBOS X 9 PIEZAS PREMIUN",
+        "precio": 7990,
+        "cantidad": 1,
+        "descontoStock": false
+      },
+      {
+        "productoId": "mp-2437",
+        "codigo": "2437",
+        "nombre": "VELAS X 10  CURVA METAL  COLORES",
+        "precio": 3200,
+        "cantidad": 2,
+        "descontoStock": true
+      }
+    ],
+    "total": 36890
+  },
+  {
+    "id": "84d4f3e5-253f-4a85-95b5-03483469ee35",
+    "numero": 26,
+    "creadoEn": "2026-11-19T13:05:15.257Z",
+    "empleado": "Gisela Veronica",
+    "empleadoEmail": "giselavdistefano@gmail.com",
+    "cliente": "Cliente genérico",
+    "formaPago": "Contado",
+    "lineas": [
+      {
+        "productoId": "mp-473",
+        "codigo": "473",
+        "nombre": "BANDEJA MICRO OVAL 105 X UN (100)",
+        "precio": 150,
+        "cantidad": 10,
+        "descontoStock": false
+      }
+    ],
+    "total": 1500
+  },
+  {
+    "id": "8512b2d1-a4c1-4992-b415-9573209690d6",
+    "numero": 27,
+    "creadoEn": "2026-11-19T15:37:22.667Z",
+    "empleado": "Gisela Veronica",
+    "empleadoEmail": "giselavdistefano@gmail.com",
+    "cliente": "Cliente genérico",
+    "formaPago": "Contado",
+    "lineas": [
+      {
+        "productoId": "mp-97",
+        "codigo": "97",
+        "nombre": "CAJA DELIVERY Nº2 (25x25x6) x 100",
+        "precio": 300,
+        "cantidad": 5,
+        "descontoStock": true
+      },
+      {
+        "productoId": "mp-95",
+        "codigo": "95",
+        "nombre": "CAJA MICRO HAMBUR Y PAPAS (25x13.5x6) x 100u",
+        "precio": 220,
+        "cantidad": 1,
+        "descontoStock": true
+      },
+      {
+        "productoId": "mp-005",
+        "codigo": "005",
+        "nombre": "ARRANQUE 15x20 x 1 un",
+        "precio": 5560,
+        "cantidad": 1,
+        "descontoStock": true
+      }
+    ],
+    "total": 7280
+  },
+  {
+    "id": "3f166cd4-a01a-4954-81ba-fb9f99981144",
+    "numero": 28,
+    "creadoEn": "2026-11-19T22:22:21.559Z",
+    "empleado": "Gisela Veronica",
+    "empleadoEmail": "giselavdistefano@gmail.com",
+    "cliente": "Cliente genérico",
+    "formaPago": "Contado",
+    "lineas": [
+      {
+        "productoId": "mp-473",
+        "codigo": "473",
+        "nombre": "BANDEJA MICRO OVAL 105 X UN (100)",
+        "precio": 150,
+        "cantidad": 20,
+        "descontoStock": false
+      },
+      {
+        "productoId": "mp-125",
+        "codigo": "125",
+        "nombre": "BANDEJA MICRO BISAFRA INPACK 103 x 100 un (3) C/U",
+        "precio": 390,
+        "cantidad": 5,
+        "descontoStock": false
+      }
+    ],
+    "total": 4950
+  },
+  {
+    "id": "5e1719c0-a288-4287-bd01-0aaf1ec4ca00",
+    "numero": 29,
+    "creadoEn": "2026-11-19T22:43:31.776Z",
+    "empleado": "Gisela Veronica",
+    "empleadoEmail": "giselavdistefano@gmail.com",
+    "cliente": "Cliente genérico",
+    "formaPago": "Contado",
+    "lineas": [
+      {
+        "productoId": "mp-266",
+        "codigo": "266",
+        "nombre": "ROLLO CELOFAN X UN 70cm X 10cm (10)",
+        "precio": 900,
+        "cantidad": 2,
+        "descontoStock": true
+      },
+      {
+        "productoId": "mp-290",
+        "codigo": "290",
+        "nombre": "BOLSA C/MANIJA 30X12X41 FESTI/INFAT  X UN",
+        "precio": 1500,
+        "cantidad": 1,
+        "descontoStock": true
+      },
+      {
+        "productoId": "mp-180",
+        "codigo": "180",
+        "nombre": "MOÑO LARGE RAPIDO AZUL METALIZADO X 50",
+        "precio": 2000,
+        "cantidad": 1,
+        "descontoStock": true
+      }
+    ],
+    "total": 5300
+  },
+  {
+    "id": "b01c841b-4154-4252-99a3-4347b60f5692",
+    "numero": 30,
+    "creadoEn": "2026-11-19T22:46:34.933Z",
+    "empleado": "Gisela Veronica",
+    "empleadoEmail": "giselavdistefano@gmail.com",
+    "cliente": "Cliente genérico",
+    "formaPago": "Contado",
+    "lineas": [
+      {
+        "productoId": "mp-370",
+        "codigo": "370",
+        "nombre": "CORTINA CURTAIN PASTEL/BLANCA",
+        "precio": 2200,
+        "cantidad": 1,
+        "descontoStock": true
+      },
+      {
+        "productoId": "mp-1051",
+        "codigo": "1051",
+        "nombre": "SET GLOBOS X 14 PCS",
+        "precio": 9500,
+        "cantidad": 1,
+        "descontoStock": true
+      }
+    ],
+    "total": 11700
+  },
+  {
+    "id": "e9c7aac2-2044-464f-af74-f910ced8ac88",
+    "numero": 31,
+    "creadoEn": "2026-11-19T22:48:00.856Z",
+    "empleado": "Gisela Veronica",
+    "empleadoEmail": "giselavdistefano@gmail.com",
+    "cliente": "Cliente genérico",
+    "formaPago": "Contado",
+    "lineas": [
+      {
+        "productoId": "mp-200",
+        "codigo": "200",
+        "nombre": "PALITO HELADO NATURAL X 50 U )200)",
+        "precio": 950,
+        "cantidad": 1,
+        "descontoStock": true
+      }
+    ],
+    "total": 950
+  },
+  {
+    "id": "05264b8c-3fad-4a3b-8854-70dd2e14f4a0",
+    "numero": 32,
+    "creadoEn": "2026-11-20T15:26:02.042Z",
+    "empleado": "Gisela Veronica",
+    "empleadoEmail": "giselavdistefano@gmail.com",
+    "cliente": "Cliente genérico",
+    "formaPago": "Contado",
+    "lineas": [
+      {
+        "productoId": "mp-528",
+        "codigo": "528",
+        "nombre": "MOUSE CHOCOLATE/D.D.LECHE X MAPSA 100 GR",
+        "precio": 3500,
+        "cantidad": 2,
+        "descontoStock": true
+      },
+      {
+        "productoId": "mp-490",
+        "codigo": "490",
+        "nombre": "BANDEJA DIVISIONES C/TAPA P/PICADA",
+        "precio": 1900,
+        "cantidad": 1,
+        "descontoStock": true
+      }
+    ],
+    "total": 8900
+  },
+  {
+    "id": "f923b69d-7de2-4e44-9057-0d5f2b04da49",
+    "numero": 33,
+    "creadoEn": "2026-11-20T15:56:39.856Z",
+    "empleado": "Gisela Veronica",
+    "empleadoEmail": "giselavdistefano@gmail.com",
+    "cliente": "Cliente genérico",
+    "formaPago": "Contado",
+    "lineas": [
+      {
+        "productoId": "mp-57",
+        "codigo": "57",
+        "nombre": "BOLSA C/MANIJA  22x10x30  BLANCA X UN",
+        "precio": 515,
+        "cantidad": 50,
+        "descontoStock": true
+      },
+      {
+        "productoId": "mp-765",
+        "codigo": "765",
+        "nombre": "VIRUTA NATURAL/COLORES",
+        "precio": 1500,
+        "cantidad": 2,
+        "descontoStock": true
+      }
+    ],
+    "total": 28750
+  },
+  {
+    "id": "8c203e4f-544f-49d0-97f0-9c94d80967f1",
+    "numero": 34,
+    "creadoEn": "2026-11-20T19:58:00.263Z",
+    "empleado": "Gisela Veronica",
+    "empleadoEmail": "giselavdistefano@gmail.com",
+    "cliente": "Cliente genérico",
+    "formaPago": "Contado",
+    "lineas": [
+      {
+        "productoId": "mp-57",
+        "codigo": "57",
+        "nombre": "BOLSA C/MANIJA  22x10x30  BLANCA X UN",
+        "precio": 515,
+        "cantidad": 50,
+        "descontoStock": true
+      },
+      {
+        "productoId": "mp-765",
+        "codigo": "765",
+        "nombre": "VIRUTA NATURAL/COLORES",
+        "precio": 1500,
+        "cantidad": 2,
+        "descontoStock": true
+      }
+    ],
+    "total": 28750
+  },
+  {
+    "id": "da00b2df-820c-4eb5-a71b-3e3afd2e1d26",
+    "numero": 35,
+    "creadoEn": "2026-11-21T14:03:26.289Z",
+    "empleado": "Gisela Veronica",
+    "empleadoEmail": "giselavdistefano@gmail.com",
+    "cliente": "Cliente genérico",
+    "formaPago": "Contado",
+    "lineas": [
+      {
+        "productoId": "mp-76",
+        "codigo": "76",
+        "nombre": "BANDEJA EXPANDIDO Nº 6-28 x 100 u (200)",
+        "precio": 250,
+        "cantidad": 5,
+        "descontoStock": true
+      },
+      {
+        "productoId": "mp-602",
+        "codigo": "602",
+        "nombre": "MINI CHIP DROP MAPSA CHOCOLATE BCO/NEGRO X 100 GR",
+        "precio": 1800,
+        "cantidad": 2,
+        "descontoStock": true
+      }
+    ],
+    "total": 4850
+  },
+  {
+    "id": "ddc81f07-516b-4196-8e4b-50ece51604cd",
+    "numero": 36,
+    "creadoEn": "2026-11-21T14:44:04.790Z",
+    "empleado": "Gisela Veronica",
+    "empleadoEmail": "giselavdistefano@gmail.com",
+    "cliente": "Cliente genérico",
+    "formaPago": "Contado",
+    "lineas": [
+      {
+        "productoId": "mp-703",
+        "codigo": "703",
+        "nombre": "GLITTER COMESTIBLE RADHA X 4 GRS",
+        "precio": 2000,
+        "cantidad": 1,
+        "descontoStock": true
+      },
+      {
+        "productoId": "mp-2101",
+        "codigo": "2101",
+        "nombre": "PERLA DE CEREAL COLOR",
+        "precio": 6500,
+        "cantidad": 1,
+        "descontoStock": false
+      }
+    ],
+    "total": 8500
+  },
+  {
+    "id": "0329b2f3-95b5-4a1f-a702-b31ad4d6a431",
+    "numero": 37,
+    "creadoEn": "2026-11-21T21:03:04.474Z",
+    "empleado": "Gisela Veronica",
+    "empleadoEmail": "giselavdistefano@gmail.com",
+    "cliente": "Cliente genérico",
+    "formaPago": "Contado",
+    "lineas": [
+      {
+        "productoId": "mp-670",
+        "codigo": "670",
+        "nombre": "PLATO ALUMINIO N° 20",
+        "precio": 420,
+        "cantidad": 5,
+        "descontoStock": true
+      }
+    ],
+    "total": 2100
+  },
+  {
+    "id": "a7217e05-566b-455b-8dad-507d24853f4d",
+    "numero": 38,
+    "creadoEn": "2026-11-21T22:20:05.176Z",
+    "empleado": "Gisela Veronica",
+    "empleadoEmail": "giselavdistefano@gmail.com",
+    "cliente": "Cliente genérico",
+    "formaPago": "Contado",
+    "lineas": [
+      {
+        "productoId": "mp-496",
+        "codigo": "496",
+        "nombre": "LENTEJAS E CHOCOLATE GRANDE * 200GRS",
+        "precio": 5500,
+        "cantidad": 1,
+        "descontoStock": false
+      },
+      {
+        "productoId": "mp-2370",
+        "codigo": "2370",
+        "nombre": "GLOBO 12\" PERLADO SURTIDO X 25 UN",
+        "precio": 4950,
+        "cantidad": 1,
+        "descontoStock": true
+      }
+    ],
+    "total": 10450
+  },
+  {
+    "id": "cd7e3845-7052-4b32-b321-bc26c2cbc366",
+    "numero": 39,
+    "creadoEn": "2026-11-24T00:43:40.389Z",
+    "empleado": "Gisela Veronica",
+    "empleadoEmail": "giselavdistefano@gmail.com",
+    "cliente": "Cliente genérico",
+    "formaPago": "Contado",
+    "lineas": [
+      {
+        "productoId": "mp-389",
+        "codigo": "389",
+        "nombre": "BOLSA BD CRISTAL 10 X 15",
+        "precio": 1500,
+        "cantidad": 1,
+        "descontoStock": false
+      }
+    ],
+    "total": 1500,
+    "devoluciones": [
+      {
+        "id": "73e80a5f-5b7e-47cf-a4fb-5f0b9837c4fe",
+        "creadoEn": "2026-11-24T00:55:53.708Z",
+        "empleado": "Administración",
+        "reponerStock": false,
+        "lineas": [
+          {
+            "productoId": "mp-389",
+            "codigo": "389",
+            "nombre": "BOLSA BD CRISTAL 10 X 15",
+            "cantidad": 1,
+            "precio": 1500
+          }
+        ],
+        "total": 1500
+      }
+    ],
+    "anulada": true
+  }
+]

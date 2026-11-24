@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { CondicionesCliente } from "@/components/CamposCredito";
 import { caja } from "@/components/caja-estilo";
 
 const CAMPO = caja.campo;
@@ -98,49 +97,6 @@ export function CajaClienteForm({
         </div>
       )}
 
-      <div className="mt-4 space-y-2 rounded-2xl border border-neutral-200 bg-neutral-50 p-3">
-        <p className="text-xs font-bold uppercase tracking-wide text-neutral-500">
-          Condiciones de pago
-        </p>
-        <label className="flex items-start gap-3 rounded-xl border border-neutral-200 bg-white px-3 py-3 text-sm">
-          <input
-            type="checkbox"
-            className="mt-1"
-            checked={credito}
-            onChange={(e) => setCredito(e.target.checked)}
-          />
-          <span>
-            <span className="block font-black text-neutral-900">Préstamos</span>
-            <span className="text-xs font-semibold text-neutral-600">
-              Crédito en efectivo / dinero que se le presta al cliente (con cuotas).
-            </span>
-          </span>
-        </label>
-        <label className="flex items-start gap-3 rounded-xl border border-neutral-200 bg-white px-3 py-3 text-sm">
-          <input
-            type="checkbox"
-            className="mt-1"
-            checked={corriente}
-            onChange={(e) => setCorriente(e.target.checked)}
-          />
-          <span>
-            <span className="block font-black text-neutral-900">Cuenta corriente de mercadería</span>
-            <span className="text-xs font-semibold text-neutral-600">
-              Puede llevar productos y pagarlos después, dentro del plazo.
-            </span>
-          </span>
-        </label>
-      </div>
-      {(credito || corriente) && (
-        <CondicionesCliente
-          credito={credito}
-          corriente={corriente}
-          tasas={tasasCuota ?? { 1: 15, 2: 25, 3: 35, 6: 50 }}
-          moraCredito={moraCredito}
-          moraCuenta={moraCuenta}
-          plazoGeneral={plazoGeneral}
-        />
-      )}
 
       {aviso && <p className="mt-3 text-sm font-bold text-red-800">{aviso}</p>}
       <div className="mt-4 grid grid-cols-2 gap-2">

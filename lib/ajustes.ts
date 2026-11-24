@@ -7,7 +7,9 @@ import type { AjustesPrecios, EscalaMora, TasasCuota } from "@/types/ajustes";
 
 export const AJUSTES_PRECIOS_BASE: AjustesPrecios = {
   descuentoClienteGenerico: 10,
+  topeFiado: 500000,
   recargoWeb: 0,
+  recargoLista: 0,
   ajustePorSeccion: {},
   descuentoClientePorSeccion: {},
   descuentoEmpleadoGenerico: 0,
@@ -69,7 +71,9 @@ export async function leerAjustes(): Promise<AjustesPrecios> {
   const recargo = porcentaje(parsed.recargoWeb, 200) ?? 0;
   return {
     descuentoClienteGenerico: descuento,
+    topeFiado: Math.max(0, Math.round(Number(parsed.topeFiado) || 500000)),
     recargoWeb: recargo,
+    recargoLista: porcentaje(parsed.recargoLista, 200) ?? 0,
     ajustePorSeccion:
       parsed.ajustePorSeccion && typeof parsed.ajustePorSeccion === "object"
         ? parsed.ajustePorSeccion

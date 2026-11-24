@@ -19,7 +19,6 @@ export function AboutSection() {
             fill
             className="object-cover object-[38%_62%]"
             sizes="(max-width: 1024px) 100vw, 520px"
-            quality={90}
             priority
           />
         </div>

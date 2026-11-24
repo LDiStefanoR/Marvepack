@@ -1,1 +1,45 @@
-﻿[]
+{
+  "ajustes": {
+    "alias": "",
+    "cbu": "",
+    "titular": "MarvePack",
+    "banco": "",
+    "limiteAlmacenDefault": 50000,
+    "limiteEfectivoDefault": 0,
+    "plazoEfectivoHoras": 48,
+    "importadoEn": "",
+    "archivoOrigen": "",
+    "ultimoTicketWeb": 0,
+    "ultimoTicketTienda": 0
+  },
+  "clientes": [
+    {
+      "id": "cli-f8983a5e",
+      "nombre": "Cliente genérico",
+      "telefono": "3410000000",
+      "email": "leo.rds.21@gmail.com",
+      "pinInicial": "1234",
+      "limiteAlmacen": 0,
+      "limiteEfectivo": 0,
+      "aliasCbu": "",
+      "activo": true
+    },
+    {
+      "id": "cli-49133a81",
+      "nombre": "Martin",
+      "telefono": "3416512635",
+      "email": "ramoscarlosmartin900@gmail.com",
+      "pinInicial": "2635",
+      "limiteAlmacen": 30000,
+      "limiteEfectivo": 0,
+      "mostrarPrestamos": false,
+      "mostrarCuenta": true,
+      "aliasCbu": "",
+      "activo": true
+    }
+  ],
+  "tickets": [],
+  "pagos": [],
+  "solicitudes": [],
+  "novedades": []
+}

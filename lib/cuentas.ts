@@ -129,6 +129,22 @@ async function guardarBase(data: BaseCuentas) {
   await escribirJsonData(ARCHIVO, data);
 }
 
+export async function reemplazarClientesRespaldo(clientes: ClienteFiado[]) {
+  const data = await leerBase();
+  data.clientes = clientes;
+  await guardarBase(data);
+  await asegurarUsuariosFiado(
+    clientes
+      .filter((c) => c.activo)
+      .map((c) => ({
+        email: c.email,
+        nombre: c.nombre,
+        telefono: c.telefono,
+        pin: c.pinInicial || "1234",
+      })),
+  );
+}
+
 export async function sincronizarUsuariosCuenta() {
   const data = await leerBase();
   await asegurarUsuariosFiado(
@@ -777,6 +793,34 @@ export async function actualizarPinInicial(clienteId: string, pin: string) {
   cliente.pinInicial = pin;
   await guardarBase(data);
   return { ok: true as const };
+}
+
+export async function asegurarFichaRegistro(datos: {
+  nombre: string;
+  telefono: string;
+  email: string;
+}) {
+  const email = normalizarEmail(datos.email);
+  const data = await leerBase();
+  const ya = data.clientes.find((c) => normalizarEmail(c.email) === email);
+  if (ya) return { ok: true as const, cliente: ya };
+  const tel = soloDigitos(datos.telefono);
+  const cliente: ClienteFiado = {
+    id: `cli-${randomUUID().slice(0, 8)}`,
+    nombre: datos.nombre.trim() || email,
+    telefono: datos.telefono.trim() || "000",
+    email,
+    pinInicial: tel.length >= 8 && !/^0+$/.test(tel) ? tel.slice(-4) : "1234",
+    limiteAlmacen: 0,
+    limiteEfectivo: 0,
+    mostrarPrestamos: false,
+    mostrarCuenta: false,
+    aliasCbu: "",
+    activo: true,
+  };
+  data.clientes.push(cliente);
+  await guardarBase(data);
+  return { ok: true as const, cliente };
 }
 
 export async function agregarClienteFiado(datos: {

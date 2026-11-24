@@ -4,11 +4,7 @@ export type EstadoCuenta = "pendiente" | "activa" | "rechazada";
 
 export type TipoPersona = "persona" | "empresa";
 
-export type TipoCuentaCliente =
-  | "generico"
-  | "descuentos"
-  | "credito_super"
-  | "linea_credito";
+export type TipoCuentaCliente = "generico" | "descuento_especial";
 
 export type PerfilCliente = {
   tipoPersona: TipoPersona;
@@ -47,6 +43,8 @@ export type Usuario = SesionPublica & {
   estado: EstadoCuenta;
   perfil?: PerfilCliente;
   tipoCuenta?: TipoCuentaCliente;
+  /** Crédito de mercadería, aparte del tipo de cuenta. */
+  creditoMercaderia?: boolean;
   notaInterna?: string;
   /** Partes del menú de caja. Si no está, un empleado ve todo menos Deudas. */
   permisosCaja?: string[];

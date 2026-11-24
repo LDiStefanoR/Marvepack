@@ -277,5 +277,5 @@ export async function armarPdfCatalogo(filas: FilaCatalogo[]) {
 
 export function nombreArchivoCatalogo(ext: "xlsx" | "pdf") {
   const fecha = new Date().toISOString().slice(0, 10);
-  return `LaTripleL-catalogo-precios-${fecha}.${ext}`;
+  return `MarvePack-catalogo-precios-${fecha}.${ext}`;
 }

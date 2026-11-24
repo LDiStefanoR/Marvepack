@@ -20,8 +20,6 @@ import {
   DETALLE_TIPO_CUENTA,
   ETIQUETA_TIPO_CUENTA,
   parseTipoCuenta,
-  tieneCreditoSuper,
-  tieneLineaCredito,
 } from "@/lib/tipo-cuenta";
 import { whatsappATelefono } from "@/lib/whatsapp";
 import type { TipoCuentaCliente, UsuarioPublico } from "@/types/auth";
@@ -65,11 +63,8 @@ export function AdminClienteFicha({
     perfil?.telefono ?? "",
     `Hola ${usuario.nombre}, te escribo de MarvePack.`,
   );
-  const montoAsignado = tieneCreditoSuper(tipo)
-    ? resumen?.cliente.limiteAlmacen ?? 0
-    : tieneLineaCredito(tipo)
-      ? resumen?.cliente.limiteEfectivo ?? 0
-      : 0;
+  const montoAsignado = resumen?.cliente.limiteAlmacen ?? 0;
+  const creditoActivo = usuario.creditoMercaderia === true || montoAsignado > 0;
 
   function run(
     tarea: () => Promise<EstadoAdminCuentas>,
@@ -362,10 +357,12 @@ export function AdminClienteFicha({
 
       {usuario.rol !== "admin" && (
         <FormTipoCliente
-          key={`${usuario.id}-${tipo}-${montoAsignado}`}
+          key={`${usuario.id}-${tipo}-${montoAsignado}-${creditoActivo}`}
           usuarioId={usuario.id}
           tipo={tipo}
           monto={montoAsignado}
+          credito={creditoActivo}
+          descuento={perfil?.descuento ?? 0}
           pending={pending}
           onSubmit={(data) => run(() => adminGuardarCreditoCliente(data))}
         />
@@ -553,23 +550,29 @@ function FormTipoCliente({
   usuarioId,
   tipo,
   monto,
+  credito,
+  descuento,
   pending,
   onSubmit,
 }: {
   usuarioId: string;
   tipo: TipoCuentaCliente;
   monto: number;
+  credito: boolean;
+  descuento: number;
   pending: boolean;
   onSubmit: (data: FormData) => void;
 }) {
   const [elegido, setElegido] = useState(tipo);
-  const pideMonto = tieneCreditoSuper(elegido) || tieneLineaCredito(elegido);
+  const [conCredito, setConCredito] = useState(credito);
   return (
     <form
       className="space-y-3 rounded-3xl bg-white p-5 shadow-sm sm:p-6"
       onSubmit={(e) => {
         e.preventDefault();
-        onSubmit(new FormData(e.currentTarget));
+        const data = new FormData(e.currentTarget);
+        if (conCredito) data.set("credito", "1");
+        onSubmit(data);
       }}
     >
       <input type="hidden" name="id" value={usuarioId} />
@@ -578,32 +581,35 @@ function FormTipoCliente({
       </h3>
       <p className="text-sm text-neutral-500">{DETALLE_TIPO_CUENTA[elegido]}</p>
       <label className={etiqueta}>
-        Condición comercial
-        <p className={ayuda}>Define si ve descuentos y si tiene crédito.</p>
+        Tipo de cuenta
+        <p className={ayuda}>Genérico no tiene descuento. El especial permite un porcentaje propio.</p>
         <select
           name="tipoCuenta"
           value={elegido}
           onChange={(e) => setElegido(parseTipoCuenta(e.target.value))}
           className={campo}
         >
-          <option value="generico">Genérico (precios de lista, sin descuento)</option>
-          <option value="descuentos">Con descuentos</option>
-          <option value="credito_super">Crédito supermercado</option>
-          <option value="linea_credito">Línea de crédito</option>
+          {Object.entries(ETIQUETA_TIPO_CUENTA).map(([id, etiquetaTipo]) => (
+            <option key={id} value={id}>
+              {etiquetaTipo}
+            </option>
+          ))}
         </select>
       </label>
-      {pideMonto && (
+      {elegido === "descuento_especial" && (
         <label className={etiqueta}>
-          {tieneCreditoSuper(elegido)
-            ? "Monto habilitado de supermercado"
-            : "Monto de la línea de crédito"}
-          <p className={ayuda}>Tope en pesos que puede usar a cuenta.</p>
-          <input
-            name="montoCredito"
-            defaultValue={monto}
-            key={`${usuarioId}-${elegido}-${monto}`}
-            className={campo}
-          />
+          Descuento especial %
+          <input name="descuentoEspecial" type="number" min={0} max={90} defaultValue={descuento} className={campo} />
+        </label>
+      )}
+      <label className="flex items-center gap-2 text-sm font-bold text-movipack-deep">
+        <input type="checkbox" checked={conCredito} onChange={(e) => setConCredito(e.target.checked)} />
+        Crédito de mercadería
+      </label>
+      {conCredito && (
+        <label className={etiqueta}>
+          Cuánto de crédito dejás
+          <input name="montoCredito" type="number" min={0} step={1000} defaultValue={monto} className={campo} />
         </label>
       )}
       <button type="submit" disabled={pending} className={btnFuerte}>

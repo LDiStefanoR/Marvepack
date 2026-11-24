@@ -30,6 +30,7 @@ import {
   type EstadoDeposito,
 } from "@/app/acciones/deposito";
 import { guardarDatosLocal, leerDatosLocal } from "@/app/acciones/local";
+import { importarRespaldoCaja, type EstadoRespaldo } from "@/app/acciones/respaldo";
 import { DEMORA_ENTREGA_BASE, type DatosLocal } from "@/lib/datos-local";
 import { AdminImagesForm } from "@/components/AdminImagesForm";
 import { caja } from "@/components/caja-estilo";
@@ -107,7 +108,7 @@ export type DeudaCaja = {
 };
 
 type PantallaStock = "menu" | "pedido" | "regularizar" | "entrada" | "inventario";
-type PantallaMant = "menu" | "proveedores" | "clientes" | "empleados" | "productos" | "secciones" | "pagos" | "descuento" | "catalogo" | "envio" | "local";
+type PantallaMant = "menu" | "proveedores" | "clientes" | "empleados" | "productos" | "secciones" | "pagos" | "descuento" | "catalogo" | "envio" | "local" | "respaldo";
 type ModoDeposito = "stock" | "mantenimiento" | "configuracion" | "clientes" | "productos";
 
 const BOTON = caja.botonAlto;
@@ -129,9 +130,9 @@ export function CajaDeposito({
   fichaRubros,
   descuentoClienteGenerico,
   descuentoClientePorSeccion = {},
-  descuentoEmpleadoGenerico = 0,
-  descuentoEmpleadoPorSeccion = {},
   recargoWeb,
+  recargoLista = 0,
+  topeFiado = 500000,
   tasasCuota,
   moraCredito,
   moraCuenta,
@@ -163,6 +164,8 @@ export function CajaDeposito({
   descuentoEmpleadoGenerico?: number;
   descuentoEmpleadoPorSeccion?: Record<string, number>;
   recargoWeb: number;
+  recargoLista?: number;
+  topeFiado?: number;
   tasasCuota: { 1: number; 2: number; 3: number; 6: number };
   moraCredito: number[];
   moraCuenta: number[];
@@ -332,8 +335,8 @@ export function CajaDeposito({
             </button>
           )}
           {esAdmin && (
-            <button type="button" className={BOTON} onClick={() => setMant("descuento")}>
-              Intereses créditos y cuentas corrientes
+            <button type="button" className={BOTON} onClick={() => setMant("respaldo")}>
+              Respaldo y restauración
             </button>
           )}
         </div>
@@ -388,14 +391,18 @@ export function CajaDeposito({
     return <EnvioDomicilio escala={envio} onVolver={() => setMant("menu")} />;
   }
 
+  if (mant === "respaldo") {
+    return <RespaldoDatos onVolver={() => setMant("menu")} />;
+  }
+
   if (mant === "catalogo") {
     return (
       <CatalogoWeb
         recargo={recargoWeb}
+        recargoLista={recargoLista}
+        topeFiado={topeFiado}
         descuento={Math.max(0, descuentoClienteGenerico)}
-        descuentoEmpleado={Math.max(0, descuentoEmpleadoGenerico)}
         descuentoClientePorSeccion={descuentoClientePorSeccion}
-        descuentoEmpleadoPorSeccion={descuentoEmpleadoPorSeccion}
         rubros={fichaRubros}
         onVolver={() => setMant("menu")}
       />
@@ -497,6 +504,7 @@ export function CajaDeposito({
           moraCredito={moraCredito}
           moraCuenta={moraCuenta}
           plazoGeneral={plazoCuenta}
+          topeCreditoGeneral={topeFiado}
           onVolver={() => setFichaCliente(null)}
         />
       );
@@ -1153,18 +1161,18 @@ function DtoRubroCampos({
 
 function CatalogoWeb({
   recargo,
+  recargoLista,
+  topeFiado,
   descuento,
-  descuentoEmpleado,
   descuentoClientePorSeccion,
-  descuentoEmpleadoPorSeccion,
   rubros,
   onVolver,
 }: {
   recargo: number;
+  recargoLista: number;
+  topeFiado: number;
   descuento: number;
-  descuentoEmpleado: number;
   descuentoClientePorSeccion: Record<string, number>;
-  descuentoEmpleadoPorSeccion: Record<string, number>;
   rubros: Rubro[];
   onVolver: () => void;
 }) {
@@ -1172,22 +1180,22 @@ function CatalogoWeb({
   const [mensaje, setMensaje] = useState<EstadoAdmin>(null);
   const [pending, start] = useTransition();
   const [recargoVista, setRecargoVista] = useState(String(recargo));
+  const [listaVista, setListaVista] = useState(String(recargoLista));
   const [descuentoVista, setDescuentoVista] = useState(String(descuento));
-  const [empleadoVista, setEmpleadoVista] = useState(String(descuentoEmpleado));
   const recargoNum = Math.min(200, Math.max(0, Math.round(Number(recargoVista) || 0)));
+  const listaNum = Math.min(200, Math.max(0, Math.round(Number(listaVista) || 0)));
   const descuentoNum = Math.min(90, Math.max(0, Math.round(Number(descuentoVista) || 0)));
-  const empleadoNum = Math.min(90, Math.max(0, Math.round(Number(empleadoVista) || 0)));
   const base = 10000;
-  const normal = Math.round(base * (1 + recargoNum / 100));
-  const clientes = Math.round(normal * (1 - descuentoNum / 100));
-  const empleadosPrecio = Math.round(normal * (1 - empleadoNum / 100));
+  const conBase = Math.round(base * (1 + recargoNum / 100));
+  const publicado = Math.round(conBase * (1 + listaNum / 100));
+  const clientes = Math.round(publicado * (1 - descuentoNum / 100));
 
   return (
     <section className="mx-auto max-w-3xl px-4 py-6">
       <p className={caja.kicker}>Configuración</p>
       <h2 className="font-display text-3xl font-bold">Catálogo web</h2>
       <p className="mt-2 text-sm text-neutral-600">
-        El catálogo usa el precio guardado de cada producto. Los clientes de comercio y los empleados tienen descuentos distintos: un % general y, si lo activás, un % propio por rubro.
+        Primero se suma el recargo sobre el precio de la base. Después el recargo de lista. El descuento de cliente, si corresponde, se aplica al final. El genérico no tiene descuento. El descuento especial se carga en la ficha de cada cliente.
       </p>
       <form
         className={`${caja.panel} mt-4 space-y-4 p-4`}
@@ -1219,11 +1227,39 @@ function CatalogoWeb({
             %
           </span>
           <span className="mt-1 block text-xs font-semibold text-neutral-600">
-            0 deja el precio tal cual está en la base. Un producto de {formatoPesos(base)} se publica a {formatoPesos(normal)}.
+            Se aplica primero. 0 deja el precio de la base. Un producto de {formatoPesos(base)} pasa a {formatoPesos(conBase)}.
           </span>
         </label>
         <label className="block text-sm font-bold">
-          Descuento de clientes generales
+          Recargo de lista
+          <span className="mt-1 flex items-center gap-2">
+            <input
+              type="number"
+              name="recargoLista"
+              value={listaVista}
+              min={0}
+              max={200}
+              step={1}
+              onChange={(e) => setListaVista(e.target.value)}
+              className="w-28 rounded-xl border border-neutral-200 bg-white px-3 py-2 text-2xl font-bold"
+            />
+            %
+          </span>
+          <span className="mt-1 block text-xs font-semibold text-neutral-600">
+            Se suma después del recargo de base. En el ejemplo el precio publicado queda en {formatoPesos(publicado)}.
+          </span>
+        </label>
+        <label className="block text-sm font-bold">
+          Crédito de clientes
+          <span className="mt-1 block text-xs font-semibold text-neutral-600">
+            Tope general de mercadería fiada por cliente. No es un préstamo de efectivo.
+          </span>
+          <span className="mt-1 flex items-center gap-2">
+            <input type="number" name="topeFiado" defaultValue={topeFiado} min={0} step={1000} className="w-40 rounded-xl border border-neutral-200 bg-white px-3 py-2 text-2xl font-bold" />
+          </span>
+        </label>
+        <label className="block text-sm font-bold">
+          Descuento general de clientes
           <span className="mt-1 flex items-center gap-2">
             <input
               type="number"
@@ -1238,49 +1274,25 @@ function CatalogoWeb({
             %
           </span>
           <span className="mt-1 block text-xs font-semibold text-neutral-600">
-            En el ejemplo, los clientes ven {formatoPesos(clientes)}. Un descuento en la ficha del cliente lo reemplaza.
+            Se aplica al final, sobre el precio ya recargado. En el ejemplo queda {formatoPesos(clientes)}. Un rubro puede tener otro porcentaje.
           </span>
         </label>
-        <label className="block text-sm font-bold">
-          Descuento general de empleados
-          <span className="mt-1 flex items-center gap-2">
-            <input
-              type="number"
-              name="descuentoEmpleadoGenerico"
-              value={empleadoVista}
-              min={0}
-              max={90}
-              step={1}
-              onChange={(e) => setEmpleadoVista(e.target.value)}
-              className="w-28 rounded-xl border border-neutral-200 bg-white px-3 py-2 text-2xl font-bold"
-            />
-            %
-          </span>
-          <span className="mt-1 block text-xs font-semibold text-neutral-600">
-            En el ejemplo, los empleados ven {formatoPesos(empleadosPrecio)}. El % de la ficha del empleado, si está cargado, lo reemplaza.
-          </span>
-        </label>
-        <div className="grid gap-3 sm:grid-cols-3">
+        <div className="grid gap-3 sm:grid-cols-2">
           <div className="rounded-2xl border border-movipack/30 bg-movipack/5 p-4">
-            <p className="text-[10px] font-bold uppercase tracking-wide text-neutral-500">Precio</p>
-            <p className="font-display text-3xl font-bold">{formatoPesos(normal)}</p>
+            <p className="text-[10px] font-bold uppercase tracking-wide text-neutral-500">Precio publicado</p>
+            <p className="font-display text-3xl font-bold">{formatoPesos(publicado)}</p>
           </div>
           <div className="rounded-2xl border border-cape/30 bg-cape/5 p-4">
-            <p className="text-[10px] font-bold uppercase tracking-wide text-cape">Clientes -{descuentoNum}%</p>
+            <p className="text-[10px] font-bold uppercase tracking-wide text-cape">Con descuento -{descuentoNum}%</p>
             <p className="font-display text-3xl font-bold text-cape">{formatoPesos(clientes)}</p>
-          </div>
-          <div className="rounded-2xl border border-emerald-300 bg-emerald-50 p-4">
-            <p className="text-[10px] font-bold uppercase tracking-wide text-emerald-700">Empleados -{empleadoNum}%</p>
-            <p className="font-display text-3xl font-bold text-emerald-700">{formatoPesos(empleadosPrecio)}</p>
           </div>
         </div>
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[640px] text-left text-sm">
+          <table className="w-full text-left text-sm">
             <thead>
               <tr className="border-b border-neutral-200 text-neutral-500">
                 <th className="py-2 font-semibold">Rubro</th>
-                <th className="py-2 font-semibold">Dto. clientes</th>
-                <th className="py-2 font-semibold">Dto. empleados</th>
+                <th className="py-2 font-semibold">Descuento de clientes</th>
               </tr>
             </thead>
             <tbody>
@@ -1300,19 +1312,6 @@ function CatalogoWeb({
                       etiqueta="Descuento clientes"
                     />
                   </td>
-                  <td className="py-2">
-                    <DtoRubroCampos
-                      prefijo="emp"
-                      clave={rubro.clave}
-                      activoInicial={Object.prototype.hasOwnProperty.call(
-                        descuentoEmpleadoPorSeccion,
-                        rubro.clave,
-                      )}
-                      valorInicial={descuentoEmpleadoPorSeccion[rubro.clave] ?? descuentoEmpleado}
-                      general={empleadoNum}
-                      etiqueta="Descuento empleados"
-                    />
-                  </td>
                 </tr>
               ))}
             </tbody>
@@ -1330,7 +1329,7 @@ function CatalogoWeb({
       <div className={`${caja.panel} mt-4 p-4`}>
         <p className="font-bold">Catálogo de precios</p>
         <p className="mt-1 text-sm text-neutral-600">
-          Foto, nombre, precio del catálogo y precio con el descuento de cliente registrado.
+          Foto, nombre, precio publicado y precio con el descuento general del rubro.
         </p>
         <div className="mt-3 flex flex-wrap gap-2">
           <a href="/admin/catalogo-precios?formato=xlsx" className={caja.primario}>
@@ -1688,6 +1687,89 @@ function Secciones({
       <button type="button" className={`${caja.boton} mt-4`} onClick={onVolver}>
         Volver
       </button>
+    </section>
+  );
+}
+
+function RespaldoDatos({ onVolver }: { onVolver: () => void }) {
+  const router = useRouter();
+  const [mensaje, setMensaje] = useState<EstadoRespaldo>(null);
+  const [pending, start] = useTransition();
+
+  return (
+    <section className="mx-auto max-w-3xl px-4 py-6">
+      <p className={caja.kicker}>Configuración</p>
+      <h2 className="font-display text-3xl font-bold">Respaldo y restauración</h2>
+      <p className="mt-2 text-sm text-neutral-600">
+        Bajá artículos, clientes, ventas y fotos. Después podés volver a cargarlos en esta misma
+        máquina u otra copia del programa.
+      </p>
+
+      <div className={`${caja.panel} mt-4 p-4`}>
+        <p className="font-bold">Descargar</p>
+        <p className="mt-1 text-sm text-neutral-600">
+          El respaldo es un ZIP con el Excel (hojas Productos, Clientes, Ventas y LineasVenta) y las
+          fotos de los productos, ya comprimidas. También podés bajar solo el Excel.
+        </p>
+        <div className="mt-3 flex flex-wrap gap-2">
+          <a href="/caja/respaldo?formato=zip" className={caja.primario}>
+            Descargar respaldo con fotos
+          </a>
+          <a href="/caja/respaldo?formato=xlsx" className={caja.boton}>
+            Solo Excel
+          </a>
+        </div>
+      </div>
+
+      <form
+        className={`${caja.panel} mt-4 p-4`}
+        onSubmit={(e) => {
+          e.preventDefault();
+          const data = new FormData(e.currentTarget);
+          start(async () => {
+            const resultado = await importarRespaldoCaja(null, data);
+            setMensaje(resultado);
+            if (resultado?.ok) router.refresh();
+          });
+        }}
+      >
+        <p className="font-bold">Volcar al programa</p>
+        <p className="mt-1 text-sm text-neutral-600">
+          Subí el Excel o el ZIP que descargaste. Fusionar actualiza por código/id sin borrar el
+          resto. Reemplazar deja solo lo del archivo en esa tabla.
+        </p>
+        {mensaje?.error && <p className={`${caja.avisoErrorPlano} mt-3`}>{mensaje.error}</p>}
+        {mensaje?.ok && <p className={`${caja.avisoOkPlano} mt-3`}>{mensaje.ok}</p>}
+        <label className="mt-4 block text-sm font-bold">
+          Archivo
+          <input
+            name="archivo"
+            type="file"
+            accept=".xlsx,.zip,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/zip"
+            required
+            className="mt-1 block w-full text-sm"
+          />
+        </label>
+        <fieldset className="mt-4">
+          <legend className="text-sm font-bold">Modo</legend>
+          <label className="mt-2 flex items-center gap-2 text-sm">
+            <input type="radio" name="modo" value="fusionar" defaultChecked />
+            Fusionar (recomendado)
+          </label>
+          <label className="mt-1 flex items-center gap-2 text-sm">
+            <input type="radio" name="modo" value="reemplazar" />
+            Reemplazar todo lo que trae el archivo
+          </label>
+        </fieldset>
+        <div className="mt-4 flex flex-wrap gap-2">
+          <button type="submit" disabled={pending} className={caja.primario}>
+            {pending ? "Cargando…" : "Volcar respaldo"}
+          </button>
+          <button type="button" className={caja.boton} onClick={onVolver}>
+            Volver
+          </button>
+        </div>
+      </form>
     </section>
   );
 }

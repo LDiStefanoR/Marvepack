@@ -89,6 +89,16 @@ export function IconoAdmin() {
   );
 }
 
+export function IconoSolicitud() {
+  return (
+    <Icono>
+      <path d="M8 3.5h8v3H8v-3Z" />
+      <path d="M8 5H6.5A1.5 1.5 0 0 0 5 6.5v13A1.5 1.5 0 0 0 6.5 21h11a1.5 1.5 0 0 0 1.5-1.5v-13A1.5 1.5 0 0 0 17.5 5H16" />
+      <path d="M9 12h6M9 16h4" />
+    </Icono>
+  );
+}
+
 export function IconoPedido() {
   return (
     <Icono>

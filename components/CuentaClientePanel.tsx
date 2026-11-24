@@ -6,13 +6,11 @@ import {
   clienteActualizarPerfil,
   clienteCambiarClave,
   clienteInformarPago,
-  clienteSolicitarEfectivo,
   type EstadoCuentaCliente,
 } from "@/app/acciones/cuenta-cliente";
 import { useCart } from "@/components/CartProvider";
 import { PerfilCuenta } from "@/components/PerfilCuenta";
 import { whatsappUrl } from "@/lib/whatsapp";
-import { parseTipoCuenta, tieneLineaCredito } from "@/lib/tipo-cuenta";
 import { plazoCuentaDias } from "@/lib/plazo-cuenta";
 import { armarComprasPerfil } from "@/lib/compras-perfil";
 import type { UsuarioPublico } from "@/types/auth";
@@ -120,17 +118,12 @@ export function CuentaClientePanel({
     EstadoCuentaCliente,
     FormData
   >(clienteCambiarClave, null);
-  const [estadoEfectivo, pedirEfectivo, pendingEfectivo] = useActionState<
-    EstadoCuentaCliente,
-    FormData
-  >(clienteSolicitarEfectivo, null);
   const [estadoPago, informarPago, pendingPago] = useActionState<
     EstadoCuentaCliente,
     FormData
   >(clienteInformarPago, null);
 
   const perfil = usuario.perfil;
-  const tipo = parseTipoCuenta(usuario.tipoCuenta);
   const foto = preview || perfil?.fotoPerfil || FOTO_DEFAULT;
   const aliasCliente = resumen?.cliente.aliasCbu?.trim() ?? "";
   const hayDatosPago = Boolean(ajustes.alias || ajustes.cbu);
@@ -159,8 +152,8 @@ export function CuentaClientePanel({
         cbu={ajustes.cbu ?? ""}
         titular={ajustes.titular ?? ""}
         nombreLocal={ajustes.nombreLocal ?? "MarvePack"}
-        verPrestamos={resumen?.cliente.mostrarPrestamos === true}
-        verCuenta={resumen?.cliente.mostrarCuenta === true}
+        verPrestamos={false}
+        verCuenta={false}
         limiteCredito={resumen?.cliente.limiteEfectivo ?? 0}
         usadoCredito={resumen?.saldoEfectivo ?? 0}
         cuotasMaximas={resumen?.cliente.cuotasMaximas}
@@ -364,26 +357,9 @@ export function CuentaClientePanel({
         </a>
       </div>
 
-      {(resumen || tieneLineaCredito(tipo)) && (
+      {resumen && (
         <>
           <div className="grid gap-3 sm:grid-cols-2">
-            {tieneLineaCredito(tipo) && (
-            <button
-              type="button"
-              onClick={() => {
-                if (!aliasCliente) {
-                  setEditando(true);
-                  setAvisoAlias("Para pedir crédito tenés que cargar tu alias o CBU.");
-                  datosRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-                  return;
-                }
-                setAbierto(abierto === "efectivo" ? null : "efectivo");
-              }}
-              className="rounded-2xl bg-movipack px-4 py-4 text-sm font-bold text-white"
-            >
-              Solicitar efectivo
-            </button>
-            )}
             {resumen && (
             <button
               type="button"
@@ -394,30 +370,6 @@ export function CuentaClientePanel({
             </button>
             )}
           </div>
-
-          {abierto === "efectivo" && (
-            <section className="rounded-3xl bg-white p-5 shadow-sm">
-              <h2 className="font-bold text-movipack-deep">Pedido de efectivo</h2>
-              <form action={pedirEfectivo} className="mt-4 space-y-3">
-                <input name="monto" required placeholder="Monto" className="w-full rounded-xl border px-3 py-2" />
-                <input type="hidden" name="aliasCbu" value={aliasCliente} />
-                <input name="nota" placeholder="Nota" className="w-full rounded-xl border px-3 py-2" />
-                {estadoEfectivo?.error && (
-                  <p className="text-sm font-semibold text-cape">{estadoEfectivo.error}</p>
-                )}
-                {estadoEfectivo?.ok && (
-                  <p className="text-sm font-semibold text-emerald-700">{estadoEfectivo.ok}</p>
-                )}
-                <button
-                  type="submit"
-                  disabled={pendingEfectivo}
-                  className="rounded-xl bg-cape px-4 py-3 text-sm font-bold text-white"
-                >
-                  {pendingEfectivo ? "Enviando…" : "Enviar pedido"}
-                </button>
-              </form>
-            </section>
-          )}
 
           {abierto === "pago" && (
             <section className="rounded-3xl bg-white p-5 shadow-sm">

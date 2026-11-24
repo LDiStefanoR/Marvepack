@@ -28,6 +28,7 @@ import {
   IconoListado,
   IconoMantenimiento,
   IconoPedido,
+  IconoSolicitud,
   IconoStock,
   IconoVenta,
   TarjetaAccion,
@@ -131,6 +132,8 @@ export function CajaPanel({
   descuentoEmpleadoGenerico = 0,
   descuentoEmpleadoPorSeccion = {},
   recargoWeb,
+  recargoLista = 0,
+  topeFiado = 500000,
   tasasCuota,
   moraCredito,
   moraCuenta,
@@ -171,6 +174,8 @@ export function CajaPanel({
   descuentoEmpleadoGenerico?: number;
   descuentoEmpleadoPorSeccion?: Record<string, number>;
   recargoWeb: number;
+  recargoLista?: number;
+  topeFiado?: number;
   tasasCuota: { 1: number; 2: number; 3: number; 6: number };
   moraCredito: number[];
   moraCuenta: number[];
@@ -209,6 +214,7 @@ export function CajaPanel({
   const [montoRetiro, setMontoRetiro] = useState("");
   const [mensaje, setMensaje] = useState<EstadoCaja>(null);
   const [reloj, setReloj] = useState("");
+  const [fecha, setFecha] = useState("");
   const [empleadoTurno, setEmpleadoTurno] = useState<PersonaCaja | null>(null);
   const [buscarProductos, setBuscarProductos] = useState(false);
   const [ultimasAbiertas, setUltimasAbiertas] = useState(false);
@@ -226,13 +232,23 @@ export function CajaPanel({
 
   useEffect(() => {
     const pintar = () => {
+      const ahora = new Date();
       setReloj(
         new Intl.DateTimeFormat("es-AR", {
           hour: "2-digit",
           minute: "2-digit",
           hourCycle: "h23",
           timeZone: "America/Argentina/Buenos_Aires",
-        }).format(new Date()),
+        }).format(ahora),
+      );
+      setFecha(
+        new Intl.DateTimeFormat("es-AR", {
+          weekday: "long",
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+          timeZone: "America/Argentina/Buenos_Aires",
+        }).format(ahora),
       );
     };
     pintar();
@@ -278,14 +294,6 @@ export function CajaPanel({
   useEffect(() => {
     panelDeudas.current?.scrollTo({ top: 0 });
   }, [deudaAbierta, vista]);
-
-  const fecha = new Intl.DateTimeFormat("es-AR", {
-    weekday: "long",
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-    timeZone: "America/Argentina/Buenos_Aires",
-  }).format(new Date());
 
   const porId = useMemo(
     () => new Map(productos.map((p) => [p.id, p])),
@@ -899,10 +907,7 @@ export function CajaPanel({
               moraCredito={moraCredito}
               moraCuenta={moraCuenta}
               plazoGeneral={plazoCuenta}
-              onAbrirDeudas={() => {
-                setDeudaAbierta(null);
-                setVista("deudas");
-              }}
+              onAbrirDeudas={undefined}
               onElegir={(persona) => {
                 setClienteVenta(persona);
                 setCliente(persona ? nombreVisible(persona) : "Cliente genérico");
@@ -1282,6 +1287,8 @@ export function CajaPanel({
           descuentoEmpleadoGenerico={descuentoEmpleadoGenerico}
           descuentoEmpleadoPorSeccion={descuentoEmpleadoPorSeccion}
           recargoWeb={recargoWeb}
+          recargoLista={recargoLista}
+          topeFiado={topeFiado}
           tasasCuota={tasasCuota}
           moraCredito={moraCredito}
           moraCuenta={moraCuenta}
@@ -1314,6 +1321,8 @@ export function CajaPanel({
           descuentoEmpleadoGenerico={descuentoEmpleadoGenerico}
           descuentoEmpleadoPorSeccion={descuentoEmpleadoPorSeccion}
           recargoWeb={recargoWeb}
+          recargoLista={recargoLista}
+          topeFiado={topeFiado}
           tasasCuota={tasasCuota}
           moraCredito={moraCredito}
           moraCuenta={moraCuenta}
@@ -1322,14 +1331,7 @@ export function CajaPanel({
           ajustePorSeccion={ajustePorSeccion}
           mediosPago={mediosPago}
           permitirStockNegativo={permitirStockNegativo}
-          onDeudas={
-            permisos.includes("deudas")
-              ? () => {
-                  setDeudaAbierta(null);
-                  setVista("deudas");
-                }
-              : undefined
-          }
+          onDeudas={undefined}
           onSalir={() => setVista("inicio")}
         />
       )}
@@ -1354,6 +1356,8 @@ export function CajaPanel({
           descuentoEmpleadoGenerico={descuentoEmpleadoGenerico}
           descuentoEmpleadoPorSeccion={descuentoEmpleadoPorSeccion}
           recargoWeb={recargoWeb}
+          recargoLista={recargoLista}
+          topeFiado={topeFiado}
           tasasCuota={tasasCuota}
           moraCredito={moraCredito}
           moraCuenta={moraCuenta}
@@ -1388,6 +1392,8 @@ export function CajaPanel({
           descuentoEmpleadoGenerico={descuentoEmpleadoGenerico}
           descuentoEmpleadoPorSeccion={descuentoEmpleadoPorSeccion}
           recargoWeb={recargoWeb}
+          recargoLista={recargoLista}
+          topeFiado={topeFiado}
           tasasCuota={tasasCuota}
           moraCredito={moraCredito}
           moraCuenta={moraCuenta}
@@ -1720,10 +1726,18 @@ function MenuCaja({
         {puede("venta") && <TarjetaAccion icono={<IconoVenta />} titulo="Caja / Ventas" detalle="Cobrar en el local" onClick={onVenta} />}
         {puede("listados") && <TarjetaAccion icono={<IconoListado />} titulo="Listados" detalle="Ventas, stock y clientes" onClick={onListados} />}
         {puede("stock") && <TarjetaAccion icono={<IconoStock />} titulo="Stock" detalle="Pedidos, entrada e inventario" onClick={onStock} />}
-        {(puede("clientes") || puede("deudas")) && <TarjetaAccion icono={<IconoCliente />} titulo="Clientes" detalle="Fichas, altas y deudas" onClick={onClientes} />}
+        {(puede("clientes") || puede("deudas")) && <TarjetaAccion icono={<IconoCliente />} titulo="Clientes" detalle="Fichas y altas" onClick={onClientes} />}
         {(puede("mantenimiento") || puede("productos")) && <TarjetaAccion icono={<IconoMantenimiento />} titulo="Mantenimiento" detalle="Productos, proveedores y pagos" onClick={onMantenimiento} />}
-        {puede("configuracion") && <TarjetaAccion icono={<IconoConfiguracion />} titulo="Configuración" detalle="Local, web, envío e intereses" onClick={onConfiguracion} />}
-        {esAdmin && <TarjetaAccion icono={<IconoPedido />} titulo="Pedidos" detalle="Web, crédito y saldo" onClick={onPedidos} />}
+        {puede("configuracion") && <TarjetaAccion icono={<IconoConfiguracion />} titulo="Configuración" detalle="Local, web y envío" onClick={onConfiguracion} />}
+        {esAdmin && <TarjetaAccion icono={<IconoPedido />} titulo="Pedidos" detalle="Pedidos de la web" onClick={onPedidos} />}
+        {esAdmin && (
+          <TarjetaAccion
+            icono={<IconoSolicitud />}
+            titulo="Solicitudes"
+            detalle="Registros pendientes"
+            href="/admin/solicitudes"
+          />
+        )}
       </div>
     </div>
   );

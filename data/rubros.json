@@ -1,63 +1,76 @@
 [
   {
     "clave": "BOLSAS",
-    "etiqueta": "Bolsas"
+    "etiqueta": "Bolsas",
+    "imagen": "/api/media/fotos/imagenes-rubros/rubro-BOLSAS-1790541368265.jpg"
   },
   {
     "clave": "DESCARTABLES",
-    "etiqueta": "Descartables"
+    "etiqueta": "Descartables",
+    "imagen": "/api/media/fotos/imagenes-rubros/rubro-DESCARTABLES-1790651924321.webp"
   },
   {
     "clave": "REPOSTERIA",
-    "etiqueta": "Repostería"
+    "etiqueta": "Repostería",
+    "imagen": "/api/media/fotos/imagenes-rubros/rubro-REPOSTERIA-1790652008445.jpg"
   },
   {
     "clave": "COTILLON",
-    "etiqueta": "Cotillón"
+    "etiqueta": "Cotillón",
+    "imagen": "/api/media/fotos/imagenes-rubros/rubro-COTILLON-1790652132195.jpg"
   },
   {
     "clave": "CAJAS MICRO",
-    "etiqueta": "Cajas micro"
+    "etiqueta": "Cajas micro",
+    "imagen": "/api/media/fotos/imagenes-rubros/rubro-CAJASMICRO-1790652208950.webp"
   },
   {
     "clave": "CAJAS Y ESTUCHES",
-    "etiqueta": "Cajas y estuches"
+    "etiqueta": "Cajas y estuches",
+    "imagen": "/api/media/fotos/imagenes-rubros/rubro-CAJASYESTUCHES-1790652298801.jpg"
   },
   {
     "clave": "POTES",
-    "etiqueta": "Potes"
+    "etiqueta": "Potes",
+    "imagen": "/api/media/fotos/imagenes-rubros/rubro-POTES-1790652335198.jpg"
   },
   {
     "clave": "EXPANDIDO",
-    "etiqueta": "Expandido"
+    "etiqueta": "Expandido",
+    "imagen": "/api/media/fotos/imagenes-rubros/rubro-EXPANDIDO-1790652377292.jpg"
   },
   {
     "clave": "TERMICOS",
-    "etiqueta": "Térmicos"
+    "etiqueta": "Térmicos",
+    "imagen": "/api/media/fotos/imagenes-rubros/rubro-TERMICOS-1790652446351.webp"
   },
   {
     "clave": "EMBALAJE",
-    "etiqueta": "Embalaje"
+    "etiqueta": "Embalaje",
+    "imagen": "/api/media/fotos/imagenes-rubros/rubro-EMBALAJE-1790652502590.jpg"
   },
   {
     "clave": "ROLLOS",
-    "etiqueta": "Rollos"
+    "etiqueta": "Rollos",
+    "imagen": "/api/media/fotos/imagenes-rubros/rubro-ROLLOS-1790652545042.webp"
   },
   {
     "clave": "HIGIENE",
-    "etiqueta": "Higiene"
+    "etiqueta": "Higiene",
+    "imagen": "/api/media/fotos/imagenes-rubros/rubro-HIGIENE-1790652610370.jpg"
   },
   {
     "clave": "LIBRERIA",
-    "etiqueta": "Librería"
+    "etiqueta": "Librería",
+    "imagen": "/api/media/fotos/imagenes-rubros/rubro-LIBRERIA-1790652671919.jpg"
+  },
+  {
+    "clave": "PROMOS",
+    "etiqueta": "Promos"
   },
   {
     "clave": "PERSONALIZADOS",
     "etiqueta": "Personalizados"
-  },
-  {
-    "clave": "EJEMPLO",
-    "etiqueta": "ejemplo"
   },
   {
     "clave": "VARIOS",

@@ -468,8 +468,7 @@ export async function cargarClienteCaja(form: FormData): Promise<EstadoDeposito>
   }
   const email = cuentaWeb ? mail : `${digitos}@mostrador.marvepack`;
   const password = cuentaWeb ? passwordWeb : randomBytes(9).toString("base64url");
-  const tipoCuenta =
-    darCredito ? "linea_credito" : cuentaCorriente ? "credito_super" : descuento > 0 ? "descuentos" : "generico";
+  const tipoCuenta = descuento > 0 ? "descuento_especial" : "generico";
   const creado = await crearUsuarioAdmin({
     email,
     nombre,
@@ -687,15 +686,7 @@ export async function actualizarClienteCaja(form: FormData): Promise<EstadoDepos
     await guardarCondicionesCredito({ email, ...condiciones });
   }
 
-  const tipo: TipoCuentaCliente = darCredito
-    ? "linea_credito"
-    : cuentaCorriente
-      ? "credito_super"
-      : descuento > 0
-        ? "descuentos"
-        : usuario.tipoCuenta === "descuentos"
-          ? "descuentos"
-          : "generico";
+  const tipo: TipoCuentaCliente = descuento > 0 ? "descuento_especial" : "generico";
   await actualizarTipoCuenta(id, tipo);
   revalidar();
 

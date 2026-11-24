@@ -74,9 +74,10 @@ export function AdminAlarma({
   );
 
   const hayPedido = alertas.pedidosNuevos > 0;
-  const hayOtros = alertas.solicitudes > 0 || alertas.novedades > 0;
+  const haySolicitudes = alertas.solicitudes > 0;
+  const hayOtros = alertas.novedades > 0;
   const sonar = hayPedido || (hayOtros && !silencioOtros);
-  const mostrarBarra = hayPedido || (hayOtros && !silencioOtros);
+  const mostrarBarra = hayPedido || haySolicitudes || (hayOtros && !silencioOtros);
 
   useEffect(() => {
     const desbloquear = () => {
@@ -198,9 +199,9 @@ export function AdminAlarma({
                 Pedidos
               </Link>
             ))}
-          {alertas.solicitudes > 0 && !silencioOtros && (
-            <Link href="/caja" className="underline underline-offset-2">
-              Caja
+          {haySolicitudes && (
+            <Link href="/admin/solicitudes" className="underline underline-offset-2">
+              Ver solicitudes
             </Link>
           )}
           {hayOtros && !silencioOtros && !hayPedido && (

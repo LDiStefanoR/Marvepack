@@ -126,52 +126,54 @@ export async function guardarPreciosAdmin(
 export async function guardarCatalogoWeb(form: FormData): Promise<EstadoAdmin> {
   if (!(await exigirAdmin())) return { error: "No tenés permiso para cambiar el catálogo." };
   const recargo = numero(form.get("recargoWeb"), 0);
+  const recargoLista = numero(form.get("recargoLista"), 0);
   const descuento = numero(form.get("descuentoClienteGenerico"), 0);
-  const descuentoEmpleado = numero(form.get("descuentoEmpleadoGenerico"), 0);
   if (recargo < 0 || recargo > 200) {
-    return { error: "El recargo tiene que estar entre 0 y 200." };
+    return { error: "El recargo sobre la base tiene que estar entre 0 y 200." };
+  }
+  if (recargoLista < 0 || recargoLista > 200) {
+    return { error: "El recargo sobre el precio de lista tiene que estar entre 0 y 200." };
   }
   if (descuento < 0 || descuento > 90) {
     return { error: "El descuento de clientes tiene que estar entre 0 y 90." };
   }
-  if (descuentoEmpleado < 0 || descuentoEmpleado > 90) {
-    return { error: "El descuento de empleados tiene que estar entre 0 y 90." };
-  }
   const productos = await leerProductos();
   const rubros = await leerRubros(productos.map((p) => p.seccion));
   const descuentoClientePorSeccion: Record<string, number> = {};
-  const descuentoEmpleadoPorSeccion: Record<string, number> = {};
   for (const rubro of rubros) {
     if (form.get(`dto-activo-${rubro.clave}`) === "1") {
       const dto = numero(form.get(`dto-${rubro.clave}`), descuento);
       if (dto < 0 || dto > 90) {
         return {
-          error: `El descuento de clientes de ${rubro.etiqueta} tiene que estar entre 0 y 90.`,
+          error: `El descuento de ${rubro.etiqueta} tiene que estar entre 0 y 90.`,
         };
       }
       descuentoClientePorSeccion[rubro.clave] = dto;
     }
-    if (form.get(`emp-activo-${rubro.clave}`) === "1") {
-      const dto = numero(form.get(`emp-${rubro.clave}`), descuentoEmpleado);
-      if (dto < 0 || dto > 90) {
-        return {
-          error: `El descuento de empleados de ${rubro.etiqueta} tiene que estar entre 0 y 90.`,
-        };
-      }
-      descuentoEmpleadoPorSeccion[rubro.clave] = dto;
-    }
   }
+  const topeFiado = Math.max(0, Math.round(numero(form.get("topeFiado"), 0)));
   const ajustes = await leerAjustes();
   await guardarAjustes({
     ...ajustes,
     recargoWeb: recargo,
+    recargoLista,
     descuentoClienteGenerico: descuento,
     descuentoClientePorSeccion,
-    descuentoEmpleadoGenerico: descuentoEmpleado,
-    descuentoEmpleadoPorSeccion,
+    descuentoEmpleadoGenerico: 0,
+    descuentoEmpleadoPorSeccion: {},
+    topeFiado,
   });
   revalidarSitio();
-  return { ok: "Guardamos recargo, descuentos de productos y de empleados." };
+  return { ok: "Guardamos recargos y descuentos del catálogo." };
+}
+
+export async function guardarTopeCredito(form: FormData): Promise<EstadoAdmin> {
+  if (!(await exigirAdmin())) return { error: "No tenés permiso para cambiar el crédito." };
+  const topeFiado = Math.max(0, Math.round(numero(form.get("topeFiado"), 0)));
+  const ajustes = await leerAjustes();
+  await guardarAjustes({ ...ajustes, topeFiado });
+  revalidarSitio();
+  return { ok: "Guardamos el tope de crédito por cliente." };
 }
 
 export async function guardarEnvioAdmin(form: FormData): Promise<EstadoAdmin> {
